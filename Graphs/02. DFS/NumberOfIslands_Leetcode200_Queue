@@ -1,0 +1,126 @@
+package com.practice.graph2.dfs;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Leetcode 200
+ * 
+ * Uses Queue and extra space for visited array
+ * 
+ */
+
+public class NumberOfIslands {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+//		char[][] grid =  {
+//	            {'0', '1', '1', '1', '0', '0', '0'},
+//	            {'0', '0', '1', '1', '0', '1', '0'}
+//	        };
+		
+//		char[][] grid =  {
+//	            {'1','1'}
+//	        };
+
+		
+//		char[][] grid =  {
+//	            {'0', '1', '0'},
+//	            {'1', '0', '1'},
+//	            {'0', '1', '0'}
+//		};
+		
+		char[][] grid =  {
+	            {'1', '1', '0', '0', '0'},
+	            {'1', '1', '0', '0', '0'},
+	            {'0', '0', '1', '0', '0'},
+	            {'0', '0', '0', '1', '1'}
+	        };
+		
+	                
+		NumberOfIslands obj = new NumberOfIslands();
+	        System.out.println(obj.numIslands(grid));
+	}
+
+	private int numIslands(char[][] grid) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		int n = grid.length;
+		int m = grid[0].length;
+		boolean vis[][] = new boolean[n][m];
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				if(!vis[i][j] && grid[i][j] == '1') {
+					vis[i][j] = true;// starting element found and marked
+					count++;//Increment count for every starting element
+					//System.out.println("row = "+i + " -- col = "+j);
+					dfs(grid,i, j,vis);
+				}
+			}
+		}
+		return count;
+	}
+
+	private void dfs(char[][] grid, int i, int j, boolean[][] vis) {
+		vis[i][j] = true;//mark element as visited
+		Queue<Pair> queue = new LinkedList<>();// using Pair as we need to store both row and col indices
+		queue.add(new Pair(i, j));
+		int n = grid.length;
+		int m = grid[0].length;
+		while(!queue.isEmpty()) {// no need to store in the dfs
+			int row = queue.peek().first;
+			int col = queue.peek().second;
+			queue.remove();
+			
+			//Now we need to run dfs for each of the neighbours for grid[row][col]
+			
+			//if diagonals are considered for island
+			/*for(int x =  -1; x <= 1; x++) {
+				for(int y = -1; y <=1; y++) {
+					int nrow = row+x;//neighbor row 
+					int ncol = col+y;//neighbor col 
+					if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1' && vis[nrow][ncol] == false) {
+						vis[nrow][ncol] = true; // mark the neighbor as visited
+						queue.add(new Pair(nrow, ncol));// push the neighbor to the queue so that we can check if 
+						
+					}
+				}
+			}*/
+			
+			//if diagonals are not considered for island
+			int[] dx= {1,-1,0,0};
+			int[] dy= {0,0,1,-1};
+			
+			for(int x =  0; x < 4; x++) {
+				//for(int y = 0; y < n; y++) {
+					//if(x!=y) {
+						int nrow = row+dx[x];//neighbor row 
+						int ncol = col+dy[x];//neighbor col 
+						System.out.println(nrow + " -- "+ncol);
+						if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1' && vis[nrow][ncol] == false) {
+							vis[nrow][ncol] = true; // mark the neighbor as visited
+							queue.add(new Pair(nrow, ncol));// push the neighbor to the queue so that we can check if 
+							
+						}
+					//}
+				//}
+			}
+					
+		}
+		
+		
+		
+	}
+
+}
+
+class Pair{
+	int first;
+	int second;
+	Pair(int first, int second){
+		this.first =  first;
+		this.second = second;
+	}
+}
+
+
