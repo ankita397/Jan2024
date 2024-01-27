@@ -1,4 +1,4 @@
-package com.practice.graph2.dfs;
+package com.practice.graph2.bfs;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -6,7 +6,7 @@ import java.util.Queue;
 /*
  * Leetcode 200
  * 
- * Uses Queue and extra space for visited array
+ * Uses Queue and extra space for visited array - bfs
  * 
  */
 
@@ -54,25 +54,25 @@ public class NumberOfIslands {
 					vis[i][j] = true;// starting element found and marked
 					count++;//Increment count for every starting element
 					//System.out.println("row = "+i + " -- col = "+j);
-					dfs(grid,i, j,vis);
+					bfs(grid,i, j,vis);
 				}
 			}
 		}
 		return count;
 	}
 
-	private void dfs(char[][] grid, int i, int j, boolean[][] vis) {
+	private void bfs(char[][] grid, int i, int j, boolean[][] vis) {
 		vis[i][j] = true;//mark element as visited
 		Queue<Pair> queue = new LinkedList<>();// using Pair as we need to store both row and col indices
 		queue.add(new Pair(i, j));
 		int n = grid.length;
 		int m = grid[0].length;
-		while(!queue.isEmpty()) {// no need to store in the dfs
+		while(!queue.isEmpty()) {// no need to store in the bfs
 			int row = queue.peek().first;
 			int col = queue.peek().second;
 			queue.remove();
 			
-			//Now we need to run dfs for each of the neighbours for grid[row][col]
+			//Now we need to run bfs for each of the neighbours for grid[row][col]
 			
 			//if diagonals are considered for island
 			/*for(int x =  -1; x <= 1; x++) {
