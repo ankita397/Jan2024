@@ -1,0 +1,93 @@
+/*
+ * Leetcode 200
+ * 
+ * Best and easy solution - Recommended as it is generic
+ * 
+ */
+public class NumberOfIslands3 {
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		char[][] grid =  {
+	            {'0', '1', '1', '1', '0', '0', '0'},
+	            {'0', '0', '1', '1', '0', '1', '0'}
+	        };
+		
+//		char[][] grid =  {
+//	            {'1','1'}
+//	        };
+
+		
+//		char[][] grid =  {
+//	            {'0', '1', '0'},
+//	            {'1', '0', '1'},
+//	            {'0', '1', '0'}
+//		};
+		
+//		char[][] grid =  {
+//	            {'1', '1', '0', '0', '0'},
+//	            {'1', '1', '0', '0', '0'},
+//	            {'0', '0', '1', '0', '0'},
+//	            {'0', '0', '0', '1', '1'}
+//	        };
+		
+	                
+		NumberOfIslands3 obj = new NumberOfIslands3();
+	        System.out.println(obj.numIslands(grid));
+	}
+
+	private int numIslands(char[][] grid) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		int n = grid.length;
+		int m = grid[0].length;
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				if(grid[i][j] == '1') {
+					grid[i][j] = '2';// mark visited lands as 2
+					count++;
+					//System.out.println("row = "+i + " -- col = "+j);
+					dfs(grid,i, j);
+				}
+			}
+		}
+		return count;
+	}
+
+	private void dfs(char[][] grid, int i, int j) {
+		int n = grid.length;
+		int m = grid[0].length;
+		
+			
+		//Now we need to run dfs for each of the neighbours for grid[row][col]
+			
+		//if diagonals are considered for island
+//			int[] dx= {1, -1, 0, 0, -1, -1, 1, 1};
+//			int[] dy= {0, 0, 1, -1, -1, 1, 1, -1};
+//			
+//			for(int x =  0; x < 8; x++) {
+//				int nrow = i+dx[x];//neighbor row 
+//				int ncol = j+dy[x];//neighbor col 
+//				if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1') {
+//					grid[nrow][ncol] = '2';
+//					dfs(grid,nrow,ncol);
+//					
+//				}
+//			}
+			
+			//if diagonals are not considered for island
+			int[] dx= {1,-1,0,0};
+			int[] dy= {0,0,1,-1};
+			
+			for(int x =  0; x < 4; x++) {
+				int nrow = i+dx[x];//neighbor row 
+				int ncol = j+dy[x];//neighbor col 
+				if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1') {
+					grid[nrow][ncol] = '2'; // mark the neighbor as visited
+					dfs(grid,nrow,ncol);
+					
+				}
+					
+			}				
+	}
+
+}
