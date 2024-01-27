@@ -10,9 +10,9 @@ import java.util.Queue;
 public class RottingOranges {
 
 	public static void main(String[] args) {
-		//int [][] grid = {{0,1,2},{0,1,2},{2,1,1}};
-		//int[][] grid = {{2,1,1},{1,1,0},{0,1,1}};
-		int[][] grid = {{2,1,1},{0,1,1},{1,0,1}};
+		//int [][] grid = {{0,1,2},{0,1,2},{2,1,1}}; // Output = 1
+		int[][] grid = {{2,1,1},{1,1,0},{0,1,1}};// Output = 4
+		//int[][] grid = {{2,1,1},{0,1,1},{1,0,1}};// Output = -1
 		
 		RottingOranges rot = new RottingOranges();
 		int minutes = rot.orangesRotting(grid);
@@ -29,7 +29,7 @@ public class RottingOranges {
 		for(int i = 0; i < n; i++) {
 			for(int j = 0; j < m; j++) {
 				if(grid[i][j] == 2) {// if rotten - starting rotten orange
-					queue.add(new Pair2(i, j, 0));
+					queue.add(new Pair2(i, j, 0));// time unit = 0 for starting element
 					vis[i][j] = 2;
 				}else if(grid[i][j] == 0) {
 					vis[i][j] = 0;
@@ -59,7 +59,7 @@ public class RottingOranges {
 				int nrow = row+dx[x];
 				int ncol = col+dy[x];
 				if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && vis[nrow][ncol] != 2 && grid[nrow][ncol] == 1) {
-					queue.add(new Pair2(nrow, ncol, tm+1));
+					queue.add(new Pair2(nrow, ncol, tm+1));// time unit incremented neighboring elements in same level(bfs)
 					vis[nrow][ncol] = 2;
 				}
 			}
@@ -78,7 +78,7 @@ public class RottingOranges {
 
 }
 
-class Pair2{
+class Pair2{// contains row, col of the element and time unit taken
 	int row;
 	int col;
 	int time;
