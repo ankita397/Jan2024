@@ -1,0 +1,90 @@
+package com.practice.graph2.bfs;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Leetcode - 994
+ * 
+ */
+public class RottingOranges {
+
+	public static void main(String[] args) {
+		//int [][] grid = {{0,1,2},{0,1,2},{2,1,1}};
+		//int[][] grid = {{2,1,1},{1,1,0},{0,1,1}};
+		int[][] grid = {{2,1,1},{0,1,1},{1,0,1}};
+		
+		RottingOranges rot = new RottingOranges();
+		int minutes = rot.orangesRotting(grid);
+		System.out.println(minutes);
+	}
+
+	public int orangesRotting(int[][] grid) {
+		//int countFresh = 0;
+		int n = grid.length;
+		int m = grid[0].length;
+		int c = 0;
+		int[][] vis = new int[n][m];
+		Queue<Pair2> queue = new LinkedList<>();
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				if(grid[i][j] == 2) {// if rotten - starting rotten orange
+					queue.add(new Pair2(i, j, 0));
+					vis[i][j] = 2;
+				}else if(grid[i][j] == 0) {
+					vis[i][j] = 0;
+				}
+				
+			}
+		}
+		c = bfs(grid, vis, queue);
+		
+		return c;
+	}
+
+	private int bfs(int[][] grid, int[][] vis, Queue<Pair2> queue) {
+		int n = grid.length;
+		int m = grid[0].length;
+		int[] dx = {-1,1,0,0};
+		int[] dy = {0,0,1,-1};
+		int time = 0;
+		while(!queue.isEmpty()) {
+			int row = queue.peek().row;
+			int col = queue.peek().col;
+			int tm = queue.peek().time;
+			time = Math.max(time, tm);
+			queue.remove();
+			
+			for(int x = 0; x<4; x++) {
+				int nrow = row+dx[x];
+				int ncol = col+dy[x];
+				if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && vis[nrow][ncol] != 2 && grid[nrow][ncol] == 1) {
+					queue.add(new Pair2(nrow, ncol, tm+1));
+					vis[nrow][ncol] = 2;
+				}
+			}
+		}
+
+		// if all oranges are not rotten
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < m; j++) {
+				if(vis[i][j] != 2 && grid[i][j] == 1) {
+					return -1;
+				}
+			}
+		}
+	    return time;
+	}
+
+}
+
+class Pair2{
+	int row;
+	int col;
+	int time;
+	Pair2(int row, int col, int time){
+		this.row = row;
+		this.col =  col;
+		this.time = time;
+	}
+}
