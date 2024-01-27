@@ -61,32 +61,31 @@ public class NumberOfIslands3 {
 		//Now we need to run dfs for each of the neighbours for grid[row][col]
 			
 		//if diagonals are considered for island
+//			if(i < 0 || j < 0 || i >= n || j >= m || grid[i][j] != '1') {
+//				return;
+//			}
+//			grid[i][j] = '2';
 //			int[] dx= {1, -1, 0, 0, -1, -1, 1, 1};
 //			int[] dy= {0, 0, 1, -1, -1, 1, 1, -1};
 //			
 //			for(int x =  0; x < 8; x++) {
 //				int nrow = i+dx[x];//neighbor row 
 //				int ncol = j+dy[x];//neighbor col 
-//				if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1') {
-//					grid[nrow][ncol] = '2';
-//					dfs(grid,nrow,ncol);
-//					
-//				}
+//				dfs(grid,nrow,ncol);
 //			}
 			
 			//if diagonals are not considered for island
+			if(i < 0 || j < 0 || i >= n || j >= m || grid[i][j] != '1') {
+				return;
+			}
+			grid[i][j] = '2';
 			int[] dx= {1,-1,0,0};
 			int[] dy= {0,0,1,-1};
 			
 			for(int x =  0; x < 4; x++) {
 				int nrow = i+dx[x];//neighbor row 
 				int ncol = j+dy[x];//neighbor col 
-				if(nrow >= 0 && ncol >=0 && nrow < n && ncol < m && grid[nrow][ncol] == '1') {
-					grid[nrow][ncol] = '2'; // mark the neighbor as visited
-					dfs(grid,nrow,ncol);
-					
-				}
-					
+				dfs(grid,nrow,ncol);	
 			}				
 	}
 
