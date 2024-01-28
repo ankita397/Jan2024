@@ -1,0 +1,92 @@
+package com.practice.graph2.dfs;
+
+
+/*
+ * DFS and BFS both can be used
+ * Same as ReplaceOsWithXs GFG
+ * 
+ */
+public class NumberOfEnclaves {
+
+	public static void main(String[] args) {
+		int[][] grid = {{0,0,0,1,1},{0,0,1,1,0},{0,1,0,0,0},{0,1,1,0,0},{0,0,0,1,1}};
+		//char[][] newGrid = new char[grid.length][grid[0].length];
+		
+		NumberOfEnclaves enc = new NumberOfEnclaves();
+		int count = enc.numEnclaves(grid);
+		
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				System.out.print(grid[i][j]+ " ");
+			}
+			//System.out.println();
+		}
+		
+		System.out.println("COUNT = "+ count);
+
+	}
+
+	public int numEnclaves(int[][] grid) {
+		int n = grid.length;
+		int m = grid[0].length;
+		boolean vis[][] = new boolean[n][m];
+		int count= 0;
+		//traverse 1st and last row
+		for(int j = 0; j < m; j++) {
+			int i1 = 0;// first row
+			if(!vis[i1][j] && grid[i1][j] == 1) {
+				dfs(grid, i1 , j, vis);
+			}
+			
+			int i2 = n-1;// last row
+			if(!vis[i2][j] && grid[i2][j] == 1) {
+				dfs(grid, i2 , j, vis);
+			}
+		}
+			
+		//traverse 1st and last col
+		for(int i = 0; i < n; i++) {
+			int j1 = 0;// first col
+			if(!vis[i][j1] && grid[i][j1] == 1) {
+				dfs(grid, i , j1, vis);
+			}
+			int j2 = m-1;// last col
+			if(!vis[i][j2] && grid[i][j2] == 1) {
+				dfs(grid, i , j2, vis);
+			}
+			
+		}
+		
+		
+		for(int i = 0; i < n; i++) {//  remaining 1s
+			for(int j = 0; j < m; j++) {
+				if(!vis[i][j] && grid[i][j] == 1) {
+					count++;
+				}
+			}
+		}
+		
+		return count;
+	}
+
+	private void dfs(int[][] grid, int i, int j, boolean[][] vis) {
+		int n = grid.length;
+		int m = grid[0].length;
+		
+		vis[i][j] = true;
+		
+		int[] dx = {-1,1,0,0};
+		int[] dy = {0,0,-1,1};
+		
+		for(int x = 0; x < 4; x++) {
+			int nrow = i + dx[x];
+			int ncol = j + dy[x];
+			
+			if(nrow >= 0 && nrow < n && ncol >=0 && ncol < m && vis[nrow][ncol] == false && grid[nrow][ncol] == 1) {
+				dfs(grid, nrow, ncol, vis);
+			}
+		}
+		
+	}
+
+}
