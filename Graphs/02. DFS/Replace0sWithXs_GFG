@@ -1,0 +1,89 @@
+package com.practice.graph2.dfs;
+
+/*
+ * 
+ * Start with boundary O's and mark them not to be converted => i == 0 or j == 0
+ * Convert the remaining O's to be converted to X's (as they are not linked with any boundary O's so they are bound to be surrounded by X's)
+ */
+
+public class ReplaceOsWithXs {
+
+	public static void main(String[] args) {
+		//int[][] grid = {{0,0,0},{0,1,0},{1,1,1}};
+			char[][] grid = {{'X','X','X','X','X'},{'X','O','O','X','O'},{'X','X','O','X','O'},{'X','O','X','O','X'},{'O','O','X','X','X'}};
+			//char[][] newGrid = new char[grid.length][grid[0].length];
+			
+			ReplaceOsWithXs zero = new ReplaceOsWithXs();
+			grid = zero.replace(grid);
+			
+			for(int i = 0; i < grid.length; i++) {
+				for(int j = 0; j < grid[0].length; j++) {
+					System.out.print(grid[i][j]+ " ");
+				}
+				System.out.println();
+			}
+	}
+
+	public char[][] replace(char[][] grid) {
+		int n = grid.length;
+		int m = grid[0].length;
+		//char[][] newGrid = new char[n][m];
+		boolean vis[][] = new boolean[n][m];
+		
+		//traverse 1st and last row
+		for(int j = 0; j < m; j++) {
+			int i1 = 0;// first row
+			if(!vis[i1][j] && grid[i1][j] == 'O') {
+				dfs(grid, i1 , j, vis);
+			}
+			
+			int i2 = n-1;// last row
+			if(!vis[i2][j] && grid[i2][j] == 'O') {
+				dfs(grid, i2 , j, vis);
+			}
+		}
+			
+		//traverse 1st and last col
+		for(int i = 0; i < n; i++) {
+			int j1 = 0;// first col
+			if(!vis[i][j1] && grid[i][j1] == 'O') {
+				dfs(grid, i , j1, vis);
+			}
+			int j2 = m-1;// last col
+			if(!vis[i][j2] && grid[i][j2] == 'O') {
+				dfs(grid, i , j2, vis);
+			}
+			
+		}
+		
+		
+		for(int i = 0; i < n; i++) {// convert remaining 0's to X
+			for(int j = 0; j < m; j++) {
+				if(!vis[i][j] && grid[i][j] == 'O') {
+					grid[i][j] = 'X';
+				}
+			}
+		}
+		
+		return grid;
+	}
+
+	private char[][] dfs(char[][] grid, int i, int j, boolean[][] vis) {
+		int n = grid.length;
+		int m = grid[0].length;
+		
+		vis[i][j] = true;
+		int[] dx = {0,0,-1,1};
+		int[] dy = {-1,1,0,0};
+		
+		for(int x = 0 ; x < 4; x++) {
+			int nrow = i+dx[x];
+			int ncol = j+dy[x];
+			if(nrow >= 0 && nrow < n && ncol >=0 && ncol < m && vis[nrow][ncol] == false && grid[nrow][ncol] == 'O') {
+				dfs(grid, nrow,ncol,vis);
+			}
+		}
+		return grid;
+	}
+
+}
