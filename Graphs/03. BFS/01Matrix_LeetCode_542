@@ -1,0 +1,98 @@
+package com.practice.graph2.bfs;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Leetcode 542
+ * Use bfs
+ * Time Complexity: O(NxM + NxMx4) ~ O(N x M)
+ * For the worst case, the BFS function will be called for (N x M) nodes, and for every node, we are traversing for 4 neighbors, so it will take O(N x M x 4) time.
+ * Space Complexity: O(N x M) + O(N x M) + O(N x M) ~ O(N x M)
+ * O(N x M) for the visited array, distance matrix, and queue space takes up N x M locations at max. 
+ */
+
+public class ZeroOneMatrix {
+
+	public static void main(String[] args) {
+		//int[][] grid = {{0,0,0},{0,1,0},{1,1,1}};
+		int[][] grid = {{0,1,0},{0,1,0},{0,1,0},{0,1,0}};
+		int[][] dist = new int[grid.length][grid[0].length];
+		
+		ZeroOneMatrix zero = new ZeroOneMatrix();
+		dist = zero.nearestZeros(grid);
+		
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < dist[0].length; j++) {
+				System.out.print(dist[i][j]+ " ");
+			}
+			System.out.println();
+		}
+
+	}
+
+	public int[][] nearestZeros(int[][] mat) {
+		int rows = mat.length;
+		int cols = mat[0].length;
+		int[][] dist = new int[rows][cols];
+		boolean[][] vis = new boolean[rows][cols];
+		
+		Queue<Pair4> queue = new LinkedList<Pair4>();
+		
+		for(int i = 0; i < rows; i++) {
+			for(int j = 0; j < cols; j++) {
+				if(mat[i][j] == 0) {// as we want nearest 0's, only elements with 0 value will bet added to queue initially with step = 0 
+					// as it takes 0 steps to go from 0 to self.
+					queue.add(new Pair4(i, j, 0));
+					vis[i][j] = true;
+				}else {
+					vis[i][j] = false;
+				}
+			}
+		}
+		dist = bfs(mat, vis, queue, dist);// call 
+		
+		return dist;
+	}
+
+	private int[][] bfs(int[][] grid, boolean[][] vis, Queue<Pair4> queue, int[][] dist) {
+		int n = grid.length;
+		int m = grid[0].length;
+		
+		int[] dx = {0,0,-1,1};
+		int[] dy = {-1,1,0,0};
+		
+		while(!queue.isEmpty()) {
+			int row = queue.peek().row;
+			int col = queue.peek().col;
+			int step = queue.peek().step;
+			queue.remove();
+			dist[row][col] = step;// distance for that index will be the step in queue
+			
+			for(int x = 0; x < 4; x++) {
+				int nrow = row+dx[x];
+				int ncol = col+dy[x];
+				
+				if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && vis[nrow][ncol] == false) {
+					vis[nrow][ncol] = true;
+					queue.add(new Pair4(nrow, ncol, step+1));// For every neighboring unvisited 1(as 0's are all visited), we can mark the distance to be +1 of the current node distance
+				}
+			}
+			
+		}
+		return dist;
+	}
+
+}
+
+
+class Pair4{
+	int row;
+	int col;
+	int step;
+	Pair4(int row, int col, int step) {
+		this.row = row;
+		this.col = col;
+		this.step = step;
+	}
+}
