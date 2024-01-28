@@ -1,6 +1,7 @@
 package com.practice.graph2.dfs;
 
 /*
+ * DFS and BFS both can be used
  * https://geeksforgeeks.org/problems/replace-os-with-xs0052/1
  * Start with boundary O's and mark them not to be converted => i == 0 or j == 0
  * Convert the remaining O's to be converted to X's (as they are not linked with any boundary O's so they are bound to be surrounded by X's)
