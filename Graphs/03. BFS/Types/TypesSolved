@@ -1,1 +1,17 @@
+1. Shortest path or Minimum steps 
+    a. Rotting Oranges - Leetcode 994
+    b. 01Matrix - Leetcode 542
 
+    Tip : Call bfs at the end of the loop for Dynamic Processes where one cell affects/changes another
+
+2. Connected Components and Reachability:
+    a. NumberOfIslands - Leetcode 200
+
+    Tip : Call bfs from inside loop for Static Connectivity in a Grid where the cells dont change
+
+3. Cycle detection in undirected graph
+    a. DetectCycleInUndirectedGraph_BFS
+
+    Tip : 
+4.
+    
