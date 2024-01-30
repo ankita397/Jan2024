@@ -1,0 +1,19 @@
+private void dfs(int[][] grid, int i, int j, boolean[][] vis) {
+		int n = grid.length;
+		int m = grid[0].length;
+		
+		vis[i][j] = true;
+		
+		int[] dx = {-1,1,0,0};
+		int[] dy = {0,0,-1,1};
+		
+		for(int x = 0; x < 4; x++) {
+			int nrow = i + dx[x];
+			int ncol = j + dy[x];
+			
+			if(nrow >= 0 && nrow < n && ncol >=0 && ncol < m && vis[nrow][ncol] == false && grid[nrow][ncol] == 1) {
+				dfs(grid, nrow, ncol, vis);
+			}
+		}
+		
+	}
