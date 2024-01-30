@@ -1,0 +1,20 @@
+private int bfs(int[][] grid, int[][] vis, Queue<Pair2> queue) {
+		int n = grid.length;
+		int m = grid[0].length;
+		int[] dx = {-1,1,0,0};
+		int[] dy = {0,0,1,-1};
+		while(!queue.isEmpty()) {
+			int row = queue.peek().row;
+			int col = queue.peek().col;
+			queue.remove();
+			
+			for(int x = 0; x<4; x++) {
+				int nrow = row+dx[x];
+				int ncol = col+dy[x];
+				if(nrow >= 0 && ncol >= 0 && nrow < n && ncol < m && vis[nrow][ncol] != 2 && grid[nrow][ncol] == 1) {
+					queue.add(new Pair2(nrow, ncol));// time unit incremented neighboring elements in same level(bfs)
+					vis[nrow][ncol] = 2;
+				}
+			}
+		}
+}
