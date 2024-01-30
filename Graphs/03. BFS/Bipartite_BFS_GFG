@@ -1,0 +1,77 @@
+package com.practice.graph2.bfs;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Both BFS and DFS can be used - connected components
+ * Time Complexity: O(V + 2E), Where V = Vertices, 2E is for total degrees as we traverse all adjacent nodes.
+ * Space Complexity: O(3V) ~ O(V), Space for queue data structure, colour array and an adjacency list.
+ */
+public class BipartiteGraph {
+
+	public static void main(String[] args) {
+		ArrayList<ArrayList<Integer>> adjList = new ArrayList<>();
+		for(int i = 0; i < 4; i++) {
+			adjList.add(new ArrayList<Integer>());
+		}
+		
+		adjList.get(0).add(2);
+        adjList.get(2).add(0);
+        adjList.get(0).add(3);
+        adjList.get(3).add(0);
+        adjList.get(1).add(3);
+        adjList.get(3).add(1);
+        adjList.get(2).add(3);
+        adjList.get(3).add(2);
+
+        BipartiteGraph obj = new BipartiteGraph();
+        boolean isBip = obj.isBipartite(4, adjList);
+        if(isBip)
+            System.out.println("1");
+        else System.out.println("0");
+
+	}
+
+	public boolean isBipartite(int nodes, ArrayList<ArrayList<Integer>> adjList) {
+		int color[] = new int[nodes];
+		boolean isBip = false;
+		for(int x = 0; x < color.length;x++) {
+			color[x] = -1;// initially mark all non-colored elements as -1
+		}
+		
+		// check for all the connected components
+		for(int i = 0; i < nodes; i++) {
+			if(color[i] == -1) {
+				isBip = bfs(adjList, color, i, nodes);// call bfs for each starting element
+				if(!isBip)
+					return false;
+			}
+		}
+		return isBip;
+	}
+
+	private boolean bfs(ArrayList<ArrayList<Integer>> adjList, int[] color, int start, int nodes) {
+		Queue<Integer> queue = new LinkedList<>();
+		queue.add(start);
+		color[start] = 0;// color starting element with 0
+		
+		while(!queue.isEmpty()) {
+			int node = queue.peek();
+			queue.remove();
+			for(Integer adjNode : adjList.get(node)) {
+				if(color[adjNode] == -1) {// if adjacent node is not colored, we need to color with opp color
+					color[adjNode] = 1 - color[node];// 1 - color[node] = gives opposite color from node's color
+					queue.add(adjNode);
+				}
+				else if(color[adjNode] == color[node]) {
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+
+}
