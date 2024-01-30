@@ -6,6 +6,7 @@
     a. NumberOfIslands - Leetcode 200
     b. Number of Enclaves - Leetcode 1020 (can be solved using DFS also) - also categorized under Boundary vs. Non-Boundary Cells
     c. NumberOfClosedIslands - Leetcode 1254
+    d. NumberOfDistinctIslands - GFG
 
     Tip : Call dfs from inside loop for Static Connectivity in a Grid where the cells dont change
 
