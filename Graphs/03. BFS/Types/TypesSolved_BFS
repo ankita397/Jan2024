@@ -6,6 +6,7 @@
 
 2. Connected Components and Reachability:
     a. NumberOfIslands - Leetcode 200
+    b. Number of Enclaves - Leetcode 1020 (can be solved using DFS also) - also categorized under Boundary vs. Non-Boundary Cells
 
     Tip : Call bfs from inside loop for Static Connectivity in a Grid where the cells dont change
 
@@ -14,5 +15,7 @@
 
     Tip : Store the elements and their corresponding parents - For source element, parent = -1.
     Consider to call bfs for each connected graph. So we need to find starting element of each connected graph
-4.
+
+4. Boundary vs. Non-Boundary Cells
+    a. Number of Enclaves - Leetcode 1020 (can be solved using DFS also)
     
