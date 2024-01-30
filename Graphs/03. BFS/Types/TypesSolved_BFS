@@ -12,6 +12,7 @@
 3. Cycle detection in undirected graph
     a. DetectCycleInUndirectedGraph_BFS
 
-    Tip : 
+    Tip : Store the elements and their corresponding parents - For source element, parent = -1.
+    Consider to call bfs for each connected graph. So we need to find starting element of each connected graph
 4.
     
