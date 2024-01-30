@@ -4,13 +4,17 @@
 
     Tip : Call bfs at the end of the loop for Dynamic Processes where one cell affects/changes another
 
-2. Connected Components and Reachability - Can be solved using DFS also
+2. Connected Components and Reachability - Can be solved using DFS also 
     a. NumberOfIslands - Leetcode 200
     b. Number of Enclaves - Leetcode 1020 (can be solved using DFS also) - also categorized under Boundary vs. Non-Boundary Cells
 
     Tip : Call bfs from inside loop for Static Connectivity in a Grid where the cells dont change
 
-3. Cycle detection in undirected graph - Can be solved using DFS also
+For most connected component problems, either BFS or DFS can be used effectively. If the graph is sparse or has a relatively uniform degree distribution, BFS might be a good choice. If memory efficiency is crucial or if the graph has deep branches, DFS might be preferred.
+
+In practice, you can try both BFS and DFS for a specific problem and choose the one that better suits the requirements or constraints of that particular scenario.
+
+3. Cycle detection in undirected graph - Can be solved using DFS also(DFS is best)
     a. DetectCycleInUndirectedGraph_BFS
 
     Tip : Store the elements and their corresponding parents - For source element, parent = -1.
@@ -21,3 +25,5 @@
 4. Boundary vs. Non-Boundary Cells - Can be solved using DFS also
     a. Number of Enclaves - Leetcode 1020 
     
+    Tip : Call dfs for non-visited 1's on all 4 boundaries. Count the remaining non-visited 1's as they won't not be connected to boundary
+\\\
