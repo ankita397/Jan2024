@@ -1,9 +1,9 @@
-1. Graph connectivity
-    a. Number of Enclaves - Leetcode 1020 (can be solved using BFS also)
+1. Graph connectivity (Different from Connected Components and Reachability) - Can be solved using BFS also (DFS is best)
+    a. Number of Enclaves - Leetcode 1020
 
     Tip : Call bfs for non-visited 1's on all 4 boundaries. Count the remaining non-visited 1's as they won't not be connected to boundary.
 
-2. Cycle detection in undirected graph
+2. Cycle detection in undirected graph - Can be solved using BFS also (DFS is best)
     a. DetectCycleInUndirectedGraph_DFS
 
     TTip : Consider elements and their corresponding parents - For source element, parent = -1.
@@ -11,5 +11,5 @@
     If adjacent node is visited and is not its own parent node - this means it was visited by someone else. So its a repeating node,         
     confirming a cycle.
 
-4. Boundary vs. Non-Boundary Cells
+4. Boundary vs. Non-Boundary Cells - Can be solved using BFS also (DFS is best)
     a. Number of Enclaves - Leetcode 1020 (can be solved using DFS also)
