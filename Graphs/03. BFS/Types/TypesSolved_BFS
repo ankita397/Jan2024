@@ -1,16 +1,16 @@
-1. Shortest path or Minimum steps 
+1. Shortest path or Minimum steps - Can be solved using DFS also (but BFS is best)
     a. Rotting Oranges - Leetcode 994
     b. 01Matrix - Leetcode 542
 
     Tip : Call bfs at the end of the loop for Dynamic Processes where one cell affects/changes another
 
-2. Connected Components and Reachability:
+2. Connected Components and Reachability - Can be solved using DFS also
     a. NumberOfIslands - Leetcode 200
     b. Number of Enclaves - Leetcode 1020 (can be solved using DFS also) - also categorized under Boundary vs. Non-Boundary Cells
 
     Tip : Call bfs from inside loop for Static Connectivity in a Grid where the cells dont change
 
-3. Cycle detection in undirected graph
+3. Cycle detection in undirected graph - Can be solved using DFS also
     a. DetectCycleInUndirectedGraph_BFS
 
     Tip : Store the elements and their corresponding parents - For source element, parent = -1.
@@ -18,6 +18,6 @@
     If adjacent node is visited and is not its own parent node - this means it was visited by someone else. So its a repeating node,         
     confirming a cycle.
 
-4. Boundary vs. Non-Boundary Cells
-    a. Number of Enclaves - Leetcode 1020 (can be solved using DFS also)
+4. Boundary vs. Non-Boundary Cells - Can be solved using DFS also
+    a. Number of Enclaves - Leetcode 1020 
     
