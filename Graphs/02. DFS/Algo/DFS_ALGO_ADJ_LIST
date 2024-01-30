@@ -1,0 +1,14 @@
+private boolean dfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int node, int parent) {
+		vis[node] = true;
+		for(int adjecentNode : adj.get(node)) {
+			if(!vis[adjecentNode]) {
+				if(dfs(adj,vis,adjecentNode, node)) {// node is parent of adjecentNode
+					return true;
+				}
+			}
+			else if(parent != adjecentNode) {
+				return true;
+			}
+		}
+		return false;
+	}
