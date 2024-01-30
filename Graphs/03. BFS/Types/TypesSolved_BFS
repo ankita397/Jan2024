@@ -26,4 +26,7 @@ In practice, you can try both BFS and DFS for a specific problem and choose the 
     a. Number of Enclaves - Leetcode 1020 
     
     Tip : Call dfs for non-visited 1's on all 4 boundaries. Count the remaining non-visited 1's as they won't not be connected to boundary
-\\\
+
+5. Bipartite - Can be solved using BFS also 
+    a. BipartiteGraphBFS - GFG
+
