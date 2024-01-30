@@ -1,0 +1,22 @@
+private boolean detectCycle(ArrayList<ArrayList<Integer>> adjList,boolean[] vis, int src) {
+		Queue<Pair3> queue = new LinkedList<>();
+		queue.add(new Pair3(src, -1));//store source element and its parent = -1
+		vis[src] = true;// visited
+		
+		while(!queue.isEmpty()) {
+			int node = queue.peek().node;
+			int parent = queue.peek().parent;
+			queue.remove();
+			
+			for(Integer it:adjList.get(node)) {
+				if(vis[it] == false) {
+					vis[it] = true;
+					queue.add(new Pair3(it,node));
+				}else if(parent != it) {// if adjacent node is visited and is not its own parent node - this means it was visited by someone else.
+					//So its a repeating node, confirming a cycle
+					return true;
+				}
+			}
+		}
+		return false;
+	}
