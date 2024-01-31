@@ -1,0 +1,74 @@
+package com.practice.graph2.dfs;
+
+import java.util.ArrayList;
+import java.util.Stack;
+
+/*
+ * Topological sorting means linear ordering of vertices such that if there is an edge between two vertices u to v, 
+ * u appears before v in the linear order
+ * 
+ * Tip : Use stack to store the linear ordering
+ * 
+ * Time Complexity: O(V+E)+O(V), where V = no. of nodes and E = no. of edges. There can be at most V components. So, another O(V) 
+ * time complexity.
+ * Space Complexity: O(2N) + O(N) ~ O(2N): O(2N) for the visited array and the stack carried during DFS calls and O(N) for 
+ * recursive stack space, where N = no. of nodes.
+ */
+public class TopologicalSort {
+
+	public static void main(String[] args) {
+		int V = 6;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        adj.get(2).add(3);
+        adj.get(3).add(1);
+        adj.get(4).add(0);
+        adj.get(4).add(1);
+        adj.get(5).add(0);
+        adj.get(5).add(2);
+
+        int[] ans = TopologicalSort.topoSort(V, adj);
+        for (int node : ans) {
+            System.out.print(node + " ");
+        }
+        System.out.println("");
+	}
+
+	public static int[] topoSort(int v, ArrayList<ArrayList<Integer>> adj) {
+		int[] orderedArray = new int[v];
+		int[] vis = new int[v];
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		for(int i = 0; i < v; i++) {
+			if(vis[i] == 0) {
+				dfs(adj, vis, i, stack);// we need dfs to be run for all starting elements
+			}
+		}
+		
+		//LIFO - linear order we are looking for
+		//So put the elements by peeking from stack and put in the orderesArray
+		while(!stack.isEmpty()) {
+			for(int i = 0; i < v; i++) {
+				orderedArray[i] = stack.peek();
+				stack.pop();
+			}
+		}
+		
+		return orderedArray;
+	}
+
+	private static void dfs(ArrayList<ArrayList<Integer>> adj, int[] vis, int node, Stack<Integer> stack) {
+		vis[node] = 1;
+		
+		for(int it : adj.get(node)) {// we need all dfs to be run for all adj nodes
+			if(vis[it] == 0) {
+				dfs(adj, vis, it, stack);
+			}
+		}
+		// push the node to the stack when it has no more adj nodes to go over
+		stack.push(node);
+	}
+
+}
