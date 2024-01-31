@@ -1,0 +1,81 @@
+package com.practice.graph2.dfs;
+
+import java.util.ArrayList;
+
+
+/* GFG
+* Trick : vis[node] = 1 => visited but not in path
+* 			vis[node] = 2 => visited and in path  ==> cyclic
+* Time Complexity: O(V+E)+O(V) , where V = no. of nodes and E = no. of edges. There can be at most V components. 
+* So, another O(V) time complexity.
+* Space Complexity: O(2N) + O(N) ~ O(2N): O(2N) for two visited arrays and O(N) for recursive stack space.
+*/
+public class DetectCycleInDirectedGraph_DFS2 {
+
+	public static void main(String[] args) {
+		int V = 11;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        adj.get(1).add(2);
+        adj.get(2).add(3);
+        adj.get(3).add(4);
+        adj.get(3).add(7);
+        adj.get(4).add(5);
+        adj.get(5).add(6);
+        adj.get(7).add(5);
+        adj.get(8).add(9);
+        //adj.get(9).add(10);
+        //adj.get(10).add(8);
+        
+
+        DetectCycleInDirectedGraph_DFS2 obj = new DetectCycleInDirectedGraph_DFS2();
+        boolean ans = obj.isCyclic(V, adj);
+        if (ans)
+            System.out.println("True");
+        else
+            System.out.println("False");
+
+	}
+
+	public boolean isCyclic(int v, ArrayList<ArrayList<Integer>> adj) {
+        int[] vis = new int[v];
+		
+		boolean isCyclic = false;
+		for(int i = 0; i < v; i++) {// connected components
+			if(vis[i] == 0) {
+				isCyclic = dfsCheck(adj, vis, i);// starting
+					if(isCyclic == true) {
+						return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean dfsCheck(ArrayList<ArrayList<Integer>> adj, int[] vis, int node) {
+		vis[node] = 2;// mark each starting node as visited and in path
+		
+		boolean cycle = false;
+		
+		for(Integer it : adj.get(node)) {
+			if(vis[it] == 0) {
+				vis[it] = 2;// mark this the adjacent node to be in the path
+				cycle = dfsCheck(adj, vis, it);
+				if(cycle == true) {
+					return true;
+				}
+			}else if(vis[it] == 2) { // if the node has been previously visited 
+	            						 // it has to be visited on the same path - vis[it] == 2
+					return true;
+			}
+		}
+		
+		vis[node] = 1;// while backtracking, unmark the node to be in path but visited
+		
+		return false;
+	}
+
+}
