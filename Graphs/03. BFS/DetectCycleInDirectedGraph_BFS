@@ -1,0 +1,96 @@
+package com.practice.graph2.bfs;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * 
+ * Use topo sort - we know topo sort is valid only on DAGs
+ * Topo sort array has same number of elements as the number of vertices in the graph
+ * So,if we are able to form a topo sort array that has same number of elements as the number of vertices in the graph, there is no cycle 
+ * So,if we are not able to form a topo sort array that has same number of elements as the number of vertices in the graph, there is a cycle 
+ *
+ * instead of adding to topo sort array, we can just increment the count as that will be the length of the topo sort array
+ *
+ * Time Complexity: O(V+E), where V = no. of nodes and E = no. of edges. This is a simple BFS algorithm.
+ * Space Complexity: O(N) + O(N) ~ O(2N), O(N) for the in-degree array, and O(N) for the queue data structure used in 
+ * BFS(where N = no.of nodes).
+ */
+
+
+public class DetectCycleInDirectedGraph_BFS {
+
+	public static void main(String[] args) {
+        int V = 6;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        
+        adj.get(2).add(3);
+        adj.get(3).add(1);
+        adj.get(4).add(0);
+        adj.get(4).add(1);
+        adj.get(5).add(0);
+        adj.get(5).add(2);
+        
+//        adj.get(1).add(2);
+//        adj.get(2).add(3);
+//        adj.get(3).add(4);
+//        adj.get(3).add(5);
+//        adj.get(4).add(2);
+
+        boolean ans = DetectCycleInDirectedGraph_BFS.isCycle(V, adj);
+        
+        System.out.println(ans);
+    }
+
+	public static boolean isCycle(int v, ArrayList<ArrayList<Integer>> adj) {
+		int[] indegree = new int[v];
+		int count = 0;
+		
+		for(int i = 0; i < v; i++) {
+			for(int it : adj.get(i)) {
+				indegree[it]++;
+			}
+		}
+		
+		count = bfs(adj, indegree, v);
+		
+		if(count == v)
+			return false;
+		else
+			return true;
+	}
+
+	private static int bfs(ArrayList<ArrayList<Integer>> adj, int[] indegree, int v) {
+		Queue<Integer> queue = new LinkedList<>();
+		
+		for(int i = 0; i < v; i++) {
+			if(indegree[i] == 0) {
+				queue.add(i); // add all initial elements whose indegree is 0
+			}
+		}
+		
+		int count = 0;
+		while(!queue.isEmpty()) {
+			int node = queue.peek();
+			queue.remove();
+			
+			count++; // instead of adding to topo sort array, we can just increment the count as that will be the length of the topo sort array
+			
+			
+			//since the node is in the topo sort already, we need to remove it from the indegree array
+			for(int it : adj.get(node)) {
+				indegree[it]--;
+				if(indegree[it] == 0) {
+					queue.add(it);
+				}
+			}
+		}
+		
+		return count;
+	}
+
+}
