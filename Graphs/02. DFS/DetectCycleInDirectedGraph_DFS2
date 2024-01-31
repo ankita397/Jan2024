@@ -73,7 +73,7 @@ public class DetectCycleInDirectedGraph_DFS2 {
 			}
 		}
 		
-		vis[node] = 1;// while backtracking, unmark the node to be in path but visited
+		vis[node] = 1;// while backtracking, unmark the node to be in path but visited - it did not find a cycle yet
 		
 		return false;
 	}
