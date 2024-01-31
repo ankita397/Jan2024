@@ -1,0 +1,7 @@
+for(int i = 0; i < len; i++) {
+			if(!vis[i]) {
+				if(bfs(<params) {
+					return true;
+				}
+			}
+		}
