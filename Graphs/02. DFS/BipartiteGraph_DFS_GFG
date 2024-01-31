@@ -3,6 +3,7 @@ package com.practice.graph2.dfs;
 import java.util.ArrayList;
 /*
  * Both BFS and DFS can be used - connected components
+ * Bipartite Graph means no 2 adjacent nodes should have same color
  * Time Complexity: O(V + 2E), Where V = Vertices, 2E is for total degrees as we traverse all adjacent nodes.
  * Space Complexity: O(3V) ~ O(V), Space for DFS stack space, colour array and an adjacency list.
  */
