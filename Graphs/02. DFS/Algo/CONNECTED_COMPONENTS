@@ -1,0 +1,9 @@
+for(int i = 0; i < len; i++) {
+			if(vis[i] == false) {
+				if(dfs(<params>)) {// node is parent of adjecentNode
+					return true;
+				}
+			}
+		}
+
+
