@@ -1,0 +1,80 @@
+package com.practice.graph2.dfs;
+
+import java.util.ArrayList;
+/*
+ * GFG
+ * Trick : vis[node] == 1 and pathVis[node] == 1 ==> these 2 conditions should satisfy for a directed graph to be cyclic
+ * Time Complexity: O(V+E)+O(V) , where V = no. of nodes and E = no. of edges. There can be at most V components. 
+ * So, another O(V) time complexity.
+ * Space Complexity: O(2N) + O(N) ~ O(2N): O(2N) for two visited arrays and O(N) for recursive stack space.
+ */
+public class DetectCycleInDirectedGraph_DFS {
+
+	public static void main(String[] args) {
+		int V = 11;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        adj.get(1).add(2);
+        adj.get(2).add(3);
+        adj.get(3).add(4);
+        adj.get(3).add(7);
+        adj.get(4).add(5);
+        adj.get(5).add(6);
+        adj.get(7).add(5);
+        adj.get(8).add(9);
+        adj.get(9).add(10);
+        adj.get(10).add(8);
+        
+
+        DetectCycleInDirectedGraph_DFS obj = new DetectCycleInDirectedGraph_DFS();
+        boolean ans = obj.isCyclic(V, adj);
+        if (ans)
+            System.out.println("True");
+        else
+            System.out.println("False");
+
+	}
+
+	public boolean isCyclic(int v, ArrayList<ArrayList<Integer>> adj) {
+        int[] vis = new int[v];
+		int pathVis[] = new int[v];
+		
+		boolean isCyclic = false;
+		for(int i = 0; i < v; i++) {// connected components
+			if(vis[i] == 0) {
+				isCyclic = dfsCheck(adj, vis, i, pathVis);
+					if(isCyclic == true) {
+						return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+
+	private boolean dfsCheck(ArrayList<ArrayList<Integer>> adj, int[] vis, int node, int[] pathVis) {
+		vis[node] = 1;
+		pathVis[node] = 1;
+		
+		boolean cycle = false;
+		
+		for(Integer it : adj.get(node)) {
+			if(vis[it] == 0) {
+				cycle = dfsCheck(adj, vis, it, pathVis);
+				if(cycle == true) {
+					return true;
+				}
+			}else if(pathVis[it] == 1) { // if the node has been previously visited - vis[it] == 1
+	            						 // it has to be visited on the same path - pathVis[it] == 1
+					return true;
+			}
+		}
+		
+		pathVis[node] = 0;// mark path visited = 0 while returning to each node
+		
+		return false;
+	}
+
+}
