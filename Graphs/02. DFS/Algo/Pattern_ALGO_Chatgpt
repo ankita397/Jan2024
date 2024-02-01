@@ -1,0 +1,143 @@
+ist main dfs pattern codes
+ChatGPT
+Certainly! Here are some main DFS (Depth-First Search) patterns with corresponding code snippets:
+
+Standard DFS on Graph:
+
+Basic DFS traversal on a graph.
+java
+Copy code
+boolean[] visited = new boolean[numNodes];
+
+for (int i = 0; i < numNodes; i++) {
+    if (!visited[i]) {
+        dfs(i, visited, adjacencyList);
+    }
+}
+
+private static void dfs(int node, boolean[] visited, List<List<Integer>> adjacencyList) {
+    visited[node] = true;
+
+    for (int neighbor : adjacencyList.get(node)) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, visited, adjacencyList);
+        }
+    }
+}
+Connected Components in an Undirected Graph:
+
+DFS to find connected components in an undirected graph.
+java
+Copy code
+List<List<Integer>> connectedComponents = new ArrayList<>();
+boolean[] visited = new boolean[numNodes];
+
+for (int i = 0; i < numNodes; i++) {
+    if (!visited[i]) {
+        List<Integer> component = new ArrayList<>();
+        dfs(i, visited, adjacencyList, component);
+        connectedComponents.add(component);
+    }
+}
+
+private static void dfs(int node, boolean[] visited, List<List<Integer>> adjacencyList, List<Integer> component) {
+    visited[node] = true;
+    component.add(node);
+
+    for (int neighbor : adjacencyList.get(node)) {
+        if (!visited[neighbor]) {
+            dfs(neighbor, visited, adjacencyList, component);
+        }
+    }
+}
+Topological Sorting in a Directed Acyclic Graph (DAG):
+
+DFS to perform topological sorting in a DAG.
+java
+Copy code
+Stack<Integer> stack = new Stack<>();
+boolean[] visited = new boolean[numNodes];
+
+for (int i = 0; i < numNodes; i++) {
+    if (!visited[i]) {
+        topologicalSort(i, visited, adjacencyList, stack);
+    }
+}
+
+private static void topologicalSort(int node, boolean[] visited, List<List<Integer>> adjacencyList, Stack<Integer> stack) {
+    visited[node] = true;
+
+    for (int neighbor : adjacencyList.get(node)) {
+        if (!visited[neighbor]) {
+            topologicalSort(neighbor, visited, adjacencyList, stack);
+        }
+    }
+
+    stack.push(node);
+}
+Detecting Cycle in a Directed Graph:
+
+DFS to detect a cycle in a directed graph.
+java
+Copy code
+boolean[] visited = new boolean[numNodes];
+boolean[] recursionStack = new boolean[numNodes];
+
+for (int i = 0; i < numNodes; i++) {
+    if (!visited[i] && hasCycle(i, visited, recursionStack, adjacencyList)) {
+        System.out.println("Graph contains a cycle");
+        return;
+    }
+}
+
+private static boolean hasCycle(int node, boolean[] visited, boolean[] recursionStack, List<List<Integer>> adjacencyList) {
+    visited[node] = true;
+    recursionStack[node] = true;
+
+    for (int neighbor : adjacencyList.get(node)) {
+        if (!visited[neighbor]) {
+            if (hasCycle(neighbor, visited, recursionStack, adjacencyList)) {
+                return true;
+            }
+        } else if (recursionStack[neighbor]) {
+            return true;
+        }
+    }
+
+    recursionStack[node] = false;
+    return false;
+}
+Path Finding in a Graph:
+
+DFS to find a path between two nodes in a graph.
+java
+Copy code
+boolean[] visited = new boolean[numNodes];
+List<Integer> path = new ArrayList<>();
+
+if (dfsPath(source, destination, visited, adjacencyList, path)) {
+    System.out.println("Path found: " + path);
+} else {
+    System.out.println("Path not found");
+}
+
+private static boolean dfsPath(int current, int destination, boolean[] visited, List<List<Integer>> adjacencyList, List<Integer> path) {
+    visited[current] = true;
+    path.add(current);
+
+    if (current == destination) {
+        return true;
+    }
+
+    for (int neighbor : adjacencyList.get(current)) {
+        if (!visited[neighbor]) {
+            if (dfsPath(neighbor, destination, visited, adjacencyList, path)) {
+                return true;
+            }
+        }
+    }
+
+    path.remove(path.size() - 1);
+    return false;
+}
+These are some common DFS patterns used in various graph-related problems. Adapt these patterns to fit the specific requirements of your problem.
