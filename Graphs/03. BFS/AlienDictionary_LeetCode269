@@ -9,12 +9,23 @@ import java.util.Queue;
  * Add an edge when you find a difference + break; - then call topo sort
  * Store as integer instead of character - s1.charAt(ptr) - 'a'
  * 
+ * invalid scanario 1 - first word is longer than second and they have same prefix
+ * invalid scanario 2 - if its not a proper topo sort - it means has cycle - return empty list - invalid
+ * 
  */
 public class AlienDictionary {
 
 	public static void main(String[] args) {
 		int N = 5, K = 4;
         String[] dict = {"baa", "abcd", "abca", "cab", "cad"};
+		
+//		invalid scenario - 1 		
+//		int N = 2, K = 2;
+//		String[] dict = {"abcd", "abc"};
+		
+//		invalid scenario - 2		
+//		int N = 3, K = 2;
+//		String[] dict = {"abc", "bat", "ade"};
         AlienDictionary obj = new AlienDictionary();
         String ans = obj.findOrder(dict, N, K);
 
@@ -31,12 +42,17 @@ public class AlienDictionary {
 		for(int i = 0; i < k; i++) {
 			adjList.add(new ArrayList<Integer>());
 		}
-		
 		for(int i = 0; i < n - 1; i++) {
 			String s1 = dict[i];
 			String s2 = dict[i+1];
 			
 			int len = Math.min(s1.length(),s2.length());
+
+			//edge case - first word is longer than second and they have same prefix - this means its a  - invalid ordering
+			if(s1.length() > s2.length() && s1.startsWith(s2)) {
+				System.out.println("here");
+				return "invalid";
+			}
 			
 			for (int ptr = 0; ptr < len; ptr++) {
                 if (s1.charAt(ptr) != s2.charAt(ptr)) {
@@ -61,6 +77,10 @@ public class AlienDictionary {
 			res = res + (char)(it + (int)'a');
 		}
 		
+		if("".equalsIgnoreCase(res)) {
+			return "invalid";
+		}
+		
 		return res;
 	}
 
@@ -81,7 +101,6 @@ public class AlienDictionary {
 	}
 
 	private ArrayList<Integer> bfs(ArrayList<ArrayList<Integer>> adjList, int k, int[] indegree) {
-		System.out.println("here");
 		ArrayList<Integer> orderedList = new ArrayList<>();
 		
 		Queue<Integer> queue = new LinkedList<>();
@@ -93,7 +112,6 @@ public class AlienDictionary {
 		
 		while(!queue.isEmpty()) {
 			int node = queue.peek();
-			System.out.println(node);
 			queue.remove();
 			
 			orderedList.add(node);
@@ -106,7 +124,14 @@ public class AlienDictionary {
 				}
 			}
 		}
-		return orderedList;
+		
+		//if its a proper topo sort - it means does not have cycle - valid
+		if(orderedList.size() == k)
+			return orderedList;
+		
+		//if its not a proper topo sort - it means has cycle - return empty list - invalid
+		ArrayList<Integer> arr = new ArrayList<>();    
+        return arr;     
 	}
 
 }
