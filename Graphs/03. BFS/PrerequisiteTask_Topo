@@ -1,0 +1,93 @@
+package com.practice.graph2.bfs;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Same as Topological sort bfs
+ * 
+ * 
+ */
+public class PrerequisiteTask_Topo {
+
+	public static void main(String[] args) {
+//		int N = 4, P = 3;
+//		
+//        int[][] prerequisites =  {
+//					        		{1,0},
+//					        		{2,1},
+//					        		{3,2}
+//					        	};
+        
+        int N = 2, P = 2;
+        int[][] prerequisites ={{1,0},{0,1}};
+        
+        PrerequisiteTask_Topo prereq = new PrerequisiteTask_Topo();
+        boolean res = prereq.isPossible(N, P, prerequisites);
+        if(res == true) {
+        	System.out.println("Yes");
+        }else {
+        	System.out.println("No");
+        }
+        
+	}
+	
+	public boolean isPossible(int N,int P, int[][] prerequisites)
+    {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0; i < N; i++){
+            adj.add(new ArrayList<Integer>());
+        }
+        
+        int m = prerequisites.length;
+        
+        for(int i = 0; i < m; i++){
+            adj.get(prerequisites[i][0]).add(prerequisites[i][1]);
+        }
+        
+        int[] indegree = new int[N];
+        for(int i = 0; i < N; i++){
+            for(int it:adj.get(i)){
+                indegree[it]++;
+            }
+        }
+        
+        int count = 0;
+        
+        count = bfs(adj,indegree,N);
+        
+        if(count == N)
+            return true;
+        else
+            return false;
+    }
+    
+    private int bfs(ArrayList<ArrayList<Integer>> adj, int[] indegree, int N){
+        Queue<Integer> queue = new LinkedList();
+        
+        for(int i = 0; i < N; i++){
+            if(indegree[i] == 0){
+                queue.add(i);
+            }   
+        }
+        
+        int count = 0;
+        while(!queue.isEmpty()){
+            int node = queue.peek();
+            queue.remove();
+            count++;
+            
+            for(int it:adj.get(node)){
+                indegree[it]--;
+                if(indegree[it] == 0){
+                    queue.add(it);
+                }   
+            }
+        }
+            
+        return count;        
+        
+    }
+
+}
