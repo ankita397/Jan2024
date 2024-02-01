@@ -1,0 +1,131 @@
+list main bfs pattern codes
+
+ChatGPT
+Breadth-First Search (BFS) can be applied to various problems using different patterns. Here are some main BFS patterns and corresponding code snippets:
+
+Standard BFS on Graph:
+
+Basic BFS traversal on a graph.
+java
+Copy code
+Queue<Integer> queue = new LinkedList<>();
+boolean[] visited = new boolean[numNodes];
+
+queue.offer(startNode);
+visited[startNode] = true;
+
+while (!queue.isEmpty()) {
+    int current = queue.poll();
+
+    for (int neighbor : adjacencyList.get(current)) {
+        if (!visited[neighbor]) {
+            visited[neighbor] = true;
+            queue.offer(neighbor);
+        }
+    }
+}
+Shortest Path in Unweighted Graph:
+
+BFS to find the shortest path in an unweighted graph.
+java
+Copy code
+Queue<Integer> queue = new LinkedList<>();
+boolean[] visited = new boolean[numNodes];
+int[] distance = new int[numNodes];
+
+queue.offer(startNode);
+visited[startNode] = true;
+distance[startNode] = 0;
+
+while (!queue.isEmpty()) {
+    int current = queue.poll();
+
+    for (int neighbor : adjacencyList.get(current)) {
+        if (!visited[neighbor]) {
+            visited[neighbor] = true;
+            distance[neighbor] = distance[current] + 1;
+            queue.offer(neighbor);
+        }
+    }
+}
+Connected Components in an Undirected Graph:
+
+BFS to find connected components in an undirected graph.
+java
+Copy code
+List<List<Integer>> connectedComponents = new ArrayList<>();
+boolean[] visited = new boolean[numNodes];
+
+for (int i = 0; i < numNodes; i++) {
+    if (!visited[i]) {
+        List<Integer> component = new ArrayList<>();
+        bfs(adjacencyList, i, visited, component);
+        connectedComponents.add(component);
+    }
+}
+
+private static void bfs(List<List<Integer>> adjacencyList, int start, boolean[] visited, List<Integer> component) {
+    // Similar to standard BFS with modification to collect components
+}
+Topological Sorting in a Directed Acyclic Graph (DAG):
+
+BFS to perform topological sorting in a DAG.
+java
+Copy code
+List<Integer> topologicalSort(List<List<Integer>> adjacencyList, int numNodes) {
+    int[] inDegree = new int[numNodes];
+    Queue<Integer> queue = new LinkedList<>();
+    List<Integer> result = new ArrayList<>();
+
+    // In-degree calculation
+
+    for (int i = 0; i < numNodes; i++) {
+        if (inDegree[i] == 0) {
+            queue.offer(i);
+        }
+    }
+
+    while (!queue.isEmpty()) {
+        int current = queue.poll();
+        result.add(current);
+
+        for (int neighbor : adjacencyList.get(current)) {
+            if (--inDegree[neighbor] == 0) {
+                queue.offer(neighbor);
+            }
+        }
+    }
+
+    return result;
+}
+Bipartite Graph Checking:
+
+BFS to check if a graph is bipartite.
+java
+Copy code
+boolean isBipartite(List<List<Integer>> adjacencyList, int numNodes) {
+    int[] colors = new int[numNodes];
+    Queue<Integer> queue = new LinkedList<>();
+
+    for (int i = 0; i < numNodes; i++) {
+        if (colors[i] == 0) {
+            queue.offer(i);
+
+            while (!queue.isEmpty()) {
+                int current = queue.poll();
+
+                for (int neighbor : adjacencyList.get(current)) {
+                    if (colors[neighbor] == 0) {
+                        colors[neighbor] = -colors[current];
+                        queue.offer(neighbor);
+                    } else if (colors[neighbor] == colors[current]) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    return true;
+}
+These are some common BFS patterns used in various graph-related problems. Adapt these patterns to fit the specific requirements of your problem.
