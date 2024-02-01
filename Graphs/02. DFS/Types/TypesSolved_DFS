@@ -30,3 +30,9 @@ In practice, you can try both BFS and DFS for a specific problem and choose the 
 
 5. Bipartite - Can be solved using BFS also 
     a. BipartiteGraphDFS - GFG
+
+6. DetectCycleInDirectedGraph
+    a. DetectCycleInDirectedGraph_DFS
+
+7. Topological Sort
+    a. TopologicalSort
