@@ -1,0 +1,89 @@
+package com.practice.graph2.bfs;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+/*
+ * Simple BFS
+ * Distance Relaxation - if(dist[node] + 1 < dist[it]) then  dist[it] = dist[node] + 1; 
+ * dist[node] = current node and dist[it] = current node's adjacent nodes            
+ * 
+ */
+public class ShortestPartInUndirectedUnitWtGraph {
+
+	public static void main(String[] args) {
+		int[][] edges = {
+							{0,1},
+							{0,3},
+							{3,4},
+							{4,5},
+							{5,6},
+							{1,2},
+							{2,6},
+							{6,7},
+							{7,8},
+							{6,8}
+						};
+		
+		int n = 9, m = 10, src = 0;
+		
+		ShortestPartInUndirectedUnitWtGraph shortestPath = new ShortestPartInUndirectedUnitWtGraph();
+		
+		int[] dist = shortestPath.shortestPath(edges, n, m, src);
+		
+		for(int i = 0; i < n; i++) {
+			System.out.print(dist[i]+ " ");
+		}
+		System.out.println();
+	}
+	
+	public int[] shortestPath(int[][] edges,int n,int m ,int src) {
+        ArrayList<ArrayList<Integer>> adjList = new ArrayList<ArrayList<Integer>>();
+        for(int i = 0; i < n; i++){
+            adjList.add(new ArrayList<Integer>());
+        }
+        
+        for(int i = 0; i < m; i++){
+        	System.out.println(edges[i][1]);
+            adjList.get(edges[i][0]).add(edges[i][1]);
+            adjList.get(edges[i][1]).add(edges[i][0]);
+        }
+        
+        //A dist array of size N initialised with a large number to 
+        //indicate that initially all the nodes are untraversed. 
+        int[] dist = new int[n];
+        
+        for(int i = 0; i < n; i++){
+            dist[i] = (int)1e9;
+        }
+        
+        Queue<Integer> queue = new LinkedList();
+        
+        dist[src] = 0; //distance of source to itself is 0
+        
+        queue.add(src);
+        
+        while(!queue.isEmpty()){
+            int node = queue.peek();
+            queue.remove();
+            
+            for(int it : adjList.get(node)){
+                if(dist[node] + 1 < dist[it]){//dist[node] = current node 
+                            //and dist[it] = current node's adjacent nodes
+                    dist[it] = dist[node] + 1;
+                    queue.add(it);
+                }
+            }
+            // Updated shortest distances are stored in the resultant array ‘ans’.
+            // Unreachable nodes are marked as -1. 
+        }
+        for(int i = 0; i < n; i++){
+            if(dist[i] == 1e9){
+                dist[i] = -1;
+            }
+        }
+        return dist;
+    }
+
+}
