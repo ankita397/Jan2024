@@ -6,6 +6,7 @@ import java.util.Queue;
 
 /*
  * Simple BFS - for unit weight
+ * adjList - stores adjacent nodes a to b and b to a
  * Distance Relaxation - if(dist[node] + 1 < dist[it]) then  dist[it] = dist[node] + 1; 
  * dist[node] = current node and dist[it] = current node's adjacent nodes            
  * 
@@ -46,7 +47,7 @@ public class ShortestPartInUndirectedUnitWtGraph {
         
         for(int i = 0; i < m; i++){
         	System.out.println(edges[i][1]);
-            adjList.get(edges[i][0]).add(edges[i][1]);//store edge from firdt to second and from second to first as its undirected
+            adjList.get(edges[i][0]).add(edges[i][1]);//store edge from firdt to second and from second to first as its undirected for each row
             adjList.get(edges[i][1]).add(edges[i][0]);
         }
         
