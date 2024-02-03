@@ -1,0 +1,108 @@
+package com.practice.graph2.dijkstra;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+/*
+ * Using Priority Queue
+ * Time Complexity: O( E log(V) ), Where E = Number of edges and V = Number of Nodes.
+ * Space Complexity: O( |E| + |V| ), Where E = Number of edges and V = Number of Nodes.
+ */
+public class Dijkstra_PQ {
+
+	public static void main(String[] args) {
+		int v = 3; int s = 2;
+		ArrayList<ArrayList<ArrayList<Integer>>> adjacencyList = new ArrayList();
+		
+		for(int i = 0; i < 3; i++) {
+			adjacencyList.add(new ArrayList<>());
+		}
+		
+		addEdge(adjacencyList, 0, 1, 1);
+        addEdge(adjacencyList, 0, 2, 6);
+        addEdge(adjacencyList, 1, 2, 3);
+        
+        
+        for (int i = 0; i < adjacencyList.size(); i++) {
+            System.out.print("Node " + i + ": ");
+            for (ArrayList<Integer> edge : adjacencyList.get(i)) {
+                System.out.print("(" + edge.get(0) + ", " + edge.get(1) + ") ");
+            }
+            System.out.println();
+        }
+	        
+      //add final values of adj here.
+        Dijkstra_PQ obj = new Dijkstra_PQ();
+        int[] res= obj.dijkstra(v,adjacencyList,s);
+        
+        for(int i=0;i<v;i++){
+            System.out.print(res[i]+" ");
+        }
+        System.out.println();
+        
+        }
+	public int[] dijkstra(int v, ArrayList<ArrayList<ArrayList<Integer>>> adjacencyList, int s) {
+		
+		// Create a priority queue for storing the nodes as a pair {dist, node} - min heap
+        // where dist is the distance from source to the node.  
+		PriorityQueue<Pair> pq = new PriorityQueue<Pair>((x,y) -> x.distance - y.distance);
+
+		
+		int[] dist = new int[v];
+		
+		// Initialising dist To list with a large number to
+        // indicate the nodes are unvisited initially.
+        // This list contains distance from source to the nodes.
+		for(int i = 0; i < v; i++) {
+			dist[i] = Integer.MAX_VALUE;
+		}
+		
+		dist[s] = 0;// source to source dist is 0
+		pq.add(new Pair(0, s));
+		
+		// Now, pop the minimum distance node first from the min-heap
+        // and traverse for all its adjacent nodes.
+		while(!pq.isEmpty()) {
+			int distance = pq.peek().distance;
+			int node = pq.peek().node;
+			pq.remove();
+		
+			// Check for all adjacent nodes of the popped out
+            // element whether the prev dist is larger than current or not.
+			for(int i = 0; i < adjacencyList.get(node).size(); i++) {
+				int adjNode = adjacencyList.get(node).get(i).get(0);
+				int adjNodeEdgeWt = adjacencyList.get(node).get(i).get(1);
+				
+				// If current distance is smaller,
+                // push it into the queue.
+				if(distance + adjNodeEdgeWt < dist[adjNode]) {
+					dist[adjNode] = distance + adjNodeEdgeWt;
+					pq.add(new Pair(dist[adjNode], adjNode));
+				}
+			}
+		}
+		// Return the list containing shortest distances
+        // from source to all the nodes.
+		return dist;
+	}
+	
+
+	private static void addEdge(ArrayList<ArrayList<ArrayList<Integer>>> adjacencyList, int source, int destination, int weight) {
+		ArrayList<Integer> edge = new ArrayList<>(Arrays.asList(destination, weight));
+        adjacencyList.get(source).add(edge);
+        // Assuming the graph is undirected
+        ArrayList<Integer> reverseEdge = new ArrayList<>(Arrays.asList(source, weight));
+        adjacencyList.get(destination).add(reverseEdge);
+	}
+	
+	
+
+}
+class Pair{
+    int node;
+    int distance;
+    public Pair(int distance,int node){
+        this.node = node;
+        this.distance = distance;
+    }
+}
