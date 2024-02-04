@@ -1,0 +1,49 @@
+Tricks to remember above algorithms
+ChatGPT
+Remembering algorithms can be challenging, but here are some tricks and mnemonics that might help you recall the key concepts and steps for the graph algorithms mentioned:
+
+Depth-First Search (DFS):
+Mnemonic: "Deepest Friends Swim"
+Deep-first traversal.
+Explore as Far as possible.
+Use a Stack or recursion.
+Breadth-First Search (BFS):
+Mnemonic: "Breadth Comes First"
+Explore all Branches at the current level before moving on to the next.
+Use a Queue.
+Cycle Detection (DFS):
+Mnemonic: "Cycle in a Circular Dance"
+DFS can identify a cycle in a graph.
+If a vertex is visited and not the parent, there's a cycle.
+Topological Sorting:
+Mnemonic: "Dig, Find, and Stack"
+Dig into dependencies.
+Find nodes with no incoming edges (sources).
+Stack the result.
+Connected Components (DFS):
+Mnemonic: "DFS Connects Components"
+DFS is commonly used to find connected components.
+Shortest Path (Unweighted):
+Mnemonic: "BFS Finds Shortcuts"
+Use BFS to find the shortest path in an unweighted graph.
+Shortest Path (Weighted):
+Mnemonic: "Dijk" sounds like "Deek" (Seek)
+Dijkstra's Algorithm: Seek the shortest path.
+Minimum Spanning Tree:
+Mnemonic: "Kru Prim"
+Kruskal's Algorithm: Sort edges by weight (like a Krusader).
+Prim's Algorithm: Pick a Primary vertex.
+Eulerian Path and Circuit:
+Mnemonic: "Euler's Journey"
+Eulerian Path/Circuit traverses all edges exactly once.
+Bipartite Graph:
+Mnemonic: "Bipartite - Two Parts"
+Use BFS or DFS to check if a graph is bipartite.
+Maximum Flow:
+Mnemonic: "Flow Like a Ford Truck"
+Ford-Fulkerson Algorithm: Flow like a Ford truck (Ford sounds like flow).
+Network Flow Problems:
+Mnemonic: "Matching Mixes, Flows Flick"
+Matching Problems: Focus on pairs.
+Flow Problems: Focus on maximizing/minimizing flow.
+These mnemonics are designed to provide quick associations with the algorithms and their key concepts. You may create your own mnemonics or memory aids based on these examples, tailoring them to suit your learning style. Additionally, practicing with sample problems and visualizing the algorithm steps can reinforce your understanding and make it easier to remember.
