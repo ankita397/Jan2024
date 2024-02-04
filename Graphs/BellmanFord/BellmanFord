@@ -1,0 +1,81 @@
+package com.practice.graph2.bellmanford;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+/*
+ * Bellman ford - Shortest distance - It works fine with negative edges as well as it is able to detect if the graph contains a negative cycle
+ * In this algorithm, the edges can be given in any order. The intuition is to relax all the edges for N-1( N = no. of nodes) times sequentially. 
+ * After N-1 iterations, we should have minimized the distance to every node.(N-1 iterations as we i=0 iteration helps update node1, 
+ * i=1 iteration helps update node 2, i=2 iteration helps update node 2 and so on till i = N-1 iteration helps update node N.(explanation in
+ * Striver's graph series)
+ * //Nth iteration - needed only to check for negative cycles
+ * 
+ * Time Complexity: O(V*E), where V = no. of vertices and E = no. of Edges.
+ * Space Complexity: O(V) for the distance array which stores the minimized distances.
+ */
+public class BellmanFord {
+
+	public static void main(String[] args) {
+		int V = 6;
+        int S = 0;
+        ArrayList<ArrayList<Integer>> edges = new ArrayList<>() {
+            {
+                add(new ArrayList<Integer>(Arrays.asList(3, 2, 6)));
+                add(new ArrayList<Integer>(Arrays.asList(5, 3, 1)));
+                add(new ArrayList<Integer>(Arrays.asList(0, 1, 5)));
+                add(new ArrayList<Integer>(Arrays.asList(1, 5, -3)));
+                add(new ArrayList<Integer>(Arrays.asList(1, 2, -2)));
+                add(new ArrayList<Integer>(Arrays.asList(3, 4, -2)));
+                add(new ArrayList<Integer>(Arrays.asList(2, 4, 3)));
+            }
+        };
+
+
+
+        int[] dist = BellmanFord.bellman_ford(V, edges, S);
+        for (int i = 0; i < V; i++) {
+            System.out.print(dist[i] + " ");
+        }
+        System.out.println("");
+
+	}
+
+	public static int[] bellman_ford(int v, ArrayList<ArrayList<Integer>> edges, int s) {
+		int dist[] = new int[v];
+				
+		for(int i = 0; i < v; i++) {
+			dist[i] = (int)1e8;
+		}
+		dist[s] = 0;
+
+		
+		//0 to N-1 iiterations - N-1 iterations are needed for bellman ford
+		for(int i = 0; i < v-1; i++) {			
+			for(ArrayList<Integer> it : edges) {
+				int first = it.get(0);
+				int second = it.get(1);
+				int weight = it.get(2);
+				
+				if(dist[first] != (int)1e8 && dist[first] + weight < dist[second]) {
+					dist[second] = dist[first] + weight;
+				}
+			}
+		}
+		
+		//Nth iteration - needed only to check for negative cycles
+		for(ArrayList<Integer> it : edges) {
+			int first = it.get(0);
+			int second = it.get(1);
+			int weight = it.get(2);
+			
+			if(dist[first] != (int)1e8 && dist[first] + weight < dist[second]) {
+				int negDist[] = new int[1];
+				negDist[1] = -1;
+				return negDist;
+			}
+		}
+		
+		return dist;
+	}
+
+}
