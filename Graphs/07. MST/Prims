@@ -2,7 +2,7 @@ package com.practice.graph2.mst;
 
 import java.util.PriorityQueue;
 /*
- * PQ is used
+ * PQ is used - GFG
  * 
  * 
  * Time Complexity: O(E*logE) + O(E*logE)~ O(E*logE), where E = no. of given edges.
