@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /*
- * Disjoint set is used
+ * Disjoint set is used - GFG
  * 
  * Time Complexity: O(N+E) + O(E logE) + O(E*4α*2)   where N = no. of nodes and E = no. of edges. 
  * O(N+E) for extracting edge information from the adjacency list. O(E logE) for sorting the array consists of the edge tuples. 
