@@ -1,0 +1,178 @@
+package com.practice.graph2.mst;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/*
+ * Disjoint set is used
+ * 
+ * Time Complexity: O(N+E) + O(E logE) + O(E*4α*2)   where N = no. of nodes and E = no. of edges. 
+ * O(N+E) for extracting edge information from the adjacency list. O(E logE) for sorting the array consists of the edge tuples. 
+ * Finally, we are using the disjoint set operations inside a loop. The loop will continue to E times. 
+ * Inside that loop, there are two disjoint set operations like findUPar() and UnionBySize() each taking 4 and so it will result in 4*2.
+ * That is why the last term O(E*4*2) is added.
+ * 
+ * 
+ * Space Complexity: O(N) + O(N) + O(E) where E = no. of edges and N = no. of nodes. O(E) space is taken by the array that we are using 
+ * to store the edge information. And in the disjoint set data structure, we are using two N-sized arrays i.e. a parent and a size array 
+ * (as we are using unionBySize() function otherwise, a rank array of the same size if unionByRank() is used) which result in the first two 
+ * terms O(N).
+ * 
+ */
+public class Krusjkals_MST {
+
+	public static void main(String[] args) {
+		int V = 5;
+        ArrayList<ArrayList<ArrayList<Integer>>> adj = new ArrayList<ArrayList<ArrayList<Integer>>>();
+        int[][] edges =  {{0, 1, 2}, {0, 2, 1}, {1, 2, 1}, {2, 3, 2}, {3, 4, 1}, {4, 2, 2}};
+
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<ArrayList<Integer>>());
+        }
+
+        for (int i = 0; i < 6; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            int w = edges[i][2];
+
+            ArrayList<Integer> tmp1 = new ArrayList<Integer>();
+            ArrayList<Integer> tmp2 = new ArrayList<Integer>();
+            tmp1.add(v);
+            tmp1.add(w);
+
+            tmp2.add(u);
+            tmp2.add(w);
+
+            adj.get(u).add(tmp1);
+            adj.get(v).add(tmp2);
+        }
+
+        Krusjkals_MST obj = new Krusjkals_MST();
+        int mstWt = obj.spanningTree(V, adj);
+        System.out.println("The sum of all the edge weights: " + mstWt);
+
+    }
+
+	public int spanningTree(int v, ArrayList<ArrayList<ArrayList<Integer>>> adj) {
+		List<Edge> edges = new ArrayList<Edge>();
+		
+		// go across all nodes to add the edges
+		for(int i = 0; i < v; i++) {
+			//traverse across the adj list
+			for(int j = 0; j < adj.get(i).size(); j++) {
+				int adjNode = adj.get(i).get(j).get(0);
+				int wt = adj.get(i).get(j).get(1);
+				int node = i;
+				
+				edges.add(new Edge(node, adjNode, wt));// add the edge
+			}
+			
+		}
+		
+		Collections.sort(edges);
+		
+		DisjointSet ds = new DisjointSet(v);
+		
+		int mstWt = 0;
+		
+		for(int i = 0; i < edges.size(); i++) {// go across all edges
+			int wt = edges.get(i).weight;
+			int src = edges.get(i).source;
+			int dest = edges.get(i).dest;
+			
+			if(ds.findUltimateParent(src) != ds.findUltimateParent(dest)) {// src and dest belong to different component
+				mstWt = mstWt + wt;//add to mst wt
+				ds.unionBySize(src, dest);// or unionByRank
+			}
+		}
+		
+		return mstWt;
+	}
+	
+
+}
+
+class Edge implements Comparable<Edge>{
+	int source;
+	int dest;
+	int weight;
+	
+	Edge(int source, int dest, int weight){
+		this.source = source;
+		this.dest = dest;
+		this.weight = weight;
+	}
+	
+	// Comparator function used for
+    // sorting edges based on their weight
+    public int compareTo(Edge compareEdge) {
+        return this.weight - compareEdge.weight;
+    }
+	
+}
+
+class DisjointSet {
+
+	List<Integer> rank = new ArrayList<>(); 
+	List<Integer> parent = new ArrayList<>(); 
+	List<Integer> size = new ArrayList<>(); 
+	
+	public DisjointSet(int n) {
+		for(int i = 0; i < n+1; i++) {// run till n+1 as it works for both 0 based and 1 based indexing
+			rank.add(0);// initially all nodes will have rank 0
+			parent.add(i);// initially all nodes will have parent itself
+			size.add(1);// initially all nodes will have size 1
+		}
+	}
+	
+	
+	public int findUltimateParent(int node) {
+		if(node == parent.get(node)) {// id node == parent of itself - return the node as it is the ultimate parent of itself
+			return node;
+		}else {
+			int ultPar = findUltimateParent(parent.get(node));// go to node's parent and recursively check for node's parent, it's parent's parent etc
+			parent.set(node, ultPar);// path compression - set all children node's parent as the ultimate parent to reduce path to ultimate parent
+			return parent.get(node);
+		}
+	}
+	
+	void unionBySize(int u, int v) {
+		int ultPar_u = findUltimateParent(u);
+		int ultPar_v = findUltimateParent(v);
+		
+		if(ultPar_u == ultPar_v) {// if both nodes u and v are belonging to the same component
+			return;
+		}
+		if(size.get(ultPar_u) < size.get(ultPar_v)) {
+			//smaller rank node gets attached to the greater rank node - so here set ultimate parent of u to ultimate parent of v
+			parent.set(ultPar_u, ultPar_v);
+			size.set(ultPar_v, size.get(ultPar_v) + size.get(ultPar_u));
+		}else {
+			//if both have same rank then they can be attached either way
+			parent.set(ultPar_v, ultPar_u);// or parent.set(ultPar_u, ultPar_v);
+			size.set(ultPar_u, size.get(ultPar_u) + size.get(ultPar_v));//increment the rank of parent for this buy size of smaller as its rank changes
+		}
+	}
+	
+	void unionByRank(int u, int v) {
+		int ultPar_u = findUltimateParent(u);
+		int ultPar_v = findUltimateParent(v);
+		
+		if(ultPar_u == ultPar_v) {// if both nodes u and v are belonging to the same component
+			return;
+		}
+		if(rank.get(ultPar_u) < rank.get(ultPar_v)) {
+			//smaller rank node gets attached to the greater rank node - so here set ultimate parent of u to ultimate parent of v
+			parent.set(ultPar_u, ultPar_v);
+		}else if(rank.get(ultPar_v) < rank.get(ultPar_u)) {
+			//here set ultimate parent of u to ultimate parent of v
+			parent.set(ultPar_v, ultPar_u);
+		}else {
+			//if both have same rank then they can be attached either way
+			parent.set(ultPar_v, ultPar_u);// or parent.set(ultPar_u, ultPar_v);
+			rank.set(ultPar_u, rank.get(ultPar_u)+1);//increment the rank of parent for this by 1 as its rank changes
+		}
+	}
+		
+}
