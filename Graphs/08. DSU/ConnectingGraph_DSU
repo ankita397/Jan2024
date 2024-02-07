@@ -1,0 +1,47 @@
+package com.practice.graph2.disjointset;
+
+public class ConnectingGraph_DSU {
+
+	public static void main(String[] args) {
+//		int n = 4;
+//		int[][] edge = { {0, 1} , {0, 2} , {1, 2} };
+		
+		int n = 6;
+		int[][] edge = {{0,1} ,{0,2} , {0,3} , {1,2} , {1,3}};
+
+		ConnectingGraph_DSU connect = new ConnectingGraph_DSU();
+		System.out.println("Num of operations : "+ connect.solve(n, edge));
+	}
+	
+	public int solve(int n, int[][] edge) {
+       DisjointSet ds = new DisjointSet(n);
+       
+       int extraEdges = 0;
+       int m = edge.length;
+       for(int i = 0; i < m; i++){
+           int u = edge[i][0];
+           int v = edge[i][1];
+           
+           if(ds.findUltimateParent(u) == ds.findUltimateParent(v)){
+               extraEdges++;
+           }else{
+               ds.unionBySize(u,v);
+           }
+       }
+       
+       int countConnected = 0; // num of connected components
+       int countOps = 0;// 
+       for(int i = 0; i < n; i++){
+           if(ds.findUltimateParent(i) == i){//num of connected components = num of nodes pointing themselves
+              countConnected++;  
+           }
+       }
+       countOps = countConnected - 1;// num of operations is one less than num of connected components
+       if(extraEdges >= countOps){
+           return countOps;
+       }else{
+           return -1;
+       }
+    }
+
+}
