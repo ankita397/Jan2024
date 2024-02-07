@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /*
- * Using Disjoint set
+ * Using Disjoint set - GFG
  * 
  * Create disjoint sets - unionByRank or unionBySize
  * if ultimate Parent of i == i -- that is one province  --> count++
