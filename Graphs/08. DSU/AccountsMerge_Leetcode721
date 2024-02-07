@@ -1,0 +1,99 @@
+package com.practice.graph2.disjointset;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+/*
+ * Disjoint set - LeetCode721
+ * 
+ * Time Complexity: O(N+E) + O(E*4ɑ) + O(N*(ElogE + E)) where N = no. of indices or nodes and E = no. of emails. 
+ * The first term is for visiting all the emails. 
+ * The second term is for merging the accounts. And the third term is for sorting the emails and storing them in the answer array.
+ * 
+ * Space Complexity: O(N)+ O(N) +O(2N) ~ O(N) where N = no. of nodes/indices. The first and second space is for the ‘mergedMails’
+ * and the ‘mergedList’ array. The last term is for the parent and size array used inside the Disjoint set data structure.
+ * 
+ */
+public class AccountsMerge_Leetcode721 {
+
+	public static void main(String[] args) {
+		ArrayList<ArrayList<String>> accounts = new ArrayList<ArrayList<String>>() {
+            {
+                add(new ArrayList<String>(Arrays.asList("John", "j1@com", "j2@com", "j3@com")));
+                add(new ArrayList<String>(Arrays.asList("John", "j4@com")));
+                add(new ArrayList<String>(Arrays.asList("Raj", "r1@com", "r2@com")));
+                add(new ArrayList<String>(Arrays.asList("John", "j1@com", "j5@com")));
+                add(new ArrayList<String>(Arrays.asList("Raj", "r2@com", "r3@com")));
+                add(new ArrayList<String>(Arrays.asList("Mary", "m1@com")));
+
+            }
+        };
+
+        AccountsMerge_Leetcode721 obj = new AccountsMerge_Leetcode721();
+        List<List<String>> ans = obj.accountsMerge(accounts);
+
+        int n = ans.size();
+        for (int i = 0; i < n; i++) {
+            System.out.print(ans.get(i).get(0) + ": ");
+            int size = ans.get(i).size();
+            for (int j = 1; j < size; j++) {
+                System.out.print(ans.get(i).get(j) + " ");
+            }
+
+            System.out.println("");
+        }
+	}
+
+	public List<List<String>> accountsMerge(ArrayList<ArrayList<String>> accounts) {
+		int n = accounts.size();
+		DisjointSet ds = new DisjointSet(n);
+		
+		HashMap<String, Integer> mapMailNode = new HashMap<>();
+		
+		for(int i = 0; i < n; i++) {
+			for(int j = 1; j < accounts.get(i).size(); j++) {// j starts from 1 as 1st(0th index) element is name and we need emails
+				String mail = accounts.get(i).get(j);
+				if(!mapMailNode.containsKey(mail)) {
+					mapMailNode.put(mail, i);
+				}else {
+					ds.unionBySize(i, mapMailNode.get(mail));// if mail is already present in map, then we need to merge the accounts(union) -
+					// i -> initial node and mapMailNode.get(mail) -> 2nd node where same mail is found
+				}
+			}
+		}
+		
+		//Traverse the map to construct the output array containing merged emails
+		ArrayList<String>[] mergedMails = new ArrayList[n];//array of ArrayLists of Strings to store the output
+		for(int i = 0; i < n; i++) {
+			mergedMails[i] = new ArrayList<String>();
+		}
+		
+		for(Map.Entry<String, Integer> entry : mapMailNode.entrySet()) {
+			String email = entry.getKey();
+			int node = ds.findUltimateParent(entry.getValue());// same emails are added to the ultimate parent in the disjoint set created before
+			
+			mergedMails[node].add(email);
+		}
+		
+		//Attach the merged mails to the names
+		List<List<String>> mergedList = new ArrayList<>();
+		for(int i = 0; i < n; i++) {// go across all nodes
+			if(mergedMails[i].size() == 0) {// ignore the nodes which do not have any merged mails
+				continue;
+			}
+			Collections.sort(mergedMails[i]);// sort all merged mails for a particular node
+			List<String> temp = new ArrayList<>();
+			temp.add(accounts.get(i).get(0));// add names first
+			// now add everything in the merged mail
+			for(String it : mergedMails[i]) {
+				temp.add(it);
+			}
+			mergedList.add(temp);
+		}	
+		return mergedList;
+	}
+
+}
