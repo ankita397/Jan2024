@@ -9,6 +9,8 @@ import java.util.List;
  * Don't use both unionByRank and unionBySize together - both have same TC = O(4alpha) ~ constant
  * 
  * Connect smaller to larger - it will help limit the height, so we don't have to take longer distance till parent
+ *
+ * Time Complexity:  The actual time complexity is O(4) which is very small and close to 1. So, we can consider 4 as a constant.
  */
 
 public class DisjointSet {
