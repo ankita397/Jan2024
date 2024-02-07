@@ -1,0 +1,56 @@
+package com.practice.graph2.disjointset;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+/*
+ * Using Disjoint set
+ * 
+ * Create disjoint sets - unionByRank or unionBySize
+ * if ultimate Parent of i == i -- that is one province  --> count++
+ * 
+ * Time Complexity: O(N2)+O(N* 4α) ~ O(N2)+O(N) where N = no. of nodes. O(N2) for visiting the adjacency matrix and O(N) for the
+ * counting of ultimate parents. 4α is so small that this term can be ignored.
+ * Space Complexity: O(2N), where N = no. of nodes. O(2N) for the two arrays parent and size(or rank) of size N.
+ * 
+ */
+public class NumberOfProvinces_DSU {
+
+	public static void main(String[] args) {
+		int V = 3;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>() {
+            {
+                add(new ArrayList<Integer>(Arrays.asList(1, 0, 1)));
+                add(new ArrayList<Integer>(Arrays.asList(0, 1, 0)));
+                add(new ArrayList<Integer>(Arrays.asList(1, 0, 1)));
+            }
+
+        };
+
+        NumberOfProvinces_DSU obj = new NumberOfProvinces_DSU();
+        int ans = obj.numProvinces(adj, V);
+        System.out.println("The number of provinces is: " + ans);
+	}
+
+	public int numProvinces(ArrayList<ArrayList<Integer>> adj, int v) {
+		DisjointSet ds = new DisjointSet(v);
+		
+		for(int i = 0; i < v ; i++) {
+			for(int j = 0; j < v; j++) {
+				if(adj.get(i).get(j) == 1) {
+					ds.unionBySize(i, j);
+				}
+			}
+		}
+		int count = 0;
+		
+		for(int i = 0; i < v; i++) {
+			if(ds.findUltimateParent(i) == i) {
+				count++;
+			}
+		}
+		
+		return count;
+	}
+
+}
