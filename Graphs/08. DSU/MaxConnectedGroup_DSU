@@ -1,0 +1,97 @@
+package com.practice.graph2.disjointset;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/*
+ * Disjoint Set - GFG
+ * 
+ * Time Complexity: O(N2)+O(N2) ~ O(N2) where N = total number of rows of the grid. Inside those nested loops, 
+ * all the operations are taking apparently constant time. So, O(N2) for the nested loop only, is the time complexity.
+ * 
+ * Space Complexity: O(2*N2) where N = the total number of rows of the grid. This is for the two arrays i.e. parent array and 
+ * size array of size N2 inside the Disjoint set.
+ * 
+ */
+public class MaxConnectedGroup_DSU {
+
+	public static void main(String[] args) {
+		int[][] grid = {
+	            {1, 1, 0, 1, 1, 0}, {1, 1, 0, 1, 1, 0},
+	            {1, 1, 0, 1, 1, 0}, {0, 0, 1, 0, 0, 0},
+	            {0, 0, 1, 1, 1, 0}, {0, 0, 1, 1, 1, 0}
+	        };
+
+		MaxConnectedGroup_DSU obj = new MaxConnectedGroup_DSU();
+	        int ans = obj.MaxConnection(grid);
+	        System.out.println("The largest group of connected 1s is of size: " + ans);
+	}
+
+	public int MaxConnection(int[][] grid) {
+		int maxSize = 0;
+		int n = grid.length;
+		DisjointSet ds = new DisjointSet(n*n);
+		
+		//Step 1 - connected the components - disjoint set
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n ; j++) {
+				if(grid[i][j] == 0) {// no need to connect the components for cell = 0
+					continue;
+				}
+				int[] dx = {-1,1,0,0};
+				int[] dy = {0,0,-1,1};
+				
+				for(int x = 0; x < 4; x++) {
+					int nrow = i + dx[x];
+					int ncol = j + dy[x];
+					
+					if(nrow >=0 && nrow < n && ncol >=0 && ncol < n && grid[nrow][ncol] == 1) {// unionBySize for 1's
+						int nodeNum = i * n + j;// convert cells to node numbers
+						int adjNodeNum = nrow * n + ncol;
+						ds.unionBySize(nodeNum, adjNodeNum);
+					}
+				}
+			}
+		}
+		
+		//Step 2 - Convert 0's to 1's and add ultimate parent to set
+		
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n ; j++) {
+				if(grid[i][j] == 1) {// no need to convert 1's
+					continue;
+				}
+				int[] dx = {-1,1,0,0};
+				int[] dy = {0,0,-1,1};
+				int totalSize = 0;
+				
+				Set<Integer> components = new HashSet<>();
+				for(int x = 0; x < 4; x++) {
+					int nrow = i + dx[x];
+					int ncol = j + dy[x];
+					
+					if(nrow >=0 && nrow < n && ncol >=0 && ncol < n && grid[nrow][ncol] == 1) {
+						int adjNodeNum = nrow * n + ncol;
+
+						//Insert ultimate parents of each component to a set so that they don't get added twice
+						components.add(ds.findUltimateParent(adjNodeNum));
+					}
+				}
+				// components set contains ultimate parents of each component - get the size of each ultimate parent and add them
+				for(Integer ultPar : components) {
+					totalSize = totalSize + ds.size.get(ultPar);
+				}
+				
+				maxSize = Math.max(maxSize, totalSize +1);
+			}
+		}
+		
+		//In case, all cells are 1's - traverse all cells and get ultimate parent for all cells and make it max 
+		for(int cellNo = 0; cellNo < n*n; cellNo++) {
+			maxSize = Math.max(maxSize, ds.size.get(ds.findUltimateParent(cellNo)));
+		}
+		
+		return maxSize;
+	}
+
+}
