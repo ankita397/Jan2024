@@ -5,7 +5,9 @@ import java.util.List;
 
 /*
  * Disjoint Set - State if two nodes u and v belong to the same component or not
- * 
+ * unionBySize - size changes for in all cases
+ * unionByRank - rank changes only if previous ranks are same
+ *
  * Don't use both unionByRank and unionBySize together - both have same TC = O(4alpha) ~ constant
  * 
  * Connect smaller to larger - it will help limit the height, so we don't have to take longer distance till parent
@@ -38,7 +40,7 @@ public class DisjointSet {
 		}
 	}
 	
-	void unionBySize(int u, int v) {
+	void unionBySize(int u, int v) {// size changes for in all cases
 		int ultPar_u = findUltimateParent(u);
 		int ultPar_v = findUltimateParent(v);
 		
@@ -56,7 +58,7 @@ public class DisjointSet {
 		}
 	}
 	
-	void unionByRank(int u, int v) {
+	void unionByRank(int u, int v) {// rank changes only if previous ranks are same
 		int ultPar_u = findUltimateParent(u);
 		int ultPar_v = findUltimateParent(v);
 		
