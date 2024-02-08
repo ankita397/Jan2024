@@ -1,0 +1,73 @@
+package com.practice.graph2.disjointset;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/*
+ * Disjoint Set - GFG
+ * formula : maxStonesRemoved =  n - num of connected components (striver graph series)
+ * 
+ * Time Complexity: O(N), where N = total no. of stones. Here we have just traversed the given stones array several times. 
+ * And inside those loops, every operation is apparently taking constant time. So, the time complexity is only the time of traversal 
+ * of the array.
+ * 
+ * Space Complexity: O(2* (max row index + max column index)) for the parent and size array inside the Disjoint Set data structure.
+ */
+public class MostStonesRemoved_DSU {
+
+	public static void main(String[] args) {
+		int n = 6;
+        int[][] stones = {
+            {0, 0}, {0, 2},
+            {1, 3}, {3, 1},
+            {3, 2}, {4, 3}
+        };
+
+        MostStonesRemoved_DSU obj = new MostStonesRemoved_DSU();
+        int ans = obj.maxRemove(stones, n);
+        System.out.println("The maximum number of stones we can remove is: " + ans);
+	}
+
+	public int maxRemove(int[][] stones, int n) {
+		int maxStonesRemoved = -0;
+		
+		// we need to find size of grid as we will store rows and cols as nodes in ds
+		int maxRow = 0;
+		int maxCol = 0;
+		
+		for(int i = 0; i < stones.length; i++) {
+			maxRow = stones[i][0];
+			maxCol = stones[i][1];
+		}
+		
+		DisjointSet ds = new DisjointSet(maxRow + maxCol + 1);// we well have rows and cols as nodes in ds
+		
+		HashMap<Integer, Integer> stoneNodes = new HashMap<>();
+		// loop over all stones(n) to create ds 
+		for(int i = 0; i < n ; i++) {
+			int nodeRow = stones[i][0];
+			int nodeCol = stones[i][1] + maxRow + 1;
+			
+			ds.unionBySize(nodeRow, nodeCol);
+			
+			//we need the unique parents for all these stones
+			//We just need the nodes in Disjoint Set which are involved in having a stone. So we store rows and cols in map as they will have stone. 
+			//And we just need to count them once for ultimate parents.
+			
+			stoneNodes.put(nodeRow, 1);
+			stoneNodes.put(nodeCol, 1);
+		}
+		
+		int count = 0; 
+		for(Map.Entry<Integer, Integer> it : stoneNodes.entrySet()) {
+			if(ds.findUltimateParent(it.getKey()) == it.getKey()) {// count the number of ultimate parents
+				count++;
+			}
+		}
+		
+		maxStonesRemoved = n - count; // formula : n - num of connected components (striver graph series)
+		
+		return maxStonesRemoved;
+	}
+
+}
