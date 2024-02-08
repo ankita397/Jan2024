@@ -72,7 +72,7 @@ public class DisjointSet {
 		}else {
 			//if both have same rank then they can be attached either way
 			parent.set(ultPar_v, ultPar_u);// or parent.set(ultPar_u, ultPar_v);
-			rank.set(ultPar_u, rank.get(ultPar_u)+1);//increment the rank of parent for this by 1 as its rank changes
+			rank.set(ultPar_u, rank.get(ultPar_u)+1);//increment the rank of parent for this by 1 as its rank changes - larger one will grow in size
 		}
 	}
 	
