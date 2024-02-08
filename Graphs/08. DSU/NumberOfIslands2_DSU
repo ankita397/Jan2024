@@ -1,0 +1,141 @@
+package com.practice.graph2.disjointset;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+ * Disjoint Set is used - Problem type - online queries 
+ * 
+ * 
+ * Time Complexity: O(Q*4α) ~ O(Q) where Q = no. of queries. The term 4α is so small that it can be considered constant.
+ * 
+ * Space Complexity: O(Q) + O(N*M) + O(N*M), where Q = no. of queries, N = total no. of rows, M = total no. of columns. 
+ * The last two terms are for the parent and the size array used inside the Disjoint set data structure. The first term is to store the answer.
+ */
+
+public class NumberOfIslands2_DSU {
+
+	public static void main(String[] args) {
+		int n = 4,m = 5, k = 4;
+		//int[][] operators = {{1,1},{0,1},{3,3},{3,4}};
+		//int[][] operators = {{0,0},{1,1},{2,2},{3,3}};
+		int[][] operators = {{0, 0}, {0, 0}, {1, 1}, {1, 0}, {0, 1},
+	            {0, 3}, {1, 3}, {0, 4}, {3, 2}, {2, 2}, {1, 2}, {0, 2}
+	        };
+		
+		NumberOfIslands2_DSU noi = new NumberOfIslands2_DSU();
+		
+		List<Integer> islandList = new ArrayList<>();
+		islandList = noi.numOfIslands(n,m,operators);
+		
+		for(int i = 0; i < islandList.size(); i++) {
+			System.out.println(islandList.get(i) + "  ");
+		}
+	}
+
+	public List<Integer> numOfIslands(int n, int m, int[][] operators) {
+		List<Integer> islandList = new ArrayList<>();
+		
+		DisjointSet2 ds = new DisjointSet2(n * m);
+		int[][] vis = new int[n][m];
+		
+		int count = 0;
+		for(int i = 0; i< operators.length;i++) {
+			int row = operators[i][0];
+			int col = operators[i][1];
+			
+			if(vis[row][col] == 1) {// if visited - this element is already added to the island
+				// no change in count of islands
+				islandList.add(count);
+				continue;
+			}
+			
+			vis[row][col] = 1;
+			count++;
+			
+			int[] dx = {1,-1,0,0};
+			int[] dy = {0,0,-1,1};
+			
+			for(int x = 0; x < 4; x++) {
+				int adjRow = row + dx[x];
+				int adjCol = col + dy[x];
+				
+				if(adjRow >=0 && adjRow < n && adjCol >=0 && adjCol < m) {
+					if(vis[adjRow][adjCol] == 1) {// on visited, an adjacent row col has to be an island for us to connect them
+						//check for connectivity - do not connected if they are already connected
+						int nodeNum = row * m + col;// Example- for 0 based indexing if 4X5 matrix, nodeNum = 11 for (2,1) node
+						int adjNodeNum = adjRow + m + adjCol;
+						if(ds.findUltimateParent(nodeNum) != ds.findUltimateParent(adjNodeNum)) {
+							// if parents are not same, we connect - disjoint set
+							count--;// decrement count every time you connect to another island
+							ds.unionBySize(nodeNum, adjNodeNum);
+						}
+					}
+				}
+			}
+			islandList.add(count);
+			
+		}		
+		return islandList;
+	}
+
+}
+
+class DisjointSet2{// exactly same as DisjointSet.java
+	List<Integer> parent = new ArrayList<>();
+	List<Integer> rank = new ArrayList<>();
+	List<Integer> size = new ArrayList<>();
+	
+	public DisjointSet2(int n) {
+		for(int i = 0; i <= n; i++) {
+			parent.add(i);
+			rank.add(0);
+			size.add(1);
+		}
+	}
+	
+	public int findUltimateParent(int node) {
+		if(parent.get(node) == node) {
+			return node;
+		}else {
+			int ultPar = findUltimateParent(parent.get(node));
+			parent.set(node, ultPar);
+			return parent.get(node);
+		}		
+	}
+	
+	public void rankByUnion(int u, int v) {
+		int ultPar_u = findUltimateParent(u);
+		int ultPar_v = findUltimateParent(v);
+		
+		if(ultPar_u == ultPar_v) {
+			return;
+		}
+		if(rank.get(ultPar_u) < rank.get(ultPar_v)) {
+			parent.set(ultPar_u, ultPar_v);
+		}else if(rank.get(ultPar_v) < rank.get(ultPar_u)) {
+			parent.set(ultPar_v, ultPar_u);
+		}else {
+			parent.set(ultPar_v, ultPar_u);
+			rank.set(ultPar_u, rank.get(ultPar_u)+1);
+		}
+	}
+	
+	public void unionBySize(int u, int v) {
+		int ultPar_u = findUltimateParent(u);
+		int ultPar_v = findUltimateParent(v);
+		
+		if(ultPar_u == ultPar_v) {
+			return;
+		}
+		
+		if(size.get(ultPar_u) < size.get(ultPar_v)) {
+			parent.set(ultPar_u, ultPar_v);
+			size.set(ultPar_v, size.get(ultPar_v) + size.get(ultPar_u));
+		}else {
+			parent.set(ultPar_v, ultPar_u);
+			size.set(ultPar_u, size.get(ultPar_u) + size.get(ultPar_v));
+		}
+	}
+	
+}
