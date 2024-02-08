@@ -29,15 +29,15 @@ public class MostStonesRemoved_DSU {
 	}
 
 	public int maxRemove(int[][] stones, int n) {
-		int maxStonesRemoved = -0;
+		int maxStonesRemoved = 0;
 		
 		// we need to find size of grid as we will store rows and cols as nodes in ds
 		int maxRow = 0;
 		int maxCol = 0;
 		
-		for(int i = 0; i < stones.length; i++) {
-			maxRow = stones[i][0];
-			maxCol = stones[i][1];
+		for(int i = 0; i < n; i++) {
+			maxRow = Math.max(maxRow, stones[i][0]);
+            maxCol = Math.max(maxCol, stones[i][1]);
 		}
 		
 		DisjointSet ds = new DisjointSet(maxRow + maxCol + 1);// we well have rows and cols as nodes in ds
