@@ -6,7 +6,8 @@ import java.util.List;
 /*
  * Disjoint Set is used - Problem type - online queries 
  * 
- * 
+ * //Remember below formula for representing (row,col) as node number
+ *
  * Time Complexity: O(Q*4α) ~ O(Q) where Q = no. of queries. The term 4α is so small that it can be considered constant.
  * 
  * Space Complexity: O(Q) + O(N*M) + O(N*M), where Q = no. of queries, N = total no. of rows, M = total no. of columns. 
@@ -63,6 +64,8 @@ public class NumberOfIslands2_DSU {
 				if(adjRow >=0 && adjRow < n && adjCol >=0 && adjCol < m) {
 					if(vis[adjRow][adjCol] == 1) {// on visited, an adjacent row col has to be an island for us to connect them
 						//check for connectivity - do not connected if they are already connected
+						
+						//Remember below formula for representing (row,col) as node number
 						int nodeNum = row * m + col;// Example- for 0 based indexing if 4X5 matrix, nodeNum = 11 for (2,1) node
 						int adjNodeNum = adjRow + m + adjCol;
 						if(ds.findUltimateParent(nodeNum) != ds.findUltimateParent(adjNodeNum)) {
