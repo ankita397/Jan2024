@@ -1,22 +1,27 @@
-private boolean detectCycle(ArrayList<ArrayList<Integer>> adjList,boolean[] vis, int src) {
-		Queue<Pair3> queue = new LinkedList<>();
-		queue.add(new Pair3(src, -1));//store source element and its parent = -1
-		vis[src] = true;// visited
-		
-		while(!queue.isEmpty()) {
-			int node = queue.peek().node;
-			int parent = queue.peek().parent;
-			queue.remove();
-			
-			for(Integer it:adjList.get(node)) {
-				if(vis[it] == false) {
-					vis[it] = true;
-					queue.add(new Pair3(it,node));
-				}else if(parent != it) {// if adjacent node is visited and is not its own parent node - this means it was visited by someone else.
-					//So its a repeating node, confirming a cycle
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+public ArrayList<Integer> bfsOfGraph(int V, 
+    ArrayList<ArrayList<Integer>> adj) {
+        
+        ArrayList < Integer > bfs = new ArrayList < > ();
+        boolean vis[] = new boolean[V];
+        Queue < Integer > q = new LinkedList < > ();
+
+        q.add(0);
+        vis[0] = true;
+
+        while (!q.isEmpty()) {
+            Integer node = q.poll();
+            bfs.add(node);
+
+            // Get all adjacent vertices of the dequeued vertex s
+            // If a adjacent has not been visited, then mark it
+            // visited and enqueue it
+            for (Integer it: adj.get(node)) {
+                if (vis[it] == false) {
+                    vis[it] = true;
+                    q.add(it);
+                }
+            }
+        }
+
+        return bfs;
+    }
