@@ -1,14 +1,13 @@
-private boolean dfs(ArrayList<ArrayList<Integer>> adj, boolean[] vis, int node, int parent) {
-		vis[node] = true;
-		for(int adjecentNode : adj.get(node)) {
-			if(!vis[adjecentNode]) {
-				if(dfs(adj,vis,adjecentNode, node)) {// node is parent of adjecentNode
-					return true;
-				}
-			}
-			else if(parent != adjecentNode) {
-				return true;
-			}
-		}
-		return false;
+private void dfs(int node, boolean[] vis, ArrayList<ArrayList<Integer>> adjList, ArrayList<Integer> dfsList) {
+		// TODO Auto-generated method stub
+		//marking current node as visited
+        vis[node] = true;
+        dfsList.add(node);
+        
+        //getting neighbour nodes
+        for(Integer it: adjList.get(node)) {
+            if(vis[it] == false) {
+                dfs(it, vis, adjList, dfsList);// recursion
+            }
+        }
 	}
