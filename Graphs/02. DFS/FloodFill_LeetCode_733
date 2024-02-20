@@ -59,8 +59,8 @@ public class FloodFIll {
 			int nrow = i+dx[x];
 			int ncol = j+dy[x];
 			if(nrow >=0 && ncol >= 0 && nrow < n && ncol < m && image[nrow][ncol]==initColor && newColorImg[nrow][ncol] != newColor) {//last condition - we do not proceed of the cell already has new color
-		        	dfs(image,newColorImg, nrow,ncol,initColor,newColor);
-            		}
+		        dfs(image,newColorImg, nrow,ncol,initColor,newColor);
+            }
 		}
 	}
 
