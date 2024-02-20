@@ -2,6 +2,11 @@ package com.practice.graph2.dfs;
 
 /*
  * DFS and BFS both can be used
+ * INTUITION : The boundary elements in the matrix cannot be replaced with ‘X’ as they are not surrounded by ‘X’ from all 4 directions. 
+ * This means if ‘O’ (or a set of ‘O’) is connected to a boundary ‘O’ then it can’t be replaced with ‘X’. The intuition is that we 
+ * start from boundary elements having ‘O’ and go through its neighboring Os in 4 directions and mark them as visited to avoid 
+ * replacing them with ‘X’. 
+ * 
  * https://geeksforgeeks.org/problems/replace-os-with-xs0052/1
  * Start with boundary O's and mark them not to be converted => i == 0 or j == 0
  * Convert the remaining O's to be converted to X's (as they are not linked with any boundary O's so they are bound to be surrounded by X's)
