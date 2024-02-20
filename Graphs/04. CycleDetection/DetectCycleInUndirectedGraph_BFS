@@ -44,7 +44,7 @@ public class DetectCycleInUndirectedGraph_BFS {
 				if(vis[it] == false) {
 					vis[it] = true;
 					queue.add(new Pair3(it,node));
-				}else if(parent != it) {// if adjacent node is visited and is not its own parent node - this means it was visited by someone else.
+				}else if(parent != it) {// if adjacent node is visited and is not its parent node - this means it was visited by someone else.
 					//So its a repeating node, confirming a cycle
 					return true;
 				}
