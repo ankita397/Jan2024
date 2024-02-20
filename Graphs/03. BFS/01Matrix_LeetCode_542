@@ -6,6 +6,12 @@ import java.util.Queue;
 /*
  * Leetcode 542
  * Use bfs
+ * 
+ * INTUITION : The intuition is that BFS will take a step from cells containing 0 and will reach out to all ones that are at a 
+ * distance of 1. Apparently, we can say that the nearest 0 to the 1s is at a distance of one. Again if we take another step,
+ * we will reach the next set of ones, for these ones 0 is at a distance of 2. If we continue the same, till we can go, we can 
+ * reach all the 1’s possible. 
+ * 
  * Time Complexity: O(NxM + NxMx4) ~ O(N x M)
  * For the worst case, the BFS function will be called for (N x M) nodes, and for every node, we are traversing for 4 neighbors, so it will take O(N x M x 4) time.
  * Space Complexity: O(N x M) + O(N x M) + O(N x M) ~ O(N x M)
