@@ -4,6 +4,7 @@ package com.practice.graph2.dfs;
  * Leetcode 200
  * 
  * Best and easy solution - Recommended as it is generic
+ * INTUITION : Need to call dfs from each starting node in connected components - so we need to figure out all starting nodes(count++)
  * 
  */
 public class NumberOfIslands3 {
