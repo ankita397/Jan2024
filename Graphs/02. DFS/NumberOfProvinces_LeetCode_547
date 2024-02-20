@@ -1,0 +1,75 @@
+package com.practice.graph2.dfs;
+
+import java.util.ArrayList;
+/*
+ * INTUITION : Need to call dfs/bfs from each starting node in connected components - so we need to figure out all starting nodes(count++)
+ * This is a 0 based undirected graph with starting node 0
+ * We are using DFS
+ * SC = O(N)+O(n)+O(N) = O(N)
+ * TC = O(N) + (O(N)+O(2E)) = = O(N)+O(M) - Queue - O(N) and AdjList - O(2M) ~ O(M)
+ * 
+ */
+public class NumberOfProvinces {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n = 8;
+		int adjMatrix[][] = new int[n+1][n+1];
+		adjMatrix[0][1] = 1;
+		adjMatrix[1][0] = 1;
+		adjMatrix[2][1] = 1;
+		adjMatrix[1][2] = 1;
+		
+		adjMatrix[3][4] = 1;
+		adjMatrix[4][3] = 1;
+		adjMatrix[4][5] = 1;
+		adjMatrix[5][4] = 1;
+		
+		adjMatrix[6][7] = 1;
+		adjMatrix[7][6] = 1;
+        
+        NumberOfProvinces np = new NumberOfProvinces();
+        System.out.println(np.numberOfProvinces(adjMatrix,n));
+	}
+
+	private int numberOfProvinces(int adjMatrix[][], int n) {
+		
+		ArrayList<ArrayList<Integer>> adjList = new ArrayList<ArrayList<Integer>>();
+		
+		for(int i = 0; i < n; i++) {
+			adjList.add(new ArrayList<Integer>());
+		}
+		
+		//Convert adj matrix to adj list
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				if(adjMatrix[i][j] == 1 && i!=j) {
+					adjList.get(i).add(j);
+					adjList.get(j).add(i);
+				}
+			}
+		}
+		
+		//Here DFS list is not needed as we are not returning list, we are returning only count
+		boolean vis[] = new boolean[n];
+		int countProv = 0;
+		for(int i = 0; i < n; i++) {
+			if(!vis[i]) {// if node is not visited, count is incremented and that node is considered to be one of the starting nodes
+				countProv++;
+				dfs(adjList, i, vis);
+			}
+			
+		}
+		return countProv;
+	}
+
+	private void dfs(ArrayList<ArrayList<Integer>> adjList, int i, boolean[] vis) {
+		vis[i] = true;
+		for(Integer it : adjList.get(i)) {
+			if(!vis[it]) {
+				dfs(adjList, it, vis);
+			}
+		}
+		
+	}
+}
