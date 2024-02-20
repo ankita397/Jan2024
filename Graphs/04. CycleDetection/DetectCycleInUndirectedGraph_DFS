@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /*
 * Use DFS - recursion
+* INTUITION : Call dfs for src and adj nodes and if any of the dfs calls returns true, then we keep on returning true as cycle has been detected
 * parent != it - return true only if the current node visited and is not its own parent
 * Time Complexity: O(N + 2E) + O(N), Where N = Nodes, 2E is for total degrees as we traverse all adjacent nodes. In the case of connected components of a graph, it will take another O(N) time.
 *Space Complexity: O(N) + O(N) ~ O(N), Space for recursive stack space and visited array.* 
