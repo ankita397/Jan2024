@@ -7,7 +7,7 @@ import java.util.Queue;
  * Leetcode - 994
  
  * Use BFS for adjacencyList
- * INTUITION : We use BFS because we want to rotten the immediate adjacent oranges simultaneously - level wise
+ * INTUITION : We use BFS because we want to rotten the immediate adjacent oranges (in all 4 directions) simultaneously - level wise
  * Pair - contains row, col of the element and time unit taken
  * Time Complexity: O(NxM + NxMx4) ~ O(N x M), For the worst case, all of the cells will have fresh oranges, so the BFS function will be called for (N x M) nodes and for every node, we are traversing for 4 neighbours, it will take O(N x M x 4) time.
  * Space Complexity ~ O(N x M), O(N x M) for copied input array and recursive stack space takes up N x M locations at max. 
