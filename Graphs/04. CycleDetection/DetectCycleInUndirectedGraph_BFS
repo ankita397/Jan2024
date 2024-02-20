@@ -6,6 +6,7 @@ import java.util.Queue;
 
 /*
  * Use BFS for adjacencyList
+ * INTUITION : We start at 2 different paths(level wise paths from starting node) and collide at a common node.
  * Pair - stores the current node and its parent. parent = -1 for source node
  * parent != it - return true only if the current node visited and is not its own parent
  * Time Complexity: O(N + 2E) + O(N), Where N = Nodes, 2E is for total degrees as we traverse all adjacent nodes.
