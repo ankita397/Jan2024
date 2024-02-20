@@ -6,9 +6,9 @@ import java.util.Queue;
 
 /*
  * Use BFS for Queue
- * INTUITION : We start at 2 different paths(level wise paths from starting node) and collide at a common node.
+ * INTUITION : We start at 2 different paths(level wise paths from starting node) and collide at a common node which is not its parent.
  * Pair - stores the current node and its parent. parent = -1 for source node
- * parent != it - return true only if the current node visited and is not its own parent
+ * parent != it - return true only if the current node visited and is not its parent
  * Time Complexity: O(N + 2E) + O(N), Where N = Nodes, 2E is for total degrees as we traverse all adjacent nodes.
  * Space Complexity: O(N) + O(N) ~ O(N), Space for queue data structure and visited array.
  * 
