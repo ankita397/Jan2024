@@ -2,6 +2,8 @@ package com.practice.graph2.dfs;
 
 /*
  * Leetcode 733
+ * INTUITION: Color the initial node and check for adjacent nodes in all 4 directions. Color them if they have same color 
+ * as initial node and if they have not already been colored.
  * Given image, sr = 1 , sc = 1, newColor = 2
  * sr and sc are starting row and starting col
  * Time Complexity: O(NxM + NxMx4) ~ O(N x M)
