@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 /*
- * * Topological sorting means linear ordering of vertices such that if there is an edge between two vertices u to v, 
+ * Topological sorting means linear ordering of vertices such that if there is an edge between two vertices u to v, 
  * u appears before v in the linear order
  * Only valid in DAGs
  * 
