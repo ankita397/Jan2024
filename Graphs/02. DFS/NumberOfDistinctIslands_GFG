@@ -6,6 +6,8 @@ import java.util.HashSet;
 /*
  * GFG - https://www.geeksforgeeks.org/problems/number-of-distinct-islands/1?utm_source=geeksforgeeks&utm_medium=article_practice_tab&utm_campaign=article_practice_tab
  * Use DFS 
+ * INTUITION : We can call one of the starting points a base, and subtract the base coordinates from the land’s 
+   coordinates (Cell Coordinates – Base coordinates).
  * Use Set<ArrayList<Integer>> to store the difference between the starting index and other indices.
  */
 
