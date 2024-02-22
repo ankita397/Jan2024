@@ -6,6 +6,7 @@ import java.util.Queue;
 
 /*
  * Use BFS for Queue
+ * INTUITION in short - node that is visited and not it's parent -> cycle
  * INTUITION : We start at 2 different paths(level wise paths from starting node) and collide at a common node which is not its parent.
  * Pair - stores the current node and its parent. parent = -1 for source node
  * parent != it - return true only if the current node visited and is not its parent
