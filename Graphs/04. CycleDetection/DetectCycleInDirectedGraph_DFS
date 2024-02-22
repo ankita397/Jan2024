@@ -2,7 +2,8 @@ package com.practice.graph2.dfs;
 
 import java.util.ArrayList;
 /*
- * GFG
+ * GFG - https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+ * INTUITION : If a directed graph contains a cycle, the node has to be visited again on the same path and not through different paths.
  * Trick : vis[node] == 1 and pathVis[node] == 1 ==> these 2 conditions should satisfy for a directed graph to be cyclic
  * Time Complexity: O(V+E)+O(V) , where V = no. of nodes and E = no. of edges. There can be at most V components. 
  * So, another O(V) time complexity.
