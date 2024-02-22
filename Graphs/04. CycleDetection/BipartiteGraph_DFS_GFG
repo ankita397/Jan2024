@@ -4,6 +4,8 @@ import java.util.ArrayList;
 /*
  * Both BFS and DFS can be used - connected components
  * Bipartite Graph means no 2 adjacent nodes should have same color
+ * INTUITION : The intuition is the brute force of filling colours using any traversal technique, just make sure no two adjacent nodes 
+   have the same colour. If at any moment of traversal, we find the adjacent nodes to have the same colour, it means that there is an odd cycle, or it cannot be a bipartite graph. 
  * Time Complexity: O(V + 2E), Where V = Vertices, 2E is for total degrees as we traverse all adjacent nodes.
  * Space Complexity: O(3V) ~ O(V), Space for DFS stack space, colour array and an adjacency list.
  */
