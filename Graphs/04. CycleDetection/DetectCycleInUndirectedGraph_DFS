@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /*
 * Use DFS - recursion
+* INTUITION in short - node that is visited and not it's parent -> cycle
 * INTUITION : we start from a source and go in-depth, and reach any node that has been previously visited in the past; it means there’s a cycle.
 * Call dfs for src and adj nodes and if any of the dfs calls returns true, then we keep on returning true as cycle has been detected
 * parent != it - return true only if the current node visited and is not its  parent
