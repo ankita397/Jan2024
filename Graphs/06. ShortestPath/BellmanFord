@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 /*
  * Bellman ford - Shortest distance - It works fine with negative edges as well as it is able to detect if the graph contains a negative cycle
- * In this algorithm, the edges can be given in any order. The intuition is to relax all the edges for N-1( N = no. of nodes) times sequentially. 
+ * In this algorithm, the edges can be given in any order. 
+ * INTUITION : Relax all the edges for N-1( N = no. of nodes) times sequentially. 
  * After N-1 iterations, we should have minimized the distance to every node.(N-1 iterations as we i=0 iteration helps update node1, 
  * i=1 iteration helps update node 2, i=2 iteration helps update node 2 and so on till i = N-1 iteration helps update node N.(explanation in
  * Striver's graph series)
