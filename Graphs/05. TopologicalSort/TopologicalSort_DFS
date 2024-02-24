@@ -16,7 +16,7 @@ import java.util.Stack;
  * Space Complexity: O(2N) + O(N) ~ O(2N): O(2N) for the visited array and the stack carried during DFS calls and O(N) for 
  * recursive stack space, where N = no. of nodes.
  */
-public class TopologicalSort {
+public class TopologicalSort_DFS {
 
 	public static void main(String[] args) {
 		int V = 6;
