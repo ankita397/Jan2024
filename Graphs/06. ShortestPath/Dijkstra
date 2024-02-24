@@ -6,6 +6,11 @@ import java.util.PriorityQueue;
 /*
  * 
  * This is Using Priority Queue
+ * INTUITION : This problem seems familiar to finding the shortest distance in the case of unit edge weights for undirected graphs. 
+ * Hence, our first guess could be a BFS kind of approach. The only thing that we need to take care of is that for all the paths possible
+ * between a pair of nodes, we need to store the path with the minimum cost between them. That is, say we have a node that has been reached 
+ * by two paths, one with a cost of 7 and another with a cost of say 9. It is obvious that the path with a cost of 7 would be more optimal
+ * than the path with a cost of 9.
  * 
  * Using Set can also help as it help ease already existing paths
  * Using Queue can work but it that will consider all paths, even longer ones(with more edge weight) - unnecessary exploration of paths
