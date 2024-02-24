@@ -6,6 +6,10 @@ import java.util.Queue;
 
 /*
  * Simple BFS - for unit weight
+ * INTUITION : If we start traversal from the src node, we move to other adjacent nodes, everyone is at a distance of 1, 
+   so everyone goes into the queue, then subsequently we get the next set of nodes at 1 more distance, making the distance to 2, 
+   and if you look at the queue closely, it will look something like below. Queue here acts as a sorted Queue, hence we don’t 
+   need any sorted ds which we generally require in the other graph algorithms.
  * adjList - stores adjacent nodes a to b and b to a
  * Distance Relaxation - if(dist[node] + 1 < dist[it]) then  dist[it] = dist[node] + 1; 
  * dist[node] = current node and dist[it] = current node's adjacent nodes            
