@@ -3,7 +3,7 @@ package com.practice.recursion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubsequencePrinter {
+public class PrintAllSubsequences_SumK {
 
     public static void main(String[] args) {
         int[] array = {3, 1, 2};
