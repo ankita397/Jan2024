@@ -4,26 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PrintAllSubsequences_SumK {
-
-    public static void main(String[] args) {
-        int[] array = {3, 1, 2};
+	public static void main(String[] args) {
+        int[] array = {1, 2, 1};
         int n = 3;
+        int K = 2;
+        int sum = 0;
         List<Integer> currentSubsequence = new ArrayList<>();
-        printSubsequences(array, 0, currentSubsequence, n);
+        printSubsequences(array, 0, currentSubsequence, n, sum, K);
     }
 
-    private static void printSubsequences(int[] array, int index, List<Integer> currentSubsequence, int n) {
+    private static void printSubsequences(int[] array, int index, List<Integer> currentSubsequence, int n, int sum, int K) {
 
         // Base case: when the end of the array is reached
         if (index == n) {
+        	if(sum == K) {
             // Print the subsequence elements
-            for (int num : currentSubsequence) {
-                System.out.print(num + " ");
-            }
-            if(currentSubsequence.size() == 0) {
-            	System.out.println("{}");
-            }
-            System.out.println();
+	            for (int num : currentSubsequence) {
+	                System.out.print(num + " ");
+	            }
+	            if(currentSubsequence.size() == 0) {
+	            	System.out.println("{}");
+	            }
+	            System.out.println();
+        	}
             
             return;
         }
@@ -31,10 +34,14 @@ public class PrintAllSubsequences_SumK {
 
         // Include the current element in the subsequence
         currentSubsequence.add(array[index]);
-        printSubsequences(array, index + 1, currentSubsequence, n);
-        currentSubsequence.remove(currentSubsequence.size() - 1);  // Backtrack
+        sum += array[index];
+        
+        printSubsequences(array, index + 1, currentSubsequence, n, sum, K);
+        
+        sum -= array[index];
+        currentSubsequence.remove(currentSubsequence.size() - 1);  // Backtrack - remove from end
 
         // Exclude the current element from the subsequence
-        printSubsequences(array, index + 1, currentSubsequence, n);
+        printSubsequences(array, index + 1, currentSubsequence, n, sum, K);
     }
 }
