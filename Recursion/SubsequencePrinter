@@ -1,0 +1,40 @@
+package com.practice.recursion;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class SubsequencePrinter {
+
+    public static void main(String[] args) {
+        int[] array = {3, 1, 2};
+        int n = 3;
+        List<Integer> currentSubsequence = new ArrayList<>();
+        printSubsequences(array, 0, currentSubsequence, n);
+    }
+
+    private static void printSubsequences(int[] array, int index, List<Integer> currentSubsequence, int n) {
+
+        // Base case: when the end of the array is reached
+        if (index == n) {
+            // Print the subsequence elements
+            for (int num : currentSubsequence) {
+                System.out.print(num + " ");
+            }
+            if(currentSubsequence.size() == 0) {
+            	System.out.println("{}");
+            }
+            System.out.println();
+            
+            return;
+        }
+        
+
+        // Include the current element in the subsequence
+        currentSubsequence.add(array[index]);
+        printSubsequences(array, index + 1, currentSubsequence, n);
+        currentSubsequence.remove(currentSubsequence.size() - 1);  // Backtrack
+
+        // Exclude the current element from the subsequence
+        printSubsequences(array, index + 1, currentSubsequence, n);
+    }
+}
