@@ -1,0 +1,44 @@
+package com.practice.recursion;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+ * Leetcode 78
+ * 
+ */
+public class PowerSet {
+
+	public static void main(String[] args) {
+		int nums[] = {3,1,2};
+		PowerSet p = new PowerSet();
+		List<List<Integer>> result = p.subsets(nums);
+		System.out.println(result);
+		
+		for(List<Integer> it: result) {
+			System.out.println(it.toString());
+		}
+	}
+	
+	List<List<Integer>> result;
+    public List<List<Integer>> subsets(int[] nums) {
+        result = new ArrayList<>();
+        subsets(0, nums, new ArrayList<>());
+        return result;
+    }
+    private void subsets(int index,int[] nums, ArrayList<Integer> temp) {
+        int n = nums.length;
+        if(index == n){
+            result.add(new ArrayList<>(temp));
+            return;
+        }
+
+        temp.add(nums[index]);
+        subsets(index+1, nums,temp);
+
+        temp.remove(temp.size()-1);
+        subsets(index+1, nums, temp);
+
+    }
+
+}
