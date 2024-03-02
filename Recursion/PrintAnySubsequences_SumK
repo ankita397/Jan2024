@@ -1,0 +1,65 @@
+package com.practice.recursion;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/*
+ * This is a technique to print 1 answer - 
+ * if(base condition == true)
+ * 		return true;
+ * else
+ * 		return false
+ * 
+ * if(function(n)) //  recursive function
+ * 		return true;
+ * 
+ * return false;
+ */
+public class PrintAnySubsequences_SumK {
+	public static void main(String[] args) {
+        int[] array = {1, 2, 1};
+        int n = 3;
+        int K = 2;
+        int sum = 0;
+        List<Integer> currentSubsequence = new ArrayList<>();
+        printSubsequences(array, 0, currentSubsequence, n, sum, K);
+    }
+
+    private static boolean printSubsequences(int[] array, int index, List<Integer> currentSubsequence, int n, int sum, int K) {
+
+        // Base case: when the end of the array is reached
+        if (index == n) {
+        	if(sum == K) {
+            // Print the subsequence elements
+	            for (int num : currentSubsequence) {
+	                System.out.print(num + " ");
+	            }
+	            if(currentSubsequence.size() == 0) {
+	            	System.out.println("{}");
+	            }
+	            System.out.println();
+	            return true;
+        	}
+            
+            return false;
+        }
+        
+
+        // Include the current element in the subsequence
+        currentSubsequence.add(array[index]);
+        sum += array[index];
+        
+        if(printSubsequences(array, index + 1, currentSubsequence, n, sum, K))
+        	return true;
+        
+        sum -= array[index];
+        currentSubsequence.remove(currentSubsequence.size() - 1);  // Backtrack - remove from end
+
+        // Exclude the current element from the subsequence
+        if(printSubsequences(array, index + 1, currentSubsequence, n, sum, K))
+        	return true;
+        
+        return false;
+    }
+}
+
