@@ -1,0 +1,35 @@
+package com.practice.recursion;
+
+public class CountSequences_SumK {
+	public static void main(String[] args) {
+        int[] array = {1, 2, 1};
+        int n = 3;
+        int K = 2;
+        int sum = 0;
+        System.out.println(printSubsequences(array, 0, n, sum, K));
+    }
+
+    private static int printSubsequences(int[] array, int index, int n, int sum, int K) {
+
+        // Base case: when the end of the array is reached
+        if (index == n) {
+        	if(sum == K) {
+	            return 1;
+        	}
+        	else
+        		return 0;
+        }
+        
+        sum += array[index];
+        
+        int l = printSubsequences(array, index + 1, n, sum, K);
+        
+        sum -= array[index];
+
+        // Exclude the current element from the subsequence
+        int r = printSubsequences(array, index + 1, n, sum, K);
+        
+        return l+r;
+    }
+}
+
