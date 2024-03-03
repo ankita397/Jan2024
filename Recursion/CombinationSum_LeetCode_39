@@ -1,0 +1,32 @@
+class Solution {
+    
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Solution s = new Solution();
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> tempList = new ArrayList<Integer>();
+        s.combinationSum(candidates, target, 0, result, tempList);
+        return result;
+    }
+
+    public void combinationSum(int[] candidates, int target, int index, List<List<Integer>> result,
+                                 List<Integer> tempList){
+       
+        int n = candidates.length;
+        int sum = 0;
+        if(index == n){
+            if(target == 0){// remaining target
+                result.add(new ArrayList<>(tempList));
+            }
+            return;
+        }
+        //System.out.println("Current target = "+target);
+        if(candidates[index] <= target){
+            tempList.add(candidates[index]);
+            combinationSum(candidates, (target - candidates[index]) , index, result,tempList);
+            
+            //System.out.println("Removing...");
+            tempList.remove(tempList.size()-1);
+        }
+        combinationSum(candidates, target, index+1, result, tempList);
+    }
+}
