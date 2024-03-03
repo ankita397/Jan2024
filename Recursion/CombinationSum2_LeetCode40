@@ -20,6 +20,10 @@ class Solution {
         
         for(int i = index; i < n; i++){
             //if its a repetitive element
+            //i > index - its not the first time
+            //If an element occurs first time, then same value element can be taken again
+            //If an element does not occur first time, then same value element cannot be taken again
+
             if(i > index && candidates[i] == candidates[i-1]){
                 continue;
             }
