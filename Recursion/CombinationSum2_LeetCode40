@@ -1,0 +1,34 @@
+/*
+* Could not understand
+*/
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> tempList = new ArrayList<>();
+        Arrays.sort(candidates);
+        combinationSum2(0,candidates,target,result,tempList);
+        return result;
+    }
+
+    private static void combinationSum2(int index, int[] candidates, int target,
+            List<List<Integer>> result, List<Integer> tempList){
+        int n = candidates.length;
+        if(target == 0){// remaining target
+            result.add(new ArrayList<>(tempList));
+            return;
+        }
+        
+        for(int i = index; i < n; i++){
+            //if its a repetitive element
+            if(i > index && candidates[i] == candidates[i-1]){
+                continue;
+            }
+            if(candidates[i] > target){
+                break;
+            }
+            tempList.add(candidates[i]);
+            combinationSum2(i+1,candidates,target-candidates[i],result,tempList);
+            tempList.remove(tempList.size()-1);
+        }
+    }
+}
