@@ -1,0 +1,50 @@
+// IMPORTANT : Use this method as the generic method nrow = row+dx[x].. and the positive boundary check approach is not working
+
+class Solution {
+    static boolean visited[][];
+    public boolean exist(char[][] board, String word) {
+        int rows = board.length;
+        int columns = board[0].length;
+        visited = new boolean[rows][columns];
+
+        for(int i = 0; i < rows; i++){
+            for(int j = 0; j < columns; j++){
+                //if the current element in braed matches the first character of the word
+                //searchWord - will tell us if we found the word 
+                //starting index is 0
+                if(word.charAt(0) == board[i][j] && searchWord(i,j,board,word,0)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean searchWord(int i, int j, char[][] board,String word, int index){
+        //base case
+        if(index == word.length()){// successfully found the full word as we increment index(i+1)  each time we recursively call searchWord
+            return true;
+        }
+        
+        //boundary checks 
+        //check row boundary
+        //check column boundary
+        //letter at index should match the current letter
+        //the element should not be already visited
+        if(i < 0 || i >= board.length || j < 0 || j >= board[i].length || word.charAt(index) != board[i][j] || visited[i][j]){
+            return false;
+        }
+
+        visited[i][j] = true;
+        //4 recursive calls on search to search in every direction
+        if(searchWord(i+1,j, board, word, index+1) ||
+            searchWord(i-1,j, board, word, index+1) || 
+            searchWord(i,j+1, board, word, index+1) ||
+            searchWord(i,j-1, board, word, index+1)){
+                return true;
+        }
+        //In each path, we have 4 directions to choose, but we need to mark the way we came such that we don't go back. After we finish the current path, we can remove marks we made through this path. So to remove the path we make visited[i][j] = false
+        visited[i][j] = false;
+        return false;
+    }
+}
