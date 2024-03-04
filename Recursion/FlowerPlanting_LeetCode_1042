@@ -1,0 +1,75 @@
+import java.util.*;
+
+class Solution {
+    // Main method to solve the problem
+    public int[] gardenNoAdj(int n, int[][] paths) {
+        // Convert the paths[][] to adj list
+        List<List<Integer>> pathList = new ArrayList<>();
+        for (int i = 0; i <= n; i++) {
+            pathList.add(new ArrayList<Integer>());
+        }
+
+        for (int i = 0; i < paths.length; i++) {
+            int u = paths[i][0];
+            int v = paths[i][1];
+            // Add both u and v to each other's neighbor list
+            pathList.get(u).add(v);
+            pathList.get(v).add(u);
+        }
+
+        // Array to store the type of flower planted in each garden
+        int[] flowerTypes = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            // If the type of flower in the current garden is not set
+            if (flowerTypes[i] == 0) {
+                // Invoke the plantFlower method to plant flowers
+                plantFlower(i, pathList, flowerTypes, 4);
+            }
+        }
+
+        // Form the output array by copying the values from flowerTypes array
+        int[] result = new int[n];
+        for (int i = 1; i <= n; i++) {
+            result[i - 1] = flowerTypes[i];
+        }
+
+        // Return the final result array
+        return result;
+    }
+
+    // Recursive method to explore different colors for the current garden
+    private static void plantFlower(int index, List<List<Integer>> pathList, int[] flowerTypes, int numColors) {
+        // Explore different colors for the current garden
+        for (int color = 1; color <= numColors; color++) {
+            // Check if it's safe to plant the current color
+            if (safelyPlant(index, pathList, flowerTypes, color)) {
+                // If safe, set the flower type in the flowerTypes array
+                if (flowerTypes[index] == 0) {
+                    flowerTypes[index] = color;
+                }
+
+                // Explore neighboring gardens
+                for (int neighbor : pathList.get(index)) {
+                    // If the flower type is not set in the neighbor, recursively call plantFlower
+                    if (flowerTypes[neighbor] == 0) {
+                        plantFlower(neighbor, pathList, flowerTypes, numColors);
+                    }
+                }
+            }
+        }
+    }
+
+    // Method to check if it's safe to plant a flower of a specific color
+    private static boolean safelyPlant(int index, List<List<Integer>> pathList, int[] flowerTypes, int color) {
+        // Check if planting the current color conflicts with the colors of neighbors
+        for (int neighbor : pathList.get(index)) {
+            if (flowerTypes[neighbor] == color) {
+                // If conflict, return false
+                return false;
+            }
+        }
+        // If no conflict, return true
+        return true;
+    }
+}
