@@ -1,0 +1,43 @@
+
+/*
+ * Balanced Binary Tree = for every node, height(left sub tree) - height(right sub tree) <= 1
+ * Recursion
+ * 
+ * At every node, get leftHeight and rightHeight
+ * 
+ * TC = O(N)
+ * SC = O(N)
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+        int maxDepth = 0;
+        maxDepth = maxDepthBalanced(root);
+        if(maxDepth == -1)
+        	return false;
+        else
+        	return true;
+    }
+
+    private int maxDepthBalanced(TreeNode root) {
+		int maxDepth = 0;
+		
+		if(root == null)
+			return 0;
+		
+		int leftHt = maxDepthBalanced(root.left);
+		int rightHt = maxDepthBalanced(root.right);
+		
+		if(leftHt == -1 || rightHt == -1) {
+			return -1;
+		}
+			
+		if(Math.abs(leftHt - rightHt) > 1) {
+			//this is not a balanced binary tree
+			return -1;
+		}
+	
+		maxDepth = 1 + Math.max(leftHt, rightHt);
+		
+		return maxDepth;
+	}
+}
