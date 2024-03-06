@@ -1,0 +1,71 @@
+/*
+* GFG - https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
+* Similar to Vertical Order Traversal - Leetcode - 987
+* TC = O(N)
+* SC = O(N)
+*/
+
+class Node{
+    int data;
+    Node left;
+    Node right;
+    Node(int data){
+        this.data = data;
+        left=null;
+        right=null;
+    }
+}
+
+class Pair{
+    int vertical;
+    Node node;
+    Pair(int vertical,Node node){
+        this.vertical = vertical;
+        this.node = node;
+    }
+}
+
+class Solution
+{
+    //Function to return a list containing the bottom view of the given tree.
+    public ArrayList <Integer> bottomView(Node root)
+    {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        //Map of vertical,node - TreeMap as we need sorting based on key
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<Pair> queue = new LinkedList<>();
+        
+        if(root == null)
+            return result;
+            
+        queue.add(new Pair(0, root));
+        
+        while(!queue.isEmpty()){
+            Pair pair = queue.peek();
+            Node node = pair.node;
+            int vertical = pair.vertical;
+            queue.remove();
+            
+            //Unlike top view, for bottom we add elements to map even though same key is 
+            //already present in the map 
+            map.put(vertical, node.data);
+            
+            
+            //level order traversal to add to the queue
+            if(node.left != null){
+                queue.add(new Pair(vertical - 1, node.left));
+            }
+            
+            if(node.right != null){
+                queue.add(new Pair(vertical + 1, node.right));
+            }
+        }
+        
+        //Loop over map to construct the final list
+        for(Map.Entry<Integer, Integer> entry: map.entrySet()){
+            result.add(entry.getValue());
+        }
+        return result;
+    }
+}
