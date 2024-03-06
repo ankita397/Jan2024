@@ -15,7 +15,7 @@
  */
 
 /*
- *
+ * Use level order traversal
  * TC = O(N)logN - N for traversal and log N for PQ
  * SC = O(N)
  *
@@ -53,12 +53,12 @@ class Solution {
             //then setting node.val on the prioroty queue
             map.get(vertical).get(level).add(node.val);
 
-            // if we move towards left
+            // if we move towards left - level order
             // vertical decreases by 1 and level increases by 1
             if(node.left != null){
                 queue.add(new Tuple(node.left, vertical - 1, level + 1));
             }
-            // if we move towards right
+            // if we move towards right - level order
             // vertical increases by 1 and level increases by 1
             if(node.right != null){
                 queue.add(new Tuple(node.right, vertical + 1, level + 1));
