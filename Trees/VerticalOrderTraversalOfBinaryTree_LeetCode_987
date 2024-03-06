@@ -1,0 +1,89 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        
+        //every vertical will have multiple levels
+        //on every level, there might be multiple nodes(these nodes can have same value)
+        //TreeMap<vertical, TreeMap<level, multipleNodes>
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+
+        Queue<Tuple> queue = new LinkedList<>();
+        queue.add(new Tuple(root, 0, 0));
+
+        while(!queue.isEmpty()){
+            Tuple tuple = queue.peek();
+            TreeNode node = tuple.node;
+            int vertical = tuple.vertical;
+            int level = tuple.level;
+            queue.remove();
+
+            //if in our map does not have the vertical, create TreeMap for it
+            if(!map.containsKey(vertical)){
+                map.put(vertical, new TreeMap());
+            }
+            //if in our map with vertical "something" does not have the level and multiNodes, create PQ
+            if(!map.get(vertical).containsKey(level)){
+                map.get(vertical).put(level, new PriorityQueue());
+            }
+
+            //add the node to that vertical(x-coordinate) and level(y-coordinate)
+            //here we are getting the vertical, then getting the TreeMap of level and 
+            //then setting node.val on the prioroty queue
+            map.get(vertical).get(level).add(node.val);
+
+            // if we move towards left
+            // vertical decreases by 1 and level increases by 1
+            if(node.left != null){
+                queue.add(new Tuple(node.left, vertical - 1, level + 1));
+            }
+            // if we move towards right
+            // vertical increases by 1 and level increases by 1
+            if(node.right != null){
+                queue.add(new Tuple(node.right, vertical + 1, level + 1));
+            }
+        }
+
+        //Add node values to main list
+        //map.values - vertical<level,node>
+        //Traverse over each vertical to get the (level,  nodes) on that vertical
+        for(TreeMap<Integer, PriorityQueue<Integer>> levelNodes : map.values()){
+            //inner ArrayList contains nodes on each vertical
+            result.add(new ArrayList<>());
+            //Traverse over each level to get the nodes on that level
+            for(PriorityQueue<Integer> nodes : levelNodes.values()){
+                while(!nodes.isEmpty()){
+                    //add nodes to the end of list
+                    result.get(result.size() - 1).add(nodes.peek());
+                    nodes.remove();
+                }
+            }
+        }
+        return result;
+    }
+}
+
+class Tuple{
+    TreeNode node;
+    int vertical;// x-axis
+    int level;// y-axis
+    Tuple(TreeNode node, int vertical, int level){
+        this.node = node;
+        this.vertical = vertical;
+        this.level = level;
+    }
+}
