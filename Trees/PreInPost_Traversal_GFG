@@ -1,0 +1,129 @@
+package com.practice.trees;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+
+
+/*
+ * 
+ * Pre-order 
+ * 	num == 1
+ * 		add to pre order list
+ * 		increment num
+ * 		check if it has left - stack.peek().node.left
+ * 		add left to stack with num = 1
+ * 
+ * In-order 
+ * 	num == 2
+ * 		add to inorder list
+ * 		increment num
+ * 		check if it has right - stack.peek().node.right
+ * 		add right to stack with num = 1
+ * 
+ * Post-order
+ * 	add to postorder list
+ * 
+ * TC = O(3N) - iteration thrice
+ * TC = O(4N) ~ O(N) - 1 stack and 2 lists
+ */
+class TreeNode5{
+	int data;
+	TreeNode5 left;
+	TreeNode5 right;
+	TreeNode5(int data){
+		this.data = data;
+	}
+}
+
+class Pair {
+    TreeNode5 node;
+    int num;
+    Pair(TreeNode5 node, int num) {
+        this.num = num;
+        this.node = node;
+    }
+}
+
+
+public class PreInPost_Traversal {
+
+	public static void main(String[] args) {
+		// Example usage:
+        TreeNode5 root = new TreeNode5(1);
+        root.left = new TreeNode5(2);
+        root.right = new TreeNode5(5);
+        root.left.left = new TreeNode5(3);
+        root.left.right = new TreeNode5(4);   
+        root.right.left = new TreeNode5(6);
+        root.right.right = new TreeNode5(7);
+
+        
+
+        PreInPost_Traversal solution = new PreInPost_Traversal();
+        
+        Map<String, List<Integer>> result = solution.postInPostOrder(root);
+
+       
+        	 System.out.println("Pre Order Traversal: " );
+        	 if(result.containsKey("preOrder")) {
+        		 System.out.println(result.get("preOrder"));
+        	 }
+        	 
+        	 System.out.println("In Order Traversal: " );
+        	 if(result.containsKey("inOrder")) {
+        		 System.out.println(result.get("inOrder"));
+        	 }
+
+        	 System.out.println("Post Order Traversal: " );
+        	 if(result.containsKey("postOrder")) {
+        		 System.out.println(result.get("postOrder"));
+        	 }
+	}
+
+	private Map<String, List<Integer>> postInPostOrder(TreeNode5 root) {
+		Map<String, List<Integer>> traversalList = new HashMap<String, List<Integer>>();
+		
+		List<Integer> preOrderList = new ArrayList<>();		
+		List<Integer> inOrderList = new ArrayList<>();	
+		List<Integer> postOrderList = new ArrayList<>();
+		Stack<Pair> stack = new Stack<Pair>();
+		
+		stack.push(new Pair(root, 1));
+
+		if(root == null)
+			return traversalList;
+		
+		while(!stack.isEmpty()) {
+			TreeNode5 node = stack.peek().node;
+			int num = stack.peek().num;
+			stack.pop();
+			
+			if(num == 1) {//Pre-order
+				preOrderList.add(node.data); 
+				num++;
+				stack.push(new Pair(node, num));
+				if(stack.peek().node.left != null) {
+					stack.push(new Pair(stack.peek().node.left, 1));
+				}
+			}else if(num == 2) {//In-order
+				inOrderList.add(node.data);
+				num++;
+				stack.push(new Pair(node, num));
+				if(stack.peek().node.right != null) {
+					stack.push(new Pair(stack.peek().node.right, 1));
+				}
+			}else {
+				postOrderList.add(node.data);
+			}
+		}
+
+		traversalList.put("preOrder",preOrderList);
+		traversalList.put("inOrder",inOrderList);
+		traversalList.put("postOrder",postOrderList);
+		
+		return traversalList;
+	}
+}
