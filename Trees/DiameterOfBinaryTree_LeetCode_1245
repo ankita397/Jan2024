@@ -1,0 +1,68 @@
+package com.practice.trees;
+
+/*
+ * Diameter - Longest path between 2 nodes which does not need to pass via root
+ * https://www.youtube.com/watch?v=Rezetez59Nk&list=PLJ_vPQ_vraNz90tiB1HNgUWjivW07RcXC&index=15
+ * 
+ * Find longest path passing via every node
+ * 		Find height at every node
+ * 		So at each node we will have leftHt and rightHt
+ *  	The max of previous(leftHt + rightHt) and  current node's leftHt + rightHt = diameter
+ *  	return the height
+ *  
+ *  TC = O(N)
+ *  SC = O(N) - AUXILLIARY STACK SPACE
+ */
+
+class TreeNode8{
+	int data;
+	TreeNode8 left = null;
+	TreeNode8 right = null;
+	public TreeNode8(int data) {
+		this.data = data;
+	}
+}
+
+public class DiameterOfBinaryTree {
+
+	public static void main(String[] args) {
+		TreeNode8 root = new TreeNode8(1);
+        root.left = new TreeNode8(2);
+        root.right = new TreeNode8(3);
+        root.right.left = new TreeNode8(4);
+        root.right.right = new TreeNode8(6);
+        
+        root.right.left.left = new TreeNode8(5);
+        root.right.left.left.left = new TreeNode8(9);
+        
+        root.right.right.right = new TreeNode8(7);
+        root.right.right.right.right = new TreeNode8(8);
+        root.right.right.right.right.left = new TreeNode8(9);
+       
+        DiameterOfBinaryTree max = new DiameterOfBinaryTree();
+        int diameter = max.diameter(root);
+        
+        System.out.println("Diameter = "+ diameter);
+	}
+	
+	int diameter = Integer.MIN_VALUE;
+	public int diameter(TreeNode8 root) {
+
+		height(root);
+		return diameter;
+	}
+
+	private int height(TreeNode8 root) {
+		
+		if(root == null)
+			return 0;
+		
+		int leftHt = height(root.left); // left height at each node
+		int rightHt = height(root.right);// right height at each node
+		
+		diameter = Math.max(diameter, leftHt+rightHt); //compare with previous diameter
+		
+		return 1 + Math.max(leftHt, rightHt); // return the height of current node
+	}
+
+}
