@@ -13,6 +13,13 @@
  *     }
  * }
  */
+
+/*
+ *
+ * TC = O(N)logN - N for traversal and log N for PQ
+ * SC = O(N)
+ *
+ */
 class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
