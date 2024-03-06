@@ -1,0 +1,18 @@
+class Solution {
+    public int minDepth(TreeNode root) {
+        int minDepth = 0;
+        if(root == null)
+			return 0;
+
+        int leftHt = minDepth(root.left); 
+        int rightHt = minDepth(root.right);
+
+        //Ex : For a skewed tree which has only right nodes
+        if(leftHt == 0 || rightHt == 0)
+            minDepth = leftHt + rightHt + 1;
+        else    
+            minDepth = 1 + Math.min(leftHt, rightHt);
+
+        return minDepth;
+    }
+}
