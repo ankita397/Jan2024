@@ -2,6 +2,8 @@ package com.practice.trees;
 
 import java.util.ArrayList;
 /*
+ * GFG - https://www.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1
+ *
  * 1. addLeftBoundary - go to left boundary nodes and add all excluding leaves
  * 2. addLeaves - Do a tree traversal and add only the leaf nodes	- go to left most node & then go to right most node
  * 					Add only if those are leaves
