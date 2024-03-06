@@ -1,0 +1,47 @@
+package com.practice.trees;
+
+/*
+ * Recursion
+ * TC = O(N)
+ * SC = O(N)
+ */
+class TreeNode6{
+	int data;
+	TreeNode6 left = null;
+	TreeNode6 right = null;
+	public TreeNode6(int data) {
+		this.data = data;
+	}
+}
+
+public class MaxDepthOfBinaryTree {
+
+	public static void main(String[] args) {
+		// Example usage:
+        TreeNode6 root = new TreeNode6(1);
+        root.left = new TreeNode6(2);
+        root.right = new TreeNode6(3);
+        root.right.left = new TreeNode6(4);
+        root.right.left.left = new TreeNode6(5);
+        root.right.right = new TreeNode6(6);
+
+        MaxDepthOfBinaryTree max = new MaxDepthOfBinaryTree();
+        int maxDepth = max.maxDepth(root);
+        
+        System.out.println("Max depth of the binary tree = "+ maxDepth);
+	}
+
+	private int maxDepth(TreeNode6 root) {
+		int maxDepth = 0;
+		
+		if(root == null)
+			return 0;
+		
+		int leftHt = maxDepth(root.left);
+		int rightHt = maxDepth(root.right);
+		
+		maxDepth = 1 + Math.max(leftHt, rightHt);
+		
+		return maxDepth;
+	}
+}
