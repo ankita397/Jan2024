@@ -1,4 +1,5 @@
 /*
+* First element on each vertical will be part of my top view - so do not add any element other than first in a vertical
 * GFG - https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
 * Similar to Vertical Order Traversal - Leetcode - 987
 * Uses Level order traversal
@@ -50,6 +51,7 @@ class Solution
             queue.remove();
             
             //if map does not contain the key, add to map
+            //we do not add any element other than first in a vertical
             if(!map.containsKey(vertical)){
                 map.put(vertical, node.data);
             }
