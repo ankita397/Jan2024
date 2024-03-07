@@ -1,4 +1,5 @@
 /*
+* Last element on each vertical will be part of my bottom view - so keep on adding all elements vertical
 * GFG - https://www.geeksforgeeks.org/problems/bottom-view-of-binary-tree/1
 * Similar to Vertical Order Traversal - Leetcode - 987
 * Uses Level order traversal
@@ -50,6 +51,7 @@ class Solution
             
             //Unlike top view, for bottom we add elements to map even though same key is 
             //already present in the map 
+            //we keep on adding all elements vertical so that other elements in the same vertical get replaced with the last element.
             map.put(vertical, node.data);
             
             
