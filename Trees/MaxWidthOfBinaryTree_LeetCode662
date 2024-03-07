@@ -1,0 +1,30 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ /*
+ * Need to find the index of the leftmost and rightmost nodes at each level to get width 
+ * WidthOfEachLevel = RightIndex - LeftIndex +1
+ * Find the max(WidthOfEachLevel)
+ *
+ *
+ *
+ *
+ */
+
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        
+    }
+}
