@@ -19,7 +19,8 @@ class Tree {
             else if(key < root.data){
                 ceil = root.data; // key < root.data means our ceil lies in left sub tree and
                 //current node is greater than our key
-                //So update ceil to current node before going to left
+                //So update ceil to current node before going to left as its the smallest value
+                // that is greater than key till now
                 root = root.left;
             }else{
                 root = root.right;
