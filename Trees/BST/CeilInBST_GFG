@@ -1,0 +1,30 @@
+/*
+* GFG - https://www.geeksforgeeks.org/problems/implementing-ceil-in-bst/1
+* Ceil = Key or Min number that is greater than key
+* TC = O(Height of BST) = O(log N)
+*
+*/
+class Tree {
+    // Function to return the ceil of given number in BST.
+    int findCeil(Node root, int key) {
+        if (root == null) return -1;
+        // Code here
+        int ceil = -1;
+        while(root != null){
+            //if the exact key exists in our BST
+            if(root.data == key){
+                ceil = root.data;
+                return ceil;
+            }
+            else if(key < root.data){
+                ceil = root.data; // key < root.data means our ceil lies in left sub tree and
+                //current node is greater than our key
+                //So update ceil to current node before going to left
+                root = root.left;
+            }else{
+                root = root.right;
+            }
+        }
+        return ceil;
+    }
+}
