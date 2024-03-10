@@ -57,7 +57,7 @@ class Solution {
 
         //Input : inorder = [40,20,50,10,60,30], preorder = [10,20,40,50,30,60]
 
-        //starting of left sub tree preorder = preorderStart + 1 (20)
+        //starting of left sub tree preorder = preorderStart + 1 - 2nd node after root(20)
         //ending of left sub tree preorder = preorderStart + leftOfInorderLength (50)
         //starting of left sub tree inorder = inorderStart (40)
         //ending of left sub tree inorder = indexInorderRoot - 1 (50)
