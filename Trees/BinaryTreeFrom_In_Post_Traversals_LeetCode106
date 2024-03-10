@@ -13,6 +13,13 @@
  *     }
  * }
  */
+/*
+ * Refer BinaryTreeFromPre_In_Traversals_LeetCode105
+ *
+ * TC = O(N) or O(NlogN) - if we consider hashmap
+ * SC = O(N) + O(N) ~ O(N) - map and stack
+ */
+
 class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         Map<Integer, Integer> inorderMap = new HashMap<Integer, Integer>();
