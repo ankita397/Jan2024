@@ -1,0 +1,44 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ /*
+ * 
+ * Recursion - use reverse post order - right - left - root
+ * INTUITION : The nodes whose rev post order was completed was stored in next and then
+ * attach then to the node as given in problem stmt - root.right = next; root.left = null;
+ * https://www.youtube.com/watch?v=sWf7k1x9XR4&list=PLJ_vPQ_vraNz90tiB1HNgUWjivW07RcXC&index=25
+ * 
+ * TC = O(N)
+ * SC = O(N)
+ */ 
+class Solution {
+    TreeNode next = null;
+    public void flatten(TreeNode root) {
+        if(root == null)
+            return;
+
+
+        //Reverse post order
+        //move till last right
+        flatten(root.right);
+        //move till last left of last right
+        flatten(root.left);
+      
+        root.right = next;
+        root.left = null;
+        next = root;
+        //System.out.println(root.val + " - "+ next.val);
+    }
+}
