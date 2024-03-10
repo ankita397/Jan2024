@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> inorderMap = new HashMap<Integer, Integer>();
+
+        for(int i = 0; i < inorder.length; i++){
+            inorderMap.put(inorder[i], i);
+        }
+
+        TreeNode root = buildTree(inorder,postorder, 0, inorder.length - 1, 
+                        0, postorder.length - 1, inorderMap );
+
+        return root;
+    }
+
+    public TreeNode buildTree(int[] inorder, int[] postorder, int inorderStart, int inorderEnd,
+            int postorderStart, int postorderEnd, Map<Integer, Integer> inorderMap)  {
+        // no more postorder or inorder trees present - eg : for leaf nodes
+        if(postorderStart > postorderEnd || inorderStart > inorderEnd){
+            return null;
+        }
+        TreeNode root = new TreeNode(postorder[postorderEnd]);
+
+        int inorderIndexRoot = inorderMap.get(root.val);
+        int leftOfInorderLength = inorderIndexRoot - inorderStart;
+
+        //Input : inorder = [40,20,50,10,60,30], postorder = [40,50,20,60,30,10]
+
+        //starting of left sub tree postorder = postorderStart - 1st node (40)
+        //ending of left sub tree postorder = postorderStart + leftOfInorderLength - 1 (20)
+        //starting of left sub tree inorder = inorderStart (40)
+        //ending of left sub tree inorder = indexInorderRoot - 1 (50)
+        // left preorder = [20,40,50], left inorder = [40,20,50]
+        root.left = buildTree(inorder,postorder, inorderStart, inorderIndexRoot - 1, 
+                        postorderStart, postorderStart + leftOfInorderLength - 1 , inorderMap );
+
+        //starting of right sub tree postorder = postorderStart + leftOfInorderLength (60)
+        //ending of right sub tree postorder = preorderEnd - 1 - second last node before root (30)
+        //starting of right sub tree inorder = indexInorderRoot + 1 (60)
+        //ending of right sub tree inorder = inorderEnd (30)
+        // right preorder = [30,60], right inorder = [60,30]
+        root.right = buildTree(inorder,postorder, inorderIndexRoot+1, inorderEnd, 
+                        postorderStart + leftOfInorderLength, postorderEnd - 1, inorderMap );
+
+        return root;
+    }
+}
