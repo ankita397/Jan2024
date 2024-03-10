@@ -1,0 +1,49 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+
+ /*
+ * We will insert our node at the LEAF position
+ * TC = O(Height of BST) = O(log N)
+ */
+class Solution {
+    public TreeNode insertIntoBST(TreeNode root, int val) {
+        if(root == null){
+            return new TreeNode(val);// Insert at root
+        }
+        TreeNode curr = root;
+        while(root != null){
+            if(val < curr.val){
+                //Insert into left subtree
+                if(curr.left != null){//left subtree exists then move to left node
+                    curr = curr.left;
+                }else{
+                    curr.left = new TreeNode(val);// inserted our node at left leaf since curr.left == null
+                    break;
+                }
+            }else{
+                //Insert into right subtree
+                if(curr.right != null){//right subtree exists then move to right node
+                    curr = curr.right;
+                }else{
+                    curr.right = new TreeNode(val);// inserted our node at right leaf since curr.right == null
+                    break;
+                }
+            }
+        }
+        return root;
+    }
+}
