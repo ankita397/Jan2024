@@ -24,7 +24,10 @@
  * node only has right subtree- return the right subtree
  * node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, then recursively delete the minimum value in the right subtree
  */
-
+/*
+ * TC = O(H) = O(logN)
+ * SC = O(1) 
+ */
 class Solution {
     public TreeNode deleteNode(TreeNode root, int key) {
         if(root == null){
