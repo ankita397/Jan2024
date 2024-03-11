@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        //-231 <= Node.val <= 231 - 1 - mentioned in problem statement - use Long
+        return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean isValidBST(TreeNode root, long minValue, long maxValue){
+        //When the method is called with a null node, it means that there are no more 
+        //nodes to check, and by default, an empty tree or a single-node tree is considered
+        // a valid binary search tree (BST).
+        if(root == null){
+            return true;
+        }
+        //If the current node's value is greater than or equal to the maximum value or 
+        //less than or equal to the minimum value, it's not a valid BST.
+        if(root.val >= maxValue || root.val <= minValue){
+            return false;
+        }
+
+        boolean leftValid = false;
+        boolean rightValid = false;
+
+        //It recursively checks the left subtree, ensuring that values in the left subtree 
+        //are within the range of (minValue, root.val).
+        if(isValidBST(root.left, minValue, root.val)){
+            leftValid = true;
+        }
+
+        //It recursively checks the right subtree, ensuring that values in the right subtree 
+        //are within the range of (root.val, maxValue).
+        if(isValidBST(root.right, root.val, maxValue)){
+            rightValid = true;
+        }
+
+        //returns true only if both the left and right subtrees are valid BSTs.
+        return leftValid && rightValid;
+    }
+}
