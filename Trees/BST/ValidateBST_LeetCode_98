@@ -13,6 +13,7 @@
  *     }
  * }
  */
+
 class Solution {
     public boolean isValidBST(TreeNode root) {
         //-231 <= Node.val <= 231 - 1 - mentioned in problem statement - use Long
