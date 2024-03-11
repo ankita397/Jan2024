@@ -1,0 +1,73 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+/*
+ * INTUITION: 2 ways -
+ * 1)cut off connection to right subtree - connect the right subtree to main tree's left's right most node
+ * 2)cut off connection to left subtree - connect the left subtree to main tree's right's left most node
+ * Recursively find the node that has the same value as the key, while setting the left/right nodes equal to the returned subtree
+ * Once the node is found, have to handle the below 4 cases
+ * node doesn't have left or right - return null
+ * node only has left subtree- return the left subtree
+ * node only has right subtree- return the right subtree
+ * node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, then recursively delete the minimum value in the right subtree
+ */
+
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null){
+            return null;
+        }
+        if(key < root.val){//delete operation to happen in left subtree
+            root.left = deleteNode(root.left, key);
+        }else if(key > root.val){//delete operation to happen in right subtree
+            root.right = deleteNode(root.right, key);
+        }else{//if key == root.val - node found
+            //if either left or right subtree not present, then move to other subtree
+            if(root.left == null){
+                return root.right;
+            }else if(root.right == null){
+                return root.left;
+            }
+        
+            //cut off connection to left subtree 
+            //find the minimum value in the right subtree
+            //connect the left subtree to main tree's right subtree's's left most node
+            //root.val = key here
+            //System.out.println("Current root: "+ root.val);
+            TreeNode rightSmallest = root.right;
+            //System.out.println("right smallest :"+rightSmallest.val);
+            while (rightSmallest.left != null) {
+                rightSmallest = rightSmallest.left;//right subtree's's left most node
+            }
+            //System.out.println("Before : "+rightSmallest.val +" - "+ root.val);
+            //System.out.println("root's left : "+root.left.val);
+            rightSmallest.left = root.left;//4's left -> 3's left(2) --> 4 connected to 2
+            //System.out.println("After : "+rightSmallest.val +" - "+ root.val);
+            //System.out.println("root's right : "+root.right.val);
+            
+            // Return the modified right subtree
+            //In the last line, return root.right;, the method returns the modified right subtree. 
+            //This is because, in the case of deleting a node with two children, the replacement 
+            //for the deleted node is found in the right subtree, and the modified right subtree 
+            //is now serving as the "new" subtree at the original node's position.
+
+            //So, this line ensures that the modifications made to the right subtree are 
+            //properly reflected in the overall structure of the binary search tree.
+            return root.right;//return root.right to the main root - establish a connection between 4 and 5 here
+        }
+        return root;
+    }
+}
