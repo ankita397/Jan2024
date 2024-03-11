@@ -1,0 +1,45 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+ /*
+ * TC = O(3N) ~ O(N) - 3 directions - down, left, right
+ * SC = O(1)
+ */
+class Solution {
+    //The ptr variable is used to keep track of the current position in the preorder array.
+    int ptr = 0;
+    public TreeNode bstFromPreorder(int[] preorder) {
+        return bstFromPreorder(preorder, Integer.MAX_VALUE);
+    }
+
+    private TreeNode bstFromPreorder(int[] preorder, int upperBound){
+        //If ptr reaches the end of the preorder array or the current preorder element is greater than the upperBound, 
+        //return null indicating the end of the subtree or an invalid subtree.
+        if(ptr == preorder.length || preorder[ptr] > upperBound){
+            return null;
+        }
+
+        //Create a new TreeNode with the value at the current position in the preorder array (preorder[ptr]).
+        TreeNode root = new TreeNode(preorder[ptr]);
+        ptr++; // move the ptr to next element in preorder array
+
+        //Recursively construct the left subtree with the updated upper bound (root.val).
+        //Recursively construct the right subtree with the original upper bound (upperBound).
+
+        root.left = bstFromPreorder(preorder, root.val);
+        root.right = bstFromPreorder(preorder, upperBound);
+        return root;
+    }
+}
