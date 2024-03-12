@@ -1,0 +1,51 @@
+/*
+* INTUITION : First and last houses together cannot be robbed since they are adj
+* So, Leave out either first or last and solve as MaxSumWithoutAdj_GFG
+* arr1 - leaving first, arr2 - leaving last => either of these 2 arrays has to be the ans
+*
+* TC = O(N), SC = O(1)
+*/
+
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if(n == 1)// if the array has only 1 element
+            return nums[0];
+        int[] arr_leavingFirst = new int[n];
+        int[] arr_leavingLast = new int[n];
+
+        for(int i = 0; i < n; i++){
+            if(i != 0){
+                arr_leavingFirst[i] = nums[i];
+            }
+            if(i != n-1){
+                arr_leavingLast[i] = nums[i];
+            }
+        }
+        return Math.max(maxSumNonAdj(arr_leavingFirst,n), maxSumNonAdj(arr_leavingLast,n));
+    }
+
+    public int maxSumNonAdj(int[] arr, int n){
+        //tabulation + SO - TC = O(N), SC = O(1)
+        int prev = arr[0];//base
+        int prev2 = 0;
+        
+        int pick = 0;
+        int notPick = 0;
+        
+        for(int i = 1; i < n; i++){
+            //if negative i.e., i <= 1, dp[1-2]=dp[-1] should not be added
+            pick = arr[i];
+            //non-neg - dp[i-2]=prev2 should be added
+            if(i>1)
+                pick = pick + prev2;// n-2 is picked since n is picked(non-adj)
+            
+            notPick = prev;// n-1 is not picked since n is  picked
+        
+            int curr_i = Math.max(pick,notPick);
+            prev2 = prev;
+            prev = curr_i;
+        }
+        return prev;
+    }
+}
