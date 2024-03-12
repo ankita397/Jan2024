@@ -1,10 +1,13 @@
+//Memoization - TC = O(n) * k , SC=O(n) + O(n) - rec stack + dp array
+//Tabulation - TC = O(n) * k, SC = O(n) - dp array only
+
 //Memoization
 import java.util.*;
 
 class FrogJump_Memo {
     // Recursive function to calculate the minimum cost to reach the end
     // from a given index with at most 'k' jumps.
-    static int solveUtil(int ind, int[] height, int[] dp, int k) {
+    static int fromJump(int ind, int[] height, int[] dp, int k) {
         // Base case: If we are at the beginning (index 0), no cost is needed.
         if (ind == 0)
             return 0;
@@ -20,7 +23,7 @@ class FrogJump_Memo {
             // Ensure that we do not jump beyond the beginning of the array
             if (ind - j >= 0) {
                 // Calculate the cost for this jump and update mmSteps with the minimum cost
-                int jump = solveUtil(ind - j, height, dp, k) + Math.abs(height[ind] - height[ind - j]);
+                int jump = fromJump(ind - j, height, dp, k) + Math.abs(height[ind] - height[ind - j]);
                 mmSteps = Math.min(jump, mmSteps);
             }
         }
@@ -33,7 +36,7 @@ class FrogJump_Memo {
     static int solve(int n, int[] height, int k) {
         int[] dp = new int[n];
         Arrays.fill(dp, -1); // Initialize a memoization array to store calculated results
-        return solveUtil(n - 1, height, dp, k); // Start the recursion from the last index
+        return fromJump(n - 1, height, dp, k); // Start the recursion from the last index
     }
 
     public static void main(String args[]) {
@@ -49,7 +52,7 @@ class FrogJump_Memo {
 
 class FrogJump_Tab {
     // Function to find the minimum cost to reach the end using at most 'k' jumps
-    static int solveUtil(int n, int[] height, int[] dp, int k) {
+    static int fromJump(int n, int[] height, int[] dp, int k) {
         dp[0] = 0;
 
         // Loop through the array to fill in the dp array
@@ -72,7 +75,7 @@ class FrogJump_Tab {
     static int solve(int n, int[] height, int k) {
         int[] dp = new int[n]; // Initialize a memoization array to store calculated results
         Arrays.fill(dp, -1);
-        return solveUtil(n, height, dp, k);
+        return fromJump(n, height, dp, k);
     }
 
     public static void main(String args[]) {
