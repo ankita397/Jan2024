@@ -1,0 +1,87 @@
+/*
+* GFG - https://www.geeksforgeeks.org/problems/max-sum-without-adjacents2430/1
+*/
+class Solution {
+    int findMaxSum(int arr[], int n) {
+        //recursion
+        //return maxSum(arr, n-1);
+        
+        //memoization
+        // int[] dp = new int[n+1];
+        // for(int i = 0; i < n+1; i++){
+        //     dp[i] = -1;
+        // }
+        // return maxSum(arr, n-1, dp);
+        
+        //tabulation - TC = O(N), SC = O(N)
+        // int[] dp = new int[n+1];
+        // dp[0] = arr[0];//base
+        // int pick = 0;
+        // int notPick = 0;
+        
+        // for(int i = 1; i < n; i++){
+        //     //if negative i.e., i <= 1, dp[1-2]=dp[-1] should not be added
+        //     pick = arr[i];
+        //     //non-neg - dp[i-2] should be added
+        //     if(i>1)
+        //         pick = pick + dp[i-2];// n-2 is picked since n is picked(non-adj)
+            
+        //     notPick = dp[i-1];// n-1 is not picked since n is  picked
+        
+        //     dp[i] = Math.max(pick,notPick);
+        // }
+        // return dp[n-1];
+        
+        //tabulation + SO - TC = O(N), SC = O(1)
+        int prev = arr[0];//base
+        int prev2 = 0;
+        
+        int pick = 0;
+        int notPick = 0;
+        
+        for(int i = 1; i < n; i++){
+            //if negative i.e., i <= 1, dp[1-2]=dp[-1] should not be added
+            pick = arr[i];
+            //non-neg - dp[i-2]=prev2 should be added
+            if(i>1)
+                pick = pick + prev2;// n-2 is picked since n is picked(non-adj)
+            
+            notPick = prev;// n-1 is not picked since n is  picked
+        
+            int curr_i = Math.max(pick,notPick);
+            prev2 = prev;
+            prev = curr_i;
+        }
+        return prev;
+        
+    }
+    //Recursion - TLE - TC = O(2^n)
+    // int maxSum(int arr[], int n){
+    //     if(n == 0)//base
+    //         return arr[n];
+            
+    //     if(n < 0)//base
+    //         return 0;
+            
+    //     int pick = arr[n] + maxSum(arr, n-2);// n-2 is picked since n is picked(non-adj)
+    //     int notPick = maxSum(arr,n-1);// n-1 is not picked since n is  picked
+        
+    //     return Math.max(pick,notPick);
+    // }
+    
+    //Memoization - TC = O(N), SC = O(N)+O(N)
+    // int maxSum(int arr[], int n, int[] dp){
+    //     if(n == 0)
+    //         return arr[n];
+          
+    //     if(n < 0)
+    //         return 0;
+    //     if(dp[n] != -1){
+    //         return dp[n];
+    //     }   
+    //     int pick = arr[n] + maxSum(arr, n-2,dp);// n-2 is picked since n is picked(non-adj)
+    //     int notPick = maxSum(arr,n-1,dp);// n-1 is not picked since n is  picked
+        
+    //     return dp[n] = Math.max(pick,notPick);
+    // }
+}
