@@ -13,7 +13,7 @@ public class Solution {
     //We want to reach index n-1(nth stair)
     //so f(n-1) => min energy required to reach n-1 from 0 index
     public static int frogJump(int n, int heights[]) {
-        //Recursion
+        //Recursion - TLE
         //return jump(n-1, heights);
 
         //Memoization
@@ -59,7 +59,7 @@ public class Solution {
        return prev;
     }
 
-    //Recursion
+    //Recursion - TLE
     // public static int jump(int index, int heights[]){
     //     int jump1 = 0; int jump2 = Integer.MAX_VALUE;
     //     if(index == 0)
