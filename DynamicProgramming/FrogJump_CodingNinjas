@@ -1,0 +1,93 @@
+/*
+* https://www.codingninjas.com/studio/problems/frog-jump_3621012?leftPanelTabValue=SUBMISSION
+* Recursion Tree -> Recursion -> Memoization -> Tabulation -> Space optimization
+* Memoization - TC = O(N), SC = O(N) + O(N) => recursion stack space + dp array
+* Tabulation - TC = O(N), SC = O(N) => dp array only
+*
+* Space Optimization - TC = O(N), SC = O(1)
+*/
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    //Recursion
+    //We want to reach index n-1(nth stair)
+    //so f(n-1) => min energy required to reach n-1 from 0 index
+    public static int frogJump(int n, int heights[]) {
+        //Recursion
+        //return jump(n-1, heights);
+
+        //Memoization
+        // int dp[] = new int[n+1];
+        // for(int i = 0; i < dp.length; i++){
+        //     dp[i] = -1;
+        // }
+        // return jump(n-1, heights,dp);
+
+        //Tabulation
+        //     int dp[] = new int[n];
+    //     for(int i = 0; i < dp.length; i++){
+    //         dp[i] = 0;
+    //     }
+    //     int jump1 = 0; 
+    //     int jump2 = Integer.MAX_VALUE;
+    //     for(int i = 1; i <n; i++){
+    //         jump1 = dp[i-1] + Math.abs(heights[i] - heights[i-1]);
+
+    //         if(i > 1){
+    //             jump2 = dp[i-2] + Math.abs(heights[i] - heights[i-2]);
+    //         }
+    //         dp[i] = Math.min(jump1,jump2);
+    //    }
+    //    return dp[n-1];
+
+      //Space Optimization
+        int prev = 0; 
+        int prev2 = 0;
+
+        int jump1 = 0; 
+        int jump2 = Integer.MAX_VALUE;
+        for(int i = 1; i <n; i++){
+            jump1 = prev + Math.abs(heights[i] - heights[i-1]);
+
+            if(i > 1){
+                jump2 = prev2 + Math.abs(heights[i] - heights[i-2]);
+            }
+            int curr_i = Math.min(jump1,jump2);
+            prev2 = prev;
+            prev = curr_i;
+       }
+       return prev;
+    }
+
+    //Recursion
+    // public static int jump(int index, int heights[]){
+    //     int jump1 = 0; int jump2 = Integer.MAX_VALUE;
+    //     if(index == 0)
+    //         return 0;
+    //     jump1 = jump(index-1,heights) + Math.abs(heights[index] - heights[index-1]);
+
+    //     if(index > 1){
+    //         jump2 = jump(index-2,heights) + Math.abs(heights[index] - heights[index-2]);
+    //     }
+    //     return Math.min(jump1,jump2);
+    // }
+
+    //Memoization
+    //  public static int jump(int index, int heights[], int[] dp){
+    //     int jump1 = 0; int jump2 = Integer.MAX_VALUE;
+    //     if(index == 0)
+    //         return 0;
+
+    //     if(dp[index] != -1){
+    //         return dp[index];
+    //     }
+
+    //     jump1 = jump(index-1,heights,dp) + Math.abs(heights[index] - heights[index-1]);
+
+    //     if(index > 1){
+    //         jump2 = jump(index-2,heights,dp) + Math.abs(heights[index] - heights[index-2]);
+    //     }
+    //     return dp[index] = Math.min(jump1,jump2);
+    
+    // }
+}
