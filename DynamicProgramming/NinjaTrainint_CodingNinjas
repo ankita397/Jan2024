@@ -113,7 +113,7 @@ public class Solution {
 
 //Space Optimization
 //TC = O(N*4*3) - 4 tasks & loops 3 times 
-//SC = O(4)
+//SC = O(4) - size 4 array
 public class Solution {
     public static int ninjaTraining(int n, int points[][]) {
         //To compute for day n, we just need day n-1's data 
