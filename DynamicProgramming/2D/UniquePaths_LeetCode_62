@@ -1,0 +1,120 @@
+//Recursion - 
+//TC = O(2^n) => since we have 2 paths for every cell - TLE
+//SC = O(m-1)+O(n-1) =>O(Path length)
+class Solution {
+    public int uniquePaths(int m, int n) {
+        return totalPaths(m-1,n-1);
+    }
+    
+    public int totalPaths(int i, int j){
+        // we start from ((m-1,n-1)) and go till (0,0)
+        // so destination is (0,0)
+        if(i == 0 && j == 0){//base
+            return 1;
+        }
+        if(i < 0 || j < 0){// base - boundary
+            return 0;
+        }
+        // we move in up and left directions instead of down and right because we start
+        // from (m-1,n-1)) and go till (0,0)
+        int up = totalPaths(i-1,j);
+        int left = totalPaths(i,j-1);
+
+        return up+left;
+    }
+}
+
+//memoisation
+//TC = O(mXn) = no of states
+//SC = O((n-1) + (m-1)) + O(mXn) - rec stack space + dp array size
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return totalPaths(m-1,n-1,dp);
+    }
+
+    public int totalPaths(int i, int j,int[][] dp){
+        // we start from ((m-1,n-1)) and go till (0,0)
+        // so destination is (0,0)
+        if(i == 0 && j == 0){//base
+            return 1;
+        }
+        if(i < 0 || j < 0){// base - boundary
+            return 0;
+        }
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+
+        // we move in up and left directions instead of down and right because we start
+        // from (m-1,n-1)) and go till (0,0)
+        int up = totalPaths(i-1,j,dp);
+        int left = totalPaths(i,j-1,dp);
+
+        return dp[i][j] = up+left;
+    }
+}
+
+//Tabulation
+//TC = O(m*n)
+//SC = O(m*n) - reduced stack space
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+
+        for(int i = 0; i < m ; i++){
+            for(int j = 0; j < n ; j++){
+                // we move in up and left directions instead of down and right because we start
+                // from (m-1,n-1)) and go till (0,0)
+                if(i == 0 && j == 0){//base
+                    dp[i][j] = 1;
+                }else{
+                    int up = 0; int left = 0;
+                    if(i > 0)
+                        up = dp[i-1][j];
+                    if(j > 0)
+                        left = dp[i][j-1];
+                    
+                    dp[i][j] = up+left;
+                }
+            }
+        }
+
+        return dp[m-1][n-1];
+    }
+}
+//Space optimization
+//TC = O(m*n)
+//SC = O(n) - reduced stack space
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int[] prev = new int[n];//1D array for storing a single row
+
+        for(int i = 0; i < m ; i++){
+            int[] curr = new int[n];
+            for(int j = 0; j < n ; j++){
+                // we move in up and left directions instead of down and right because we start
+                // from (m-1,n-1)) and go till (0,0)
+                if(i == 0 && j == 0){//base
+                    curr[j] = 1;// current row
+                }else{
+                    int up = 0; int left = 0;
+                    if(i > 0)
+                        up = prev[j];// previous row
+                    if(j > 0)
+                        left = curr[j-1];//previous column on the current row
+                    
+                    curr[j] = up+left;//current row
+                }
+            }
+            prev = curr;// when i increases(next row), curr will become prev
+        }
+
+        return prev[n-1];
+    }
+}
