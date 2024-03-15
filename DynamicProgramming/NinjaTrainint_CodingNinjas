@@ -110,3 +110,44 @@ public class Solution {
     }
 
 }
+
+//Space Optimization
+//TC = O(N*4*3) - 4 tasks & loops 3 times 
+//SC = O(1)
+public class Solution {
+    public static int ninjaTraining(int n, int points[][]) {
+        //To compute for day n, we just need day n-1's data 
+        //So nX4 matrix is not required. Only a 1D matrix would work
+        int[] prev = new int[4];// n = days, 4 = no of tasks(0,1,2,3)
+        
+    // bases cases - 4 for day = 0 and task = 0,1,2,3
+        prev[0] = Math.max(points[0][1], points[0][2]);
+        prev[1] = Math.max(points[0][0], points[0][2]);
+        prev[2] = Math.max(points[0][0], points[0][1]);
+        prev[3] = Math.max(points[0][0], Math.max(points[0][1],points[0][2]));
+
+        //IMP : These first 2 loops (day and last) are for the 2D DP array
+        //Days remaining 1 to n-1
+            for (int day = 1; day < n; day++) {
+                // Initialize an array 'temp' to store the maximum points for the current day
+                int temp[] = new int[4];
+                for (int last = 0; last < 4; last++) {
+                    temp[last] = 0; // Initialize the maximum points for the current day and last activity
+                    // Consider each possible task for the current day
+                    for (int task = 0; task <= 2; task++) {
+                        if (task != last) { // Ensure that the current task is different from the last
+                            // Calculate the points for the current activity and add it to the maximum points from the previous day
+                            int activity = points[day][task] + prev[task];
+                            // Update the maximum points for the current day and last activity
+                            temp[last] = Math.max(temp[last], activity);
+                        }
+                    }
+                }
+                prev = temp;
+            }
+
+        // Return the maximum points achievable after all days (last activity is 3)
+        return prev[3];
+    }
+
+}
