@@ -114,7 +114,7 @@ class Solution {
             }
             prev = curr;// when i increases(next row), curr will become prev
         }
-
+        //After i loop, i = n. So i = n, its previous will be prev[n-1]
         return prev[n-1];
     }
 }
