@@ -51,9 +51,9 @@ class Solution {
         //SC = O(n)  = reduced stack space - 1D array prev
         int minSum = 0;
         int[] prev = new int[n];
-        int[] curr = new int[n];
         //2 states - i and j - so 2 loops
         for(int i = 0; i < m; i++){
+            int[] curr = new int[n];
             for(int j = 0; j < n; j++){
                 if(i ==0 && j == 0){
                     curr[j] = grid[0][0];
