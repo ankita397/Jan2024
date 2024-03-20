@@ -25,7 +25,7 @@ class Solution {
 }
 
 //memoisation
-//TC = O(mXn) = no of states
+//TC = O(mXn) = no of states(2 nested loops)
 //SC = O((n-1) + (m-1)) + O(mXn) - rec stack space + dp array size
 class Solution {
     public int uniquePaths(int m, int n) {
@@ -60,7 +60,7 @@ class Solution {
     }
 }
 
-//Tabulation
+//Tabulation = no of states(2 nested loops)
 //TC = O(m*n)
 //SC = O(m*n) - reduced stack space
 class Solution {
