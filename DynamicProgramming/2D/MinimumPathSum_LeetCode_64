@@ -1,0 +1,119 @@
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        //Recursion
+        //TC =
+        //return minSum(m-1,n-1,grid);
+
+        //Memoization
+        /*int[][] dp = new int[m+1][n+1];
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                dp[i][j] = -1;
+            }  
+        }
+        return minSum(m-1,n-1,dp,grid);
+        */
+
+        //Tabulation
+        //TC = O(mXn) = no of states(2 nested loops)
+        //SC = O(mXn) - dp array size
+        /*int[][] dp = new int[m+1][n+1];
+        int minSum = 0;
+        
+        //2 states - i and j - so 2 loops
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(i ==0 && j == 0){
+                    dp[i][j] = grid[0][0];
+                }else{
+                    int up = (int)1e9;// we are storing a huge number as we want to exclude this 
+                        //from our min path sum if i > 0 == false
+                    int left = (int)1e9;// we are storing a huge number as we want to exclude this 
+                        //from our min path sum if i > 0 == false
+                    if(i > 0){
+                        up = grid[i][j] + dp[i-1][j];
+                    }
+                  
+                    if(j > 0)
+                        left = grid[i][j] + dp[i][j-1];
+
+                    dp[i][j] = Math.min(up, left);
+                }
+            }  
+        }
+        return dp[m-1][n-1];
+        */
+
+        //Space Optimization
+        //TC = O(mXn) = no of states(2 nested loops)
+        //SC = O(n)  = reduced stack space - 1D array prev
+        int minSum = 0;
+        int[] prev = new int[n];
+        int[] curr = new int[n];
+        //2 states - i and j - so 2 loops
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(i ==0 && j == 0){
+                    curr[j] = grid[0][0];
+                }else{
+                    int up = (int)1e9;
+                    int left = (int)1e9;
+                    if(i > 0)// previous row's j column is required
+                        up = grid[i][j] + prev[j];
+                  
+                    if(j > 0)// current row's j-1 column is required
+                        left = grid[i][j] + curr[j-1];
+
+                    curr[j] = Math.min(up, left);
+                }
+            }  
+            prev = curr;
+        }
+        return prev[n-1];// outer for loop will end with i = m, so for i = m , previous is 
+        //prev will be m-1
+    }
+
+    //Recursion
+    //TC = O(2^n) => since we have 2 paths for every cell - TLE
+    //SC = O(m-1)+O(n-1) =>O(Path length)
+    /*public int minSum(int i, int j, int[][] grid){
+        int minSum = 0;
+        if(i == 0 && j == 0){
+            return grid[0][0];
+        }
+        if(i < 0 || j < 0){
+            return (int)1e9; // we are returning a huge number as we want to exclude this 
+                        //from our min path sum
+        }
+
+        int up = grid[i][j] + minSum(i-1, j, grid);
+        int left = grid[i][j] + minSum(i, j-1, grid);
+
+        return Math.min(up,left);
+    }*/
+
+    //Memoization
+    //TC = O(mXn) = no of states
+    //SC = O((n-1) + (m-1)) + O(mXn) - rec stack space + dp array size
+    /*public int minSum(int i, int j, int[][] dp,int[][] grid){
+        int minSum = 0;
+        if(i == 0 && j == 0){
+            return grid[0][0];
+        }
+        if(i < 0 || j < 0){
+            return (int)1e9; // we are returning a huge number as we want to exclude this 
+                        //from our min path sum
+        }
+        if(dp[i][j] != -1){// if its not -1, then it has been computed earlier
+            return dp[i][j];
+        }
+
+        int up = grid[i][j] + minSum(i-1, j, dp, grid);
+        int left = grid[i][j] + minSum(i, j-1, dp, grid);
+
+        return dp[i][j] = Math.min(up,left);
+    }*/
+}
