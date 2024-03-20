@@ -4,7 +4,6 @@ class Solution {
         int n = grid[0].length;
 
         //Recursion
-        //TC =
         //return minSum(m-1,n-1,grid);
 
         //Memoization
