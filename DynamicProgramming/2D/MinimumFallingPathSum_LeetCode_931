@@ -31,7 +31,7 @@ class Solution {
         //SC = O(n*m) - dp array
         /*
         int[][] dp = new int[n][m];    
-        //base case - i == 0
+        //base case - i == 0, run loop for other changing index (j)
         for(int j = 0; j < m; j++){
             dp[0][j] = matrix[0][j];
         } 
