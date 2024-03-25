@@ -83,6 +83,7 @@ public class Solution {
         int[][] dp = new int[n][4];// n = days, 4 = no of tasks(0,1,2,3)
         
     // bases cases - 4 for day = 0 and task = 0,1,2,3 - can run loop also for task
+    // check for base case separately outside nested loop if base case is for only i == 0 or j == 0
         dp[0][0] = Math.max(points[0][1], points[0][2]);
         dp[0][1] = Math.max(points[0][0], points[0][2]);
         dp[0][2] = Math.max(points[0][0], points[0][1]);
