@@ -32,6 +32,7 @@ class Solution {
         /*
         int[][] dp = new int[n][m];    
         //base case - i == 0, run loop for other changing index (j)
+        // check for base case separately outside nested loop if base case is for only i == 0 or j == 0
         for(int j = 0; j < m; j++){
             dp[0][j] = matrix[0][j];
         } 
