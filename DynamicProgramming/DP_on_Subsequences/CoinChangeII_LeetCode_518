@@ -1,0 +1,127 @@
+class Solution {
+    //Recursion
+    //TC = exponential
+    //SC = O(N) - rec/auxiliary stack space
+    /*
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        return coinChange(n-1, amount, coins);
+    }
+    public int coinChange(int ind, int amount, int[] coins){
+        //base case
+        if(ind == 0){
+            int take = (amount % coins[ind]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+            return take;
+        }
+
+        int notTake = 0 + coinChange(ind-1, amount, coins);
+        int take = 0;
+        if(coins[ind] <= amount){
+            // no need to add coins[ind] as we need only ways not total coins
+            take = coinChange(ind, amount - coins[ind], coins);
+        }
+
+        return notTake + take;
+    }
+    */
+
+    //Memoization
+    //TC = O(n * amount) => dp array size
+    //SC = O(N) - rec/auxiliary stack space
+    /*
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount+1];
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return coinChange(n-1, amount, coins, dp);
+    }
+    public int coinChange(int ind, int amount, int[] coins, int[][] dp){
+        //base case
+        if(ind == 0){
+            int take = (amount % coins[0]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+            return take;
+        }
+
+        if(dp[ind][amount] != -1)
+            return dp[ind][amount];
+
+        int notTake = 0 + coinChange(ind-1, amount, coins, dp);
+        int take = 0;
+        if(coins[ind] <= amount){
+            // no need to add coins[ind] as we need only ways not total coins
+            take = coinChange(ind, amount - coins[ind], coins, dp);
+        }
+
+        return dp[ind][amount] = notTake + take;
+    }
+    */
+
+    //Tabulation
+    //TC = O(n * amount)
+    //SC = O(n * amount)  
+    /*
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[][] dp = new int[n][amount+1];
+        
+        // for(int amt = 0; amt <= amount; amt++){
+        //     dp[0][amt] = (amount % coins[0]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+        // }
+        // Initialize base condition for the first element of the array
+        for (int amt = 0; amt <= amount; amt++) {
+            if (amt % coins[0] == 0)
+                dp[0][amt] = 1;
+            // Else condition is automatically fulfilled, as dp array is initialized to zero
+        }
+
+        for(int ind = 1; ind < n; ind++){
+            for(int amt = 0; amt <= amount; amt++){
+                int notTake = 0 + dp[ind-1][amt];
+                int take = 0;
+                if(coins[ind] <= amt){
+                    // no need to add coins[ind] as we need only ways not total coins
+                    take = dp[ind][amt - coins[ind]];
+                }
+                dp[ind][amt] = notTake + take;
+            }
+        }
+        return dp[n-1][amount];
+    }
+    */
+
+    //Space Optimization
+    //TC = O(n * amount)
+    //SC = O(amount) - 1D array size
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[] prev = new int[amount+1];
+        
+        // for(int amt = 0; amt <= amount; amt++){
+        //     dp[0][amt] = (amount % coins[0]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+        // }
+        // Initialize base condition for the first element of the array
+        for (int amt = 0; amt <= amount; amt++) {
+            if (amt % coins[0] == 0)
+                prev[amt] = 1;
+            // Else condition is automatically fulfilled, as dp array is initialized to zero
+        }
+
+        for(int ind = 1; ind < n; ind++){
+            int[] curr = new int[amount+1];
+            for(int amt = 0; amt <= amount; amt++){
+                int notTake = 0 + prev[amt];
+                int take = 0;
+                if(coins[ind] <= amt){
+                    // no need to add coins[ind] as we need only ways not total coins
+                    take = curr[amt - coins[ind]];
+                }
+                curr[amt] = notTake + take;
+            }
+            prev = curr;
+        }
+        return prev[amount];
+    }
