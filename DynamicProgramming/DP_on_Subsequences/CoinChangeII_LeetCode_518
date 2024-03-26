@@ -11,7 +11,6 @@ class Solution {
         //base case
         if(ind == 0){
             int take = (amount % coins[ind]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
-            //This represents that there is only one way to make up the amount using only the first coin.
             return take;
         }
 
@@ -94,10 +93,10 @@ class Solution {
     }
     */
 
-    //Space Optimization
+    //Space Optimization - 2 arrays
     //TC = O(n * amount)
     //SC = O(amount) - 1D array size
-    public int change(int amount, int[] coins) {
+    /*public int change(int amount, int[] coins) {
         int n = coins.length;
         int[] prev = new int[amount+1];
         
@@ -126,3 +125,36 @@ class Solution {
         }
         return prev[amount];
     }
+    */
+
+    //Space Optimization - 1 array
+    //TC = O(n * amount)
+    //SC = O(amount) - 1D array size
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[] prev = new int[amount+1];
+        
+        // for(int amt = 0; amt <= amount; amt++){
+        //     dp[0][amt] = (amount % coins[0]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+        // }
+        // Initialize base condition for the first element of the array
+        for (int amt = 0; amt <= amount; amt++) {
+            if (amt % coins[0] == 0)
+                prev[amt] = 1;
+            // Else condition is automatically fulfilled, as dp array is initialized to zero
+        }
+
+        for(int ind = 1; ind < n; ind++){
+            for(int amt = 0; amt <= amount; amt++){
+                int notTake = 0 + prev[amt];
+                int take = 0;
+                if(coins[ind] <= amt){
+                    // no need to add coins[ind] as we need only ways not total coins
+                    take = prev[amt - coins[ind]];
+                }
+                prev[amt] = notTake + take;
+            }
+        }
+        return prev[amount];
+    }
+}
