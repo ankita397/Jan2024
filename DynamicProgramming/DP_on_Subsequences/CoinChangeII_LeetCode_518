@@ -11,6 +11,7 @@ class Solution {
         //base case
         if(ind == 0){
             int take = (amount % coins[ind]) == 0 ? 1 : 0; // 1 => take (can be taken any no of times)
+            //This represents that there is only one way to make up the amount using only the first coin.
             return take;
         }
 
