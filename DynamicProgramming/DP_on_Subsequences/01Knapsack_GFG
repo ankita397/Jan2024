@@ -2,7 +2,7 @@
 class Solution 
 { 
     //Recursion
-    //TC = exponential
+    //TC = exponential (> 2^ N)
     //SC = O(N) = recursion/auxiliary stack space
     //Function to return max value that can be put in knapsack of capacity W.
     /*
