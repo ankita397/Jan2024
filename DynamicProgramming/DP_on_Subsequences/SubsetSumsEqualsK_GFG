@@ -2,7 +2,7 @@
 class Solution{
 
     //Recursion
-    //TC = O(exponential)
+    //TC = O(2^N)
     //SC = O(N) = auxialliary stack space
     /*
     static Boolean isSubsetSum(int N, int arr[], int sum){
