@@ -1,0 +1,157 @@
+//GFG - https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+class Solution 
+{ 
+    //Recursion
+    //TC = exponential
+    //SC = O(N) = recursion/auxiliary stack space
+    //Function to return max value that can be put in knapsack of capacity W.
+    /*
+    static int knapSack(int W, int wt[], int val[], int n) { 
+         return maxKnapsack(n-1, W, wt, val);
+    } 
+    
+    static int maxKnapsack(int index, int maxWt, int[] wt, int[] val){
+        //base case
+        if(index == 0){
+            if(wt[0] <= maxWt){
+                return val[0];
+            }else {
+                return 0; // Can't select this item
+            }
+        }
+        
+        int notTake = maxKnapsack(index-1, maxWt, wt,val);
+        int take = Integer.MIN_VALUE;
+        if(wt[index] <= maxWt){
+            take = val[index] + maxKnapsack(index-1, maxWt-wt[index], wt,val);
+        }
+        
+        return Math.max(notTake , take);
+    }*/
+    
+    //Memoization
+    //TC = O(n * W)
+    //SC = O(n * W) + O(n) = dp array size + recursion/auxiliary stack space
+    /*
+    static int knapSack(int W, int wt[], int val[], int n) { 
+        int[][] dp = new int[n][W+1];
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return maxKnapsack(n-1, W, wt, val, dp);
+    } 
+    
+    static int maxKnapsack(int index, int maxWt, int[] wt, int[] val, int[][] dp){
+        //base case
+        if(index == 0){
+            if(wt[0] <= maxWt){
+                return val[0];
+            }else {
+                return 0; // Can't select this item
+            }
+        }
+        
+        if(dp[index][maxWt] != -1)
+            return dp[index][maxWt];
+        
+        int notTake = maxKnapsack(index-1, maxWt, wt,val,dp);
+        int take = Integer.MIN_VALUE;
+        if(wt[index] <= maxWt){
+            take = val[index] + maxKnapsack(index-1, maxWt-wt[index], wt,val,dp);
+        }
+        
+        return dp[index][maxWt] = Math.max(notTake , take);
+    }*/
+    
+    //Tabulation
+    //TC = O(n * maxWt)
+    //Sc = O(n * maxWt) => dp array size
+    /*
+    static int knapSack(int maxWt, int wt[], int val[], int n) { 
+        int[][] dp = new int[n][maxWt+1];
+        
+        //base case
+        //weight starts from wt[0] as the sack weight must be >= weight of index 0 for it 
+        //to be added to the sack
+        for(int weight = wt[0]; weight <= maxWt; weight++){
+            dp[0][weight] = val[0];
+        }
+        
+        //For remaining cases
+        for(int index = 1; index < n; index++){
+            for(int weight = 0; weight <= maxWt; weight++){
+                int notTake = dp[index-1][weight];
+                int take = Integer.MIN_VALUE;
+                if(wt[index] <= weight){
+                    take = val[index] + dp[index-1][weight-wt[index]];
+                }
+                dp[index][weight] = Math.max(notTake , take);
+            }
+        }
+        return dp[n-1][maxWt];
+    } 
+    */
+    
+    //Space Optimization - 2 arrays
+    //TC = O(n * maxWt)
+    //SC = O(maxWt) - 1D array
+    /*
+    static int knapSack(int maxWt, int wt[], int val[], int n) { 
+        int[] prev = new int[maxWt+1];
+        
+        //base case
+        //weight starts from wt[0] as the sack weight must be >= weight of index 0 for it 
+        //to be added to the sack
+        for(int weight = wt[0]; weight <= maxWt; weight++){
+            prev[weight] = val[0];
+        }
+        
+        //For remaining cases
+        for(int index = 1; index < n; index++){
+            int[] curr = new int[maxWt+1];
+            for(int weight = 0; weight <= maxWt; weight++){
+                int notTake = prev[weight];
+                int take = Integer.MIN_VALUE;
+                if(wt[index] <= weight){
+                    take = val[index] + prev[weight-wt[index]];
+                }
+                curr[weight] = Math.max(notTake , take);
+            }
+            prev = curr;
+        }
+        return prev[maxWt];
+    } 
+    */
+    
+    //Space Optimization - 1 array - not mandatory
+    //TC = O(n * maxWt)
+    //SC = O(maxWt) - 1D array
+    // We don't need 2 arrays as we can use just one array since the values to the left 
+    // if weight are not used
+    static int knapSack(int maxWt, int wt[], int val[], int n) { 
+        int[] prev = new int[maxWt+1];
+        
+        //base case
+        //weight starts from wt[0] as the sack weight must be >= weight of index 0 for it 
+        //to be added to the sack
+        for(int weight = wt[0]; weight <= maxWt; weight++){
+            prev[weight] = val[0];
+        }
+        
+        //For remaining cases
+        for(int index = 1; index < n; index++){
+            //weight loop should be reversed
+            for(int weight = maxWt; weight > 0; weight--){
+                int notTake = prev[weight];
+                int take = Integer.MIN_VALUE;
+                if(wt[index] <= weight){
+                    take = val[index] + prev[weight-wt[index]];
+                }
+                prev[weight] = Math.max(notTake , take);
+            }
+        }
+        return prev[maxWt];
+    } 
+}
