@@ -1,0 +1,140 @@
+// GFG - https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=bottom_sticky_on_article
+class Solution{
+
+    //Recursion
+    //TC = O(exponential)
+    //SC = O(N) = auxialliary stack space
+    /*
+    static Boolean isSubsetSum(int N, int arr[], int sum){
+        return subSum(N-1, arr, sum);
+    }
+    
+    static Boolean subSum(int ind, int arr[], int target){
+        //subset/subsequence - take or notTake approach
+        //base case
+        if(target == 0) // no target left as we have subset whose sum is target
+            return true;
+        if(ind == 0){
+            return (arr[0] == target);
+        }
+        
+        boolean notTake = subSum(ind-1, arr, target);
+        boolean take = false;
+        if(arr[ind] <= target){
+            take = subSum(ind-1, arr, target - arr[ind]);
+        }
+        
+        return take || notTake;
+    }
+    */
+
+    //Memoization
+    //TC = O(N*sum)
+    //SC = O(N*sum) + O(N) = dp array + auxialliary stack space
+    /*static Boolean isSubsetSum(int N, int arr[], int sum){
+        int[][] dp = new int[N][sum+1];
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                dp[i][j] = -1;
+            }  
+        }
+        return subSum(N-1, arr, sum, dp);
+    }
+    
+    static Boolean subSum(int ind, int arr[], int target, int[][] dp){
+        //subset/subsequence - take or notTake approach
+        //base case
+        if(target == 0) // no target left as we have subset whose sum is target
+            return true;
+        if(ind == 0){ // if only last index is left, then if it is exactly equal to target, 
+                      // then only it would be considered as part of the subset
+            return (arr[0] == target);
+        }
+        if(dp[ind][target] != -1){
+            return dp[ind][target] == 0 ? false: true;
+        }
+        boolean notTake = subSum(ind-1, arr, target, dp);
+        boolean take = false;
+        if(arr[ind] <= target){
+            take = subSum(ind-1, arr, target - arr[ind], dp);
+        }
+        dp[ind][target] = take || notTake ? 1 : 0;
+        return take || notTake;
+    }*/
+    
+    //Tabulation
+    //TC = O(N*sum)
+    //SC = O(N*sum) = dp array 
+    /*static Boolean isSubsetSum(int N, int arr[], int sum){
+        boolean[][] dp = new boolean[N][sum+1];
+        
+        //Each row in dp array corresponds to individual elements in arr
+        
+        
+        // if target == 0 => true
+        // Initialize the first row of the DP table
+        for (int i = 0; i < N; i++) {
+            dp[i][0] = true;
+        }
+
+        // Initialize the first column of the DP table
+        // dp[0][arr[0]] means that we are considering the first element 
+        // of the array with the target equal to the first element itself). 
+        // Eg : arr = [4,2,3,7,..], target = 11 -> arr[0] = 4 => dp[0][4] = true 
+        // On the first row, only arr[0] == target will be true => this means we can form the
+        // target value a[0] at index 0
+        if (arr[0] <= sum) {
+            dp[0][arr[0]] = true;
+        }
+        //Loop for remaining - 2 states = 2 loops
+        for(int ind = 1; ind < N; ind++){
+            for(int target = 0; target <= sum; target++){
+                boolean notTake = dp[ind-1][target];
+                boolean take = false;
+                if(arr[ind] <= target){
+                    take = dp[ind-1][target - arr[ind]];
+                }
+                dp[ind][target] = take || notTake;
+            }
+        }
+        return dp[N-1][sum];
+    }*/
+    
+    //Space Optimization
+    //TC = O(N*sum)
+    //SC = O(sum) = 1D array
+    static Boolean isSubsetSum(int N, int arr[], int sum){
+
+        boolean[] prev = new boolean[sum+1];
+    
+        //for prev[0] = dp[i][0] => we know for target == 0, it will be true
+        prev[0] = true;
+        
+
+        // Initialize the first column of the DP table
+        // dp[0][arr[0]] means that we are considering the first element 
+        // of the array with the target equal to the first element itself). 
+        // Eg : arr = [4,2,3,7,..], target = 11 -> arr[0] = 4 => dp[0][4] = true 
+        // On the first row, only arr[0] == target will be true => this means we can form the
+        // target value a[0] at index 0
+        if (arr[0] <= sum) {
+            prev[arr[0]] = true;
+        }
+        //Loop for remaining - 2 states = 2 loops
+        for(int ind = 1; ind < N; ind++){
+            boolean[] curr = new boolean[sum+1];
+            curr[0] = true;
+            for(int target = 0; target <= sum; target++){
+                boolean notTake = prev[target];
+                boolean take = false;
+                if(arr[ind] <= target){
+                    take = prev[target - arr[ind]];
+                }
+                curr[target] = take || notTake;
+            }
+            prev = curr;
+        }
+        return prev[sum];
+    }
+    
+}
