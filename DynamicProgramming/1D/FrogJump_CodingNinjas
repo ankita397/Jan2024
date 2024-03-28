@@ -1,6 +1,8 @@
 /*
+* find the minimum total energy used by the frog to reach from '1st' stair to 'Nth' stair. (return min(jump1,jump2))
 * INTUITION : Jumping back - for 1 step jump - prevJump(i-1) + Height of Jump from (i-1 to n)
 *                          - for 2 steps jump - prevJump(i-2) + Height of Jump from (i-2 to n)
+* base case - resch destination - index == 0
 * Code ref : jump1 = jump(index-1,heights) + Math.abs(heights[index] - heights[index-1])
 * https://www.codingninjas.com/studio/problems/frog-jump_3621012?leftPanelTabValue=SUBMISSION
 * Recursion Tree -> Recursion -> Memoization -> Tabulation -> Space optimization
