@@ -1,0 +1,149 @@
+/*
+ * Determine the maximum value obtainable by cutting up the rod and selling the pieces.(return max(take,notTake))
+ * INTUITION : Subsequences always take or notTake - based on rodLength not price[index] => rodLength = index + 1
+ * Pick rod lengths(and maximize the price) to make N = target = N
+ * GFG - https://www.geeksforgeeks.org/problems/rod-cutting0840/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=bottom_sticky_on_article
+ * base case : at index 0, rod length = 1. We need N rods of length = 1 to get N size rod
+ */
+class Solution{
+    
+    //Recursion
+    //TC = exponential(> 2^n)
+    //SC = O(N)
+    /*
+    public int cutRod(int price[], int n) {
+        return maxRodLen(n-1, price, n);
+    }
+    
+    public int maxRodLen(int index, int[] price, int N){
+        //base case
+        if(index == 0){// at index 0, rod length = 1. We need N rods of length = 1 to get N size rod
+            return N * price[0];
+        }
+        int notTake = 0 + maxRodLen(index-1, price, N);
+        int take = Integer.MIN_VALUE;
+        int rodLength = index + 1;
+        if(rodLength <= N){
+            take = price[index] + maxRodLen(index, price, N-rodLength);
+        }
+        
+        return Math.max(take, notTake);
+    }*/
+    
+    //Memoization - 2 changing states - dp[n][n+1]
+    //TC = O(N * N)
+    //SC = O(N * N) + O(N) => dp array + auxiliary stack space
+    /*
+    public int cutRod(int price[], int n) {
+        int[][] dp = new int[n][n+1];
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return maxRodLen(n-1, price, n, dp);
+    }
+    
+    public int maxRodLen(int index, int[] price, int N, int[][] dp){
+        //base case
+        if(index == 0){// at index 0, rod length = 1. We need N rods of length = 1 to get N size rod
+            return N * price[0];
+        }
+        if(dp[index][N] != -1){
+            return dp[index][N];
+        }
+        int notTake = 0 + maxRodLen(index-1, price, N, dp);
+        int take = Integer.MIN_VALUE;
+        int rodLength = index + 1;
+        if(rodLength <= N){
+            take = price[index] + maxRodLen(index, price, N-rodLength, dp);
+        }
+        
+        return dp[index][N] = Math.max(take, notTake);
+    }
+    */
+    
+    //Tabulation
+    //TC = O(N*N)
+    //SC = O(N*N)
+    /*
+    public int cutRod(int price[], int n) {
+        int[][] dp = new int[n][n+1];
+        //base case - index = 0, so run loop for N - fill all columns for row 0 of dp array
+        for(int N = 0; N <=n; N++){//0,1,2,3,...n
+            dp[0][N] = N * price[0];
+        }
+        
+        for(int index = 1; index < n; index++){
+            for(int N = 0; N <= n; N++){//<=n as col size = n+1
+                int notTake = 0 + dp[index-1][N];
+                int take = Integer.MIN_VALUE;
+                int rodLength = index + 1;
+                if(rodLength <= N){
+                    take = price[index] + dp[index][N-rodLength];
+                }
+                dp[index][N] = Math.max(take, notTake);
+            }
+        }
+        
+        return dp[n-1][n];
+    }
+    */
+    
+    //Space Optimization - 2 1D arrays
+    //TC = O(N*N)
+    //SC = O(N)
+    /*
+    public int cutRod(int price[], int n) {
+        int[][] dp = new int[n][n+1];
+        int[] prev = new int[n+1];
+        int[] curr = new int[n+1];
+        //base case - index = 0, so run loop for N - fill all columns for row 0 of dp array
+        for(int N = 0; N <=n; N++){//0,1,2,3,...n
+            prev[N] = N * price[0];
+        }
+        
+        for(int index = 1; index < n; index++){
+            for(int N = 0; N <= n; N++){//<=n as col size = n+1
+                int notTake = 0 + prev[N];
+                int take = Integer.MIN_VALUE;
+                int rodLength = index + 1;
+                if(rodLength <= N){
+                    take = price[index] + curr[N-rodLength];
+                }
+                curr[N] = Math.max(take, notTake);
+            }
+            prev = curr;
+        }
+        
+        return prev[n];
+    }
+    */
+    
+    //Space Optimization - Single 1D array - we don't need left elements in prev array so we 
+    // can rewrite onto those indexes for computing our next value
+    //TC = O(N*N)
+    //SC = O(N)
+    public int cutRod(int price[], int n) {
+        int[][] dp = new int[n][n+1];
+        int[] prev = new int[n+1];
+        //base case - index = 0, so run loop for N - fill all columns for row 0 of dp array
+        for(int N = 0; N <=n; N++){//0,1,2,3,...n
+            prev[N] = N * price[0];
+        }
+        
+        for(int index = 1; index < n; index++){
+            for(int N = 0; N <= n; N++){//<=n as col size = n+1
+                int notTake = 0 + prev[N];
+                int take = Integer.MIN_VALUE;
+                int rodLength = index + 1;
+                if(rodLength <= N){
+                    take = price[index] + prev[N-rodLength];
+                }
+                prev[N] = Math.max(take, notTake);
+            }
+        }
+        
+        return prev[n];
+    }
+}
