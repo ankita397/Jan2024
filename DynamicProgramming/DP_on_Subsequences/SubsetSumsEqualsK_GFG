@@ -1,3 +1,8 @@
+/*
+* INTUITION : Subsequences always take or not take
+* base case - 1. no target left as we have subset whose sum is target
+*            2. value at 0th index = target
+*/
 // GFG - https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=bottom_sticky_on_article
 class Solution{
 
