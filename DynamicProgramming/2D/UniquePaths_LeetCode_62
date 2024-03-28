@@ -1,3 +1,8 @@
+/*
+* INTUITION : Start from end and move in up and left directions. For up, i reduces and for left, j reduces. 
+* Recursively move & add up and left.
+*
+*/
 //Recursion - 
 //TC = O(2^n) => since we have 2 paths for every cell - TLE
 //SC = O(m-1)+O(n-1) =>O(Path length)
