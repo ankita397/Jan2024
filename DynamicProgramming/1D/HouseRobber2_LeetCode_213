@@ -1,4 +1,5 @@
 /*
+* return the maximum amount of money you can rob tonight without alerting the police.(return max(pick,notPick);)
 * INTUITION : First and last houses together cannot be robbed since they are adj
 * So, Leave out either first or last and solve as MaxSumWithoutAdj_GFG
 * arr1 - leaving first, arr2 - leaving last => either of these 2 arrays has to be the ans
