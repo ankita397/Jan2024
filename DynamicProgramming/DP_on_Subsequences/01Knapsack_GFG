@@ -1,4 +1,5 @@
 /*
+* find out the maximum value subset of val[] such that sum of the weights of this subset is smaller than or equal to W.(sum = return max(notTake , take)) 
 * INTUITION : Subsequences always take(target reduces and recursively call for index-1) or not take(target stays same and recursively call for index-1 and val[index])  
 * return take or notTake
 * return take or notTake
