@@ -1,5 +1,6 @@
 /*
-* INTUITION : Subsequences always take or not take
+* INTUITION : Subsequences always take(target reduces and recursively call for index-1) or not take(target stays same and recursively call for index-1)  
+* return take or notTake
 * base case - 1. no target left as we have subset whose sum is target
 *            2. value at 0th index = target
 */
