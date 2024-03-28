@@ -1,4 +1,5 @@
 /*
+* Return the number of combinations that make up that amount. 
 * INTUITION : Subsequences always take(target reduces and recursively call for same index as same coin can be considered multiple times) 
 * or not take(target stays same and recursively call for index-1)  
 * return take or notTake
