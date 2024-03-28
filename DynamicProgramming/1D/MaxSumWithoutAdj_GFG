@@ -1,5 +1,5 @@
 /*
-* INTUITION : subsequence pick or not pick
+* INTUITION : subsequence pick(pick and add) or not pick(don't pick so don't add)
 * GFG - https://www.geeksforgeeks.org/problems/max-sum-without-adjacents2430/1
 */
 class Solution {
