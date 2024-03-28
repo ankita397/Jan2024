@@ -2,6 +2,7 @@
 * Return the minimum possible total cost incurred in reaching the stone ‘n’.(return min)
 * INTUITION : Jumping back - for 1 step jump - prevJump(i-k) + Height of Jump from (i-k to n)
 *                          - for 2 steps jump - prevJump(i-k) + Height of Jump from (i-k to n)
+* base case - reach destination - index == 0
 * Code ref : int jump = fromJump(ind - j, height, dp, k) + Math.abs(height[ind] - height[ind - j]);// j(loop var) = k
 * Memoization - TC = O(n) * k , SC=O(n) + O(n) - rec stack + dp array
 * Tabulation - TC = O(n) * k, SC = O(n) - dp array only
