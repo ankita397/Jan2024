@@ -1,4 +1,5 @@
 /*
+* Return the minimum possible total cost incurred in reaching the stone ‘n’.(return min)
 * INTUITION : Jumping back - for 1 step jump - prevJump(i-k) + Height of Jump from (i-k to n)
 *                          - for 2 steps jump - prevJump(i-k) + Height of Jump from (i-k to n)
 * Code ref : int jump = fromJump(ind - j, height, dp, k) + Math.abs(height[ind] - height[ind - j]);// j(loop var) = k
