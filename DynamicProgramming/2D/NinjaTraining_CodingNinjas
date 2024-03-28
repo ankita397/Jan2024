@@ -1,8 +1,10 @@
 //Explanation in copy - https://www.youtube.com/watch?v=AE39gJYuRog&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=4
 /*
+* calculate the maximum number of merit points that the ninja can earn.(return max(maxi, point)
 * INTUITION : Start from last day with ability to choose any of the 3 stasks.
 * If task does not match last performed one, add to points and calculate points recursively for previous day.
 * Keep getting the maximum points for each task.
+* base case -  reach day0
 */
 //Recursion - TLE
 public class Solution {
