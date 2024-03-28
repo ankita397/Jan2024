@@ -1,3 +1,8 @@
+/*
+* INTUITION : Move up(row reduces) and left(col reduces)
+* Add current cell value and recursively move left or right
+* Take minimum of up and left paths at each step
+*/
 class Solution {
     public int minPathSum(int[][] grid) {
         int m = grid.length;
