@@ -1,6 +1,6 @@
 /*
-* return the minimum sum of any falling path through matrix.
-* INTUITION : Call from all columns(loop over columns) of last row(n-1) as starting could be anything(min path - return min(up,leftDiag,rightDiag))
+* return the minimum sum of any falling path through matrix.(min path - return min(up,leftDiag,rightDiag))
+* INTUITION : Call from all columns(loop over columns) of last row(n-1) as starting could be anything
 * Move up(row reduces) and leftDiag(row and col reduces) and rightDiag(row and col increases)
 * Add current cell value and recursively move left or leftDiag or right Diag
 * Take minimum of up, leftDiag and rightDiag paths at each step
