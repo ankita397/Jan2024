@@ -1,4 +1,5 @@
 /*
+* determine if there is a subset of the given set with sum equal to given sum. - (return boolean take or notTake)
 * INTUITION : Subsequences always take(target reduces and recursively call for index-1) or not take(target stays same and recursively call for index-1)  
 * return take or notTake
 * base case - 1. no target left as we have subset whose sum is target
