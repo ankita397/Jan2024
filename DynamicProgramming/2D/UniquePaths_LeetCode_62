@@ -1,7 +1,9 @@
 /*
+* return the number of possible unique paths that the robot can take to reach the bottom-right corner. (ways = return up + left)
 * INTUITION : Start from end and move in up and left directions. For up, i reduces and for left, j reduces. 
 * Recursively move & add up and left.
-*
+* base case - 1. reach destination - i = 0 and j = 0
+*            2. reach boundaries on any side - i < 0 or j < 0
 */
 //Recursion - 
 //TC = O(2^n) => since we have 2 paths for every cell - TLE
