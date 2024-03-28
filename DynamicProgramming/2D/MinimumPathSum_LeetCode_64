@@ -1,7 +1,10 @@
 /*
+* find a path from top left to bottom right, which minimizes the sum of all numbers along its path.(min path - return min(up,left)
 * INTUITION : Move up(row reduces) and left(col reduces)
 * Add current cell value and recursively move left or right
 * Take minimum of up and left paths at each step
+* base case - 1. reach destination - i = 0 and j = 0
+*            2. reach boundaries on any side - i < 0 or j < 0
 */
 class Solution {
     public int minPathSum(int[][] grid) {
