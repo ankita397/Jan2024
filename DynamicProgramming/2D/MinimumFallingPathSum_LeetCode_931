@@ -1,8 +1,11 @@
 /*
-* INTUITION : Call from all columns(loop over columns) of last row(n-1) as starting could be anything
+* return the minimum sum of any falling path through matrix.
+* INTUITION : Call from all columns(loop over columns) of last row(n-1) as starting could be anything(min path - return min(up,leftDiag,rightDiag))
 * Move up(row reduces) and leftDiag(row and col reduces) and rightDiag(row and col increases)
 * Add current cell value and recursively move left or leftDiag or right Diag
 * Take minimum of up, leftDiag and rightDiag paths at each step
+* base case - 1. reach boundaries on any side - row will not go below 0 as we consider i = 0 as destination so check col boundary on both sides
+*            2. if i == 0 => reached row 0 means reached destination
 */
 class Solution {
     //starts at any element in the first row - variable start index
