@@ -67,7 +67,7 @@ class Solution{
     //TC = O(N*N)
     //SC = O(N*N)
     /*
-    public int cutRod(int price[], int n) {
+    public int cutRod(int price[], int n) { // n = maxRodLength ( it was N in recursion and memoization)
         int[][] dp = new int[n][n+1];
         //base case - index = 0, so run loop for N - fill all columns for row 0 of dp array
         for(int N = 0; N <=n; N++){//0,1,2,3,...n
