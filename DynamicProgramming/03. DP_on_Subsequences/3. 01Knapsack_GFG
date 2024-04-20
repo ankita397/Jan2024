@@ -132,8 +132,8 @@ class Solution
     //Space Optimization - 1 array - not mandatory
     //TC = O(n * maxWt)
     //SC = O(maxWt) - 1D array
-    // We don't need 2 arrays as we can use just one array since the values to the left 
-    // of weight are not used
+    // We don't need 2 arrays as we can use just the same prev array. This is because the values to the left of the cell we want to 
+    // fill in our curr row are not used, since our curr row is only dependent on the prev row
     static int knapSack(int maxWt, int wt[], int val[], int n) { 
         int[] prev = new int[maxWt+1];
         
