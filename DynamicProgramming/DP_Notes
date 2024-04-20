@@ -18,3 +18,5 @@ TC / SC :
 4. Space Optimization - f(n-1) encountered
   TC - dp array size 
   SC - Reduce space to 1D array size or O(1)
+
+DP on Subsequences - Always will have parameters - index and target
