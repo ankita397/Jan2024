@@ -23,6 +23,7 @@ TC / SC :
   SC - Reduce space to 1D array size or O(1)
 
 DP on Subsequences 
+- Take | NotTake
 - Always will have parameters - index and target
 - f(n-1, target) - In the array till index n-1, does there exist a target
 - Loops -
