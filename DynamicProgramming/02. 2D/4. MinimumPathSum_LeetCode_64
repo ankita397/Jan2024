@@ -1,4 +1,5 @@
 /*
+* Variable starting point and variable ending point
 * find a path from top left to bottom right, which minimizes the sum of all numbers along its path.(min path - return min(up,left)
 * INTUITION : Move up(row reduces) and left(col reduces)
 * Add current cell value and recursively move left or right
