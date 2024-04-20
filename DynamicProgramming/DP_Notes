@@ -1,4 +1,4 @@
-BASE CASE :
+BASE CASE : since recursion is started from n-1, our base case will always be for index 0
         1D / 2D DP :
                 1. reach destination - i = 0 and j = 0
                 2. reach boundaries on any side - i < 0 or j < 0
