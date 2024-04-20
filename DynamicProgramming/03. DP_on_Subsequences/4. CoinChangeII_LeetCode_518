@@ -7,7 +7,7 @@
 class Solution {
     //Recursion
     //TC = exponential
-    //SC = O(N) - rec/auxiliary stack space
+    //SC = O(amount) - rec/auxiliary stack space
     /*
     public int change(int amount, int[] coins) {
         int n = coins.length;
