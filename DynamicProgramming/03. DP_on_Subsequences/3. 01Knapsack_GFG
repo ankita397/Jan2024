@@ -146,7 +146,7 @@ class Solution
         
         //For remaining cases
         for(int index = 1; index < n; index++){
-            //weight loop should be reversed
+            //weight loop should be reversed as we should fill the right side first(last to first) for this optimization
             for(int weight = maxWt; weight > 0; weight--){
                 int notTake = prev[weight];
                 int take = Integer.MIN_VALUE;
