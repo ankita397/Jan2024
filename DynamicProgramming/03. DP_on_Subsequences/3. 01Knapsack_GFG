@@ -78,8 +78,7 @@ class Solution
         int[][] dp = new int[n][maxWt+1];
         
         //base case
-        //weight starts from wt[0] as the sack weight must be >= weight of index 0 for it 
-        //to be added to the sack
+        //All weights in 'wt' array that are <= maxWt can be added to the knapsack
         for(int weight = wt[0]; weight <= maxWt; weight++){
             dp[0][weight] = val[0];
         }
