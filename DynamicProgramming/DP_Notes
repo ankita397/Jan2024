@@ -1,1 +1,20 @@
+BASE CASE :
+        1D / 2D DP :
+              1. reach destination - i = 0 and j = 0
+              2. reach boundaries on any side - i < 0 or j < 0
 
+
+
+TC / SC :
+1. Recursion 
+  TC - Exponential(eg: 2^n) - TLE
+  SC - Recursion stack space/ Path length
+2. Memoization 
+  TC - dp array size 
+  SC - dp array size + Recursion stack space/ Path length
+3. Tabulation
+  TC - dp array size 
+  SC - dp array size 
+4. Space Optimization - f(n-1) encountered
+  TC - dp array size 
+  SC - Reduce space to 1D array size or O(1)
