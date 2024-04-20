@@ -133,7 +133,7 @@ class Solution
     //TC = O(n * maxWt)
     //SC = O(maxWt) - 1D array
     // We don't need 2 arrays as we can use just one array since the values to the left 
-    // if weight are not used
+    // of weight are not used
     static int knapSack(int maxWt, int wt[], int val[], int n) { 
         int[] prev = new int[maxWt+1];
         
