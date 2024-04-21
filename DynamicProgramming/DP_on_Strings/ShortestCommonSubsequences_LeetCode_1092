@@ -10,6 +10,7 @@
             5.Remaining characters in str1 and str2 has to be added to ans
             6.Reverse the string
 * base case - -ve means end of string (i==0 || j ==0)
+* For understanding DP table traversal - check Print_LCS_eclipse and in notebook
 */
 class Solution {
     public String shortestCommonSupersequence(String str1, String str2) {
