@@ -4,6 +4,7 @@
 * 2 indexes needed to represent the 2 strings
 * INTUITION : match - add 1 to length and move index of both strings to left/ shrink both the strings
 *            non-match - shrink either s1 or s1 and take max of both
+* f(n-1, m-1) - LCS of s1 (0 to n-1) and s2 (0 to m-1).
 * base case - -ve means end of string (i==0 || j ==0)
 */
 class Solution {
