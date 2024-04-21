@@ -5,7 +5,9 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
         DP on Subsequences:
                 1. for target == 0 (target base case is written first)
                 2. for index == 0
-
+        Dp on Strings:
+                1. for ind1 -ve for s1 => -ve means end of string s1
+                2. for ind2 -ve for s2 => -ve means end of string s2
 
 
 TC / SC :
@@ -29,3 +31,10 @@ DP on Subsequences
 - Loops -
         ind - 1 to n-1
         target - 1 to sum
+
+DP on Strings
+- Types - Comparisons, Replaces, Edits
+- Comparisons
+        - Match | notMatch
+        - 2 indexes to represent pointers to 2 strings for comparison - ind1 for s1 and ind2 for s2
+        - Do comparison character wise
