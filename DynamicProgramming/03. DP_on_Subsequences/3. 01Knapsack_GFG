@@ -1,6 +1,7 @@
 /*
 * find out the maximum value subset of val[] such that sum of the weights of this subset is smaller than or equal to W.(return max(notTake , take)) 
 * INTUITION : Subsequences always take(target reduces and recursively call for index-1) or not take(target stays same and recursively call for index-1 and val[index])  
+* f(n-1, maxWt) - Till index n-1, what is the max value you will get when max weight of bag is maxWt.
 * base case - at index 0, if weight at index 0 is less than matWt, then take the value else return 0
 */
 //GFG - https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
