@@ -1,0 +1,73 @@
+/*
+* https://leetcode.com/problems/shortest-common-supersequence/
+* Type : Comparison
+* 2 indexes needed to represent the 2 strings
+* INTUITION : 
+            1.Code the LCS dp table first
+            2.Traverse the dp table from end and do the follwing
+            3.match - add the matching character once to ans
+            4.non-match - shrink either s1 or s1 i.e, - move up or left - str1/str2 gets reduced and its non-match character gets added to ans 
+            5.Remaining characters in str1 and str2 has to be added to ans
+            6.Reverse the string
+* base case - -ve means end of string (i==0 || j ==0)
+*/
+class Solution {
+    public String shortestCommonSupersequence(String str1, String str2) {
+        int n = str1.length();
+        int m = str2.length();
+        int[][] dp = new int[n+1][m+1];
+        //base case
+        for(int j = 0; j <=m; j++){
+            dp[0][j] = 0;
+        }
+        for(int i = 0; i <= n; i++){
+            dp[i][0] = 0;
+        }
+        
+        for(int i = 1; i <=n; i++){
+           for(int j = 1; j <=m; j++){
+                if(str1.charAt(i-1) == str2.charAt(j-1)){
+                    dp[i][j] = 1 + dp[i-1][j-1];
+                }else{
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1]);
+                }
+            }    
+        }
+        //From starting till here its LCS code
+        //Now for SCS printing, we need to use the dp array and traverse from end coordinates
+        String ans = "";
+        int i = n, j = m; // start from end
+        while(i>0 && j>0){
+            //match - add the matching character once to ans
+            if(str1.charAt(i-1) == str2.charAt(j-1)){
+                ans+=str1.charAt(i-1);
+                i--;
+                j--;
+            }else if(dp[i-1][j] > dp[i][j-1]){// non-match - move up - str1 gets reduced and its non-match character gets added to ans    
+            //Here, basically we go to i-1 and add that character from str1 to ans
+                //System.out.println(i + " -- " + str1.charAt(i-1));
+                ans+=str1.charAt(i-1);
+                i--;
+            }else{// non-match - move left - str2 gets reduced and its non-match character gets added to ans
+            //Here, basically we go to j-1 and add that character from str2 to ans
+                ans+=str2.charAt(j-1);
+                j--;
+            }
+        }
+        //Remaining characters in str1 and str2 has to be added to ans
+        while(i>0){
+            ans+=str1.charAt(i-1);
+            i--;
+        }
+        while(j>0){
+            ans+=str2.charAt(j-1);
+            j--;
+        }
+
+        //Reverse the string - we get reversed string as we are starting computing from end
+        StringBuilder res = new StringBuilder();
+        res.append(ans);
+        res.reverse();
+        return res.toString();
+    }
+}
