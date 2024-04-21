@@ -1,6 +1,7 @@
 /*
  * Determine the maximum value obtainable by cutting up the rod and selling the pieces.(return max(take,notTake))
  * INTUITION : Subsequences always take or notTake - based on rodLength not price[index] => rodLength = index + 1
+ * f(n-1, N) - Till n-1, what is the max value we can get by cutting a rod of length N
  * Pick rod lengths(and maximize the price) to make N = target = N
  * GFG - https://www.geeksforgeeks.org/problems/rod-cutting0840/1?itm_source=geeksforgeeks&itm_medium=article&itm_campaign=bottom_sticky_on_article
  * base case : at index 0, rod length = 1. We need N rods of length = 1 to get N size rod
