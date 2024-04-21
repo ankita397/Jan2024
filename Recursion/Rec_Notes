@@ -1,0 +1,3 @@
+Count ways -
+  base case - 0 or 1
+  return f() + f()
