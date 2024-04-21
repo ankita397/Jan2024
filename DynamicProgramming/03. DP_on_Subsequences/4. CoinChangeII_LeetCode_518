@@ -2,6 +2,7 @@
 * Return the number of combinations that make up that amount. (ways = return take + notTake)
 * INTUITION : Subsequences always take(target reduces and recursively call for same index as same coin can be considered multiple times) 
 * or not take(target stays same and recursively call for index-1)  
+* f(n-1,amount) - Till n-1, how many ways are there to make up the value = amount.
 * base case - at index 0, only coin value that completely divides target amount should be taken
 */
 class Solution {
