@@ -117,7 +117,7 @@ class Solution {
 
     //Space Optimization
     //TC = O(n*m)
-    //SC = O(n*m)
+    //SC = O(m)
     public int longestCommonSubsequence(String text1, String text2) {
         int n = text1.length();
         int m = text2.length();
