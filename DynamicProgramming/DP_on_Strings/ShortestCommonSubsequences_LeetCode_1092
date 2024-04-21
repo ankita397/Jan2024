@@ -9,6 +9,7 @@
             4.non-match - shrink either s1 or s1 i.e, - move up or left - str1/str2 gets reduced and its non-match character gets added to ans 
             5.Remaining characters in str1 and str2 has to be added to ans
             6.Reverse the string
+* f(n, m) - SCS of s1 (0 to n) and s2 (0 to m).
 * base case - -ve means end of string (i==0 || j ==0)
 * For understanding DP table traversal - check Print_LCS_eclipse and in notebook
 */
