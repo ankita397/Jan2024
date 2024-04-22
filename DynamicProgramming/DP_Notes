@@ -51,6 +51,7 @@ DP on Strings
         - not match - need to be coded based on requirement
 
 Tricks:
-base case - tabulation to SO - dp[0][x] -> prev[x]
-                             - remove dp[x][0] loop
+ - tabulation to SO
+        base case - dp[0][x] -> prev[x]
+                  - remove dp[x][0] loop from and assign for curr[0] inside 1st loop - eg: dp[i][0] = i --> curr[0] = i
 For SO, imagine 0th row to be prev and 1st row to be curr
