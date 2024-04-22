@@ -53,3 +53,4 @@ DP on Strings
 Tricks:
 base case - tabulation to SO - dp[0][x] -> prev[x]
                              - remove dp[x][0] loop
+For SO, imagine 0th row to be prev and 1st row to be curr
