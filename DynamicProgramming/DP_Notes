@@ -8,6 +8,7 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
         Dp on Strings:
                 1. for ind1 -ve for s1 => -ve means end of string s1
                 2. for ind2 -ve for s2 => -ve means end of string s2
+                s1 gets exhausted or s2 gets exhausted
 
 
 TC / SC :
