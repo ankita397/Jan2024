@@ -34,7 +34,14 @@ DP on Subsequences
 
 DP on Strings
 - Types - Comparisons, Replaces, Edits
-- Comparisons
+- Comparisons 
         - Match | notMatch
         - 2 indexes to represent pointers to 2 strings for comparison - ind1 for s1 and ind2 for s2
         - Do comparison character wise
+- Edits 
+        - Same as comparison
+        - not match - need to be coded for all operations
+
+Tricks:
+base case - tabulation to SO - dp[0][x] -> prev[x]
+                             - remove dp[x][0] loop
