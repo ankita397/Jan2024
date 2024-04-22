@@ -1,3 +1,8 @@
 Count ways -
   base case - 0 or 1
   return f() + f()
+
+True or false - 
+  base case - 0 or 1
+  if(f() == true) || f() == true) - return true 
+  else if both are false - return false
