@@ -9,6 +9,10 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
                 1. for ind1 -ve for s1 => -ve means end of string s1
                 2. for ind2 -ve for s2 => -ve means end of string s2
                 s1 gets exhausted or s2 gets exhausted
+        DP on stocks:
+                1. ind == n
+                2. cap/txn == n(when required)
+                3. base case return 0 - nor required for tabulation and SO
 
 
 TC / SC :
@@ -55,4 +59,6 @@ Tricks:
         base case - dp[0][x] -> prev[x]
                   - remove dp[x][0] loop from and assign for curr[0] inside 1st loop - eg: dp[i][0] = i --> curr[0] = i
 - For SO, imagine 0th row to be prev and 1st row to be curr
-- if loop 'ind' loop starts from n-1 and ind+1 is used later, then dp size should be dp[n+1][x]
+- if loop 'ind' loop starts from n-1 and ind+1 is used later, then dp size should be dp[n+1][x] - otherwise out of bounds
+- if ind+2 is used, base -> ind >= n - otherwise out of bounds
+- Be mindful of out of bounds conditions(in base as well as loops)
