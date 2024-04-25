@@ -55,7 +55,11 @@ DP on Strings
         - not match - need to be coded based on requirement
 
 Tricks:
-- if(i<0) or (j<0) check is there, do a index shifting by increasing index by 1 as dp[-1] cannot be done for tabulation
+- if(i<0) or (j<0) check is there, 
+        - do a index shifting by increasing index by 1 as dp[-1] cannot be done for tabulation
+        - dp[n][m] -> dp[n+1][m+1] - loop will be till i<=n and j <=m
+        - i < 0 -> i == 0
+        - s1[i] -> s[i-1]
 - tabulation to SO
         base case - dp[0][x] -> prev[x]
                   - remove dp[x][0] loop from and assign for curr[0] inside 1st loop - eg: dp[i][0] = i --> curr[0] = i
