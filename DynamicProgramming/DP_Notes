@@ -59,6 +59,7 @@ Tricks:
         - do a index shifting by increasing index by 1 as dp[-1] cannot be done for tabulation
         - dp[n][m] -> dp[n+1][m+1] - loop will be till i<=n and j <=m
         - i < 0 -> i == 0
+        - i >= 0 -> i >0
         - s1[i] -> s[i-1]
         - f(n-1,m-1) -> f(n,m)
         - return dp[n][m]
