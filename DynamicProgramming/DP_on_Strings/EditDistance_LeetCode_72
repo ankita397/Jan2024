@@ -1,3 +1,13 @@
+/*
+* https://leetcode.com/problems/edit-distance/
+* Type : Edit
+* 2 indexes needed to represent the 2 strings
+* INTUITION : match - no operations needed - only shrink both strings
+*            non-match - try all operations - insert, replace and delete and take the max
+* f(n-1, m-1) - Min operations needed to convert of s1 (0 to n-1) to s2 (0 to n-1) .
+* base case -if s1 gets exhausted, we have do insert of remaining letters in s2
+*            if s2 gets exhausted, we have to do delete for remaining letters in s1
+*/
 class Solution {
     //Recursion
     //TC = exponential
