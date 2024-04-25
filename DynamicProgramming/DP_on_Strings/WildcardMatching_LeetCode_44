@@ -1,0 +1,253 @@
+/*
+* https://leetcode.com/problems/wildcard-matching/
+* Type : Replace
+* 2 indexes needed to represent the 2 strings
+* INTUITION : match - if chars match or p's char matches '?' - shrink both strings
+*             - if * is there in p - we need to try taking into consideration that * can be either ""(empty) or it can be matched to some char
+* base cases - if s gets exhausted, then p also has to be exhausted(both have to be "") to return a true
+            - if only second string p gets exhausted then return false - no match possible
+*           - if p gets exhausted and s has some chars left, then both can match only if the remaining chars in s are *
+* VVIMP NOTE :ask this if not clearly specified 
+* here s1 = p and s2 = s  => s2(i.e; p) can have lowercase,?,*
+*                         => s1(i.e; s) can have lowercase
+* In notebook and striver's video, 1st string can have lowercase,?,* and second string cn have only lower case 
+* So, accordingly all conditions change
+*/
+class Solution {
+    //Recursion
+    //TC = exponential
+    //SC = O(n+m) - ASS
+    /*public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        return wildcard(s,p,n-1,m-1);
+    }
+    public boolean wildcard(String s, String p, int i , int j){
+        //base case
+        if(i<0 && j<0)//if s gets exhausted, then p also has to be exhausted(both have to be "") to return a true
+            return true;
+        if(j<0 && i>=0)// if only second string p gets exhausted then return false
+            return false;
+        
+         if(i<0 && j>=0){// if p gets exhausted and s has some chars left, then both can match only if the remaining chars in s are *
+            for(int x = 0; x<=j; x++){
+                if(p.charAt(x) != '*'){
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //match - if chars match or p's char matches '?' - shrink both strings
+        if(s.charAt(i) == p.charAt(j) || p.charAt(j) == '?'){
+            return wildcard(s,p,i-1,j-1);
+        }
+        //if * is there - we need to try taking into consideration that * can be either ""(empty) or
+        //it can be matched to some char
+        //ab*|abdef -> ab|abdef (* = "") or ab*|abde - (* = 'f') - shrink s1 pr s2
+        //better explation with tree in notebook or 
+        //https://www.youtube.com/watch?v=ZmlQ3vgAOMo&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=16
+        if(p.charAt(j) == '*'){
+            return wildcard(s,p,i-1,j) | wildcard(s,p,i,j-1);
+        }
+ 
+        return false; //if none of the above conditions get executed, we know the strings will never match, so return false
+    }*/
+
+    //Memoization
+    //TC = O(n*m)
+    //SC = O(n*m) + O(n+m) - ASS
+    /*public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        int[][] dp = new int[n][m];
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return (wildcard(s,p,n-1,m-1,dp) == 1);
+    }
+    //has to be int as dp array has to be int type
+    public int wildcard(String s, String p, int i , int j,int[][] dp){
+        //base case
+        if(i<0 && j<0)//if s gets exhausted, then p also has to be exhausted(both have to be "") to return a true
+            return 1;
+        if(j<0 && i>=0)// if p gets exhausted and s has some chars left, then both can match only if the remaining chars in s1 are *
+            return 0;
+        
+         if(i<0 && j>=0){// if only second string gets exhausted then return false
+            for(int x = 0; x<=j; x++){
+                if(p.charAt(x) != '*'){
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+
+        //match - if chars match or p's char matches '?' - shrink both strings
+        if(s.charAt(i) == p.charAt(j) || p.charAt(j) == '?'){
+            return  dp[i][j] = wildcard(s,p,i-1,j-1,dp);
+        }
+        //if * is there - we need to try taking into consideration that * can be either ""(empty) or
+        //it can be matched to some char
+        //ab*|abdef -> ab|abdef (* = "") or ab*|abde - (* = 'f') - shrink s pr p
+        //better explation with tree in notebook or 
+        //https://www.youtube.com/watch?v=ZmlQ3vgAOMo&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=16
+        if(p.charAt(j) == '*'){
+            return dp[i][j] = wildcard(s,p,i-1,j,dp) | wildcard(s,p,i,j-1,dp);
+        }
+
+        return 0; //if none of the above conditions get executed, we know the strings will never match, so return false
+    }*/
+
+    //Memoization with index shifting - i<0 and j<0 conditions are present
+    //TC = O(n*m)
+    //SC = O(n*m) + O(n+m) - ASS
+    /*public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        int[][] dp = new int[n+1][m+1];
+        for(int i = 0; i <= n; i++){
+            for(int j = 0; j <= m; j++){
+                dp[i][j] = -1;
+            }
+        }
+        return (wildcard(s,p,n,m,dp) == 1);
+    }
+    //has to be int as dp array has to be int type
+    public int wildcard(String s, String p, int i , int j,int[][] dp){
+        //base case
+        if(i==0 && j==0)//if s gets exhausted, then p also has to be exhausted(both have to be "") to return a true
+            return 1;
+        if(j==0 && i>0)// if p gets exhausted and s has some chars left, then both can match only if the remaining chars in s are *
+            return 0;
+        
+         if(i==0 && j>0){// if only second string gets exhausted then return false
+            for(int x = 1; x<=j; x++){// start from 1 for index shifting
+                if(p.charAt(x-1) != '*'){
+                    return 0;
+                }
+            }
+            return 1;
+        }
+
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+
+        //match - if chars match or p's char matches '?' - shrink both strings
+        if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '?'){
+            return  dp[i][j] = wildcard(s,p,i-1,j-1,dp);
+        }
+        //if * is there - we need to try taking into consideration that * can be either ""(empty) or
+        //it can be matched to some char
+        //ab*|abdef -> ab|abdef (* = "") or ab*|abde - (* = 'f') - shrink s1 pr s2
+        //better explation with tree in notebook or 
+        //https://www.youtube.com/watch?v=ZmlQ3vgAOMo&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=16
+        if(p.charAt(j-1) == '*'){
+            return dp[i][j] = wildcard(s,p,i-1,j,dp) | wildcard(s,p,i,j-1,dp);
+        }
+
+        return 0; //if none of the above conditions get executed, we know the strings will never match, so return false
+    }*/
+
+    //Tabulation with index shifting - i<0 and j<0 conditions are present
+    //TC = O(n*m)
+    //SC = O(n*m) 
+    /*public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        boolean[][] dp = new boolean[n+1][m+1];
+        
+        //base case
+        dp[0][0] = true;
+        for(int i = 1; i <= n; i++)
+            dp[i][0] = false;
+        for(int j = 1; j <= m; j++){
+            boolean flag = true; // use flag otherwose all test cases won't pass
+            for(int x = 1; x<=j; x++){// start from 1 for index shifting
+                if(p.charAt(x-1) != '*'){
+                    flag = false;
+                    break;
+                }
+            }
+            dp[0][j] = flag;
+        }
+
+
+         for(int i = 1; i <= n; i++){
+            for(int j = 1; j<=m; j++){
+                //match - if chars match or p's char matches '?' - shrink both strings
+                if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '?'){
+                    dp[i][j] = dp[i-1][j-1];
+                }
+                //if * is there - we need to try taking into consideration that * can be either ""(empty) or it can be matched to some char
+                //ab*|abdef -> ab|abdef (* = "") or ab*|abde - (* = 'f') - shrink s1 pr s2
+                //better explation with tree in notebook or 
+                //https://www.youtube.com/watch?v=ZmlQ3vgAOMo&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=16
+                else if(p.charAt(j-1) == '*'){//else if needed since return is not there
+                    dp[i][j] = dp[i-1][j] | dp[i][j-1];
+                }
+                else
+                    dp[i][j] = false; //if none of the above conditions get executed, we know the strings will never match, so return false
+
+            }
+         }
+        return dp[n][m];
+    }*/
+
+
+    //SO
+    //TC = O(n*m)
+    //SC = O(m) 
+    public boolean isMatch(String s, String p) {
+        int n = s.length();
+        int m = p.length();
+        boolean[] prev = new boolean[m+1];        
+        //base case
+        prev[0] = true;
+
+        // for(int i = 1; i <= n; i++) // NR for prev - do it for curr
+        //     dp[i][0] = false;
+
+        for(int j = 1; j <= m; j++){
+            boolean flag = true; // use flag otherwose all test cases won't pass
+            for(int x = 1; x<=j; x++){// start from 1 for index shifting
+                if(p.charAt(x-1) != '*'){
+                    flag = false;
+                    break;
+                }
+            }
+            prev[j] = flag;
+        }
+
+
+         for(int i = 1; i <= n; i++){
+            boolean[] curr = new boolean[m+1];  
+            curr[0] = false ;
+            for(int j = 1; j<=m; j++){
+                //match - if chars match or p's char matches '?' - shrink both strings
+                if(s.charAt(i-1) == p.charAt(j-1) || p.charAt(j-1) == '?'){
+                    curr[j] = prev[j-1];
+                }
+                //if * is there - we need to try taking into consideration that * can be either ""(empty) or it can be matched to some char
+                //ab*|abdef -> ab|abdef (* = "") or ab*|abde - (* = 'f') - shrink s1 pr s2
+                //better explation with tree in notebook or 
+                //https://www.youtube.com/watch?v=ZmlQ3vgAOMo&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=16
+                else if(p.charAt(j-1) == '*'){//else if needed since return is not there
+                    curr[j] = prev[j] | curr[j-1];
+                }
+                else
+                    curr[j] = false; //if none of the above conditions get executed, we know the strings will never match, so return false
+
+            }
+            prev = curr;
+         }
+        return prev[m];
+    }
+}
