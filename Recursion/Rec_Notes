@@ -3,6 +3,6 @@ Count ways -
   return f() + f()
 
 True or false - 
-  base case - 0 or 1
+  base case - true or false
   if(f() == true) || f() == true) - return true 
   else if both are false - return false
