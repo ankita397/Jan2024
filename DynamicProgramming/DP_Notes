@@ -12,7 +12,7 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
         DP on stocks:
                 1. ind == n
                 2. cap/txn == n(when required)
-                3. base case return 0 - nor required for tabulation and SO
+                3. base case return 0 - not required for tabulation and SO
 
 
 TC / SC :
