@@ -10,9 +10,10 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
                 2. for ind2 -ve for s2 => -ve means end of string s2
                 s1 gets exhausted or s2 gets exhausted
         DP on stocks:
-                1. ind == n
-                2. cap/txn == n(when required)
-                3. base case return 0 - not required for tabulation and SO
+                1. Recursion call from 0 (not n-1)
+                2. ind == n
+                3. cap/txn == n(when required)
+                4. base case return 0 - not required for tabulation and SO
 
 
 TC / SC :
