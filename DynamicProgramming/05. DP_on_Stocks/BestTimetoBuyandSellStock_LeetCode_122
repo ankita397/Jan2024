@@ -5,7 +5,6 @@
 * INTUITION : - Try all ways to buy or sell.
 *             - After each buy or sell move to next index(ind+1) and set the buyFlag param(0 or *               1) to signify if buy is allowed or not at ind+1
 * base - ind == n - no days left - buy sell window is over so no profit at that index
-* This SO can be implemented using 4 variables as well which we will use in LC 123
 */
 //Recursion
 //TC = O(2^n)
@@ -97,7 +96,7 @@ class Solution {
     //SO
     //TC = O(n*2)
     //SC = O(2)
-    public int maxProfit(int[] prices) {
+    /*public int maxProfit(int[] prices) {
         int n = prices.length;
         int[] next = new int[2];// 2 values for buyFlag = 0 and 1
 
@@ -123,5 +122,34 @@ class Solution {
             next = curr;
         }
         return next[1];// for 0th index, we buy     
+    }*/
+
+    //SO - using 4 variables instead of arrays
+    //TC = O(n)
+    //SC = O(1)
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        int nextBuy, nextNotBuy, currBuy,currNotBuy;// 2 values for buyFlag = 0 and 1
+
+        //base case
+        //dp[n][0] - next[0] - replaced by nextNotBuy
+        //dp[n][1] - next[1] - replaced by nextBuy
+        nextNotBuy = nextBuy = 0;//no days left - ind == n -  buy sell window is over so no profit at that index
+
+        //bottom up - ind starts from back (n-1)
+        for(int ind = n-1; ind >= 0; ind--){
+            // no need for buy Flag loop since it has only 2 values
+            //buyFlag == 1
+            currBuy = Math.max(-prices[ind] + nextNotBuy,
+                            0 + nextBuy);
+            
+            //buyFlag == 0
+            currNotBuy = Math.max(prices[ind] + nextBuy,
+                            0 + nextNotBuy);
+            
+            nextBuy = currBuy;
+            nextNotBuy = currNotBuy;
+        }
+        return nextBuy;// for 0th index, we buy     
     }
 }
