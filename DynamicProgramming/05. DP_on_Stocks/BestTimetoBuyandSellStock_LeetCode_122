@@ -5,6 +5,7 @@
 * INTUITION : - Try all ways to buy or sell.
 *             - After each buy or sell move to next index(ind+1) and set the buyFlag param(0 or *               1) to signify if buy is allowed or not at ind+1
 * base - ind == n - no days left - buy sell window is over so no profit at that index
+* This SO can be implemented using 4 variables as well which we will use in LC 123
 */
 //Recursion
 //TC = O(2^n)
