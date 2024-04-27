@@ -14,6 +14,7 @@ BASE CASE : since recursion is started from n-1, our base case will always be fo
                 2. ind == n
                 3. cap/txn == n(when required)
                 4. base case return 0 - not required for tabulation and SO
+                5. For SO, dp[n][0] - next[0] - n is next of n-1 from which our ind loop starts in bottom up
 
 
 TC / SC :
@@ -76,3 +77,6 @@ Tricks:
         out of bounds(n-1 + 2  goes beyond boundary as our index ends at n-1)
 - if ind+2 is used, base -> ind >= n - otherwise out of bounds
 - Be mindful of out of bounds conditions(in base as well as loops)
+- SO -
+        dp[n][0] - next[0] - n is next of n-1 from which our ind loop starts in bottom up(DP on stocks)
+        dp[i][0] - prev[0] - i(0) is prev 1 from which our i loop starts in bottom up(DP on others)
