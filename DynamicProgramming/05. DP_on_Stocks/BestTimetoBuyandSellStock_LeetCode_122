@@ -7,7 +7,7 @@
 * base - ind == n - no days left - buy sell window is over so no profit at that index
 */
 //Recursion
-//TC = O(2^n)
+//TC = exponential
 //SC = O(n)
 class Solution {
    /* public int maxProfit(int[] prices) {
