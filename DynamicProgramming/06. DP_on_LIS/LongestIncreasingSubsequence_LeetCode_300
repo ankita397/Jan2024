@@ -1,3 +1,8 @@
+/*
+* https://www.youtube.com/watch?v=on2hvxBXJH4&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=22
+* https://leetcode.com/problems/longest-increasing-subsequence/description/
+*/
+
 class Solution {
     //Algorithmic approach 
     //TC = O(n^2)
