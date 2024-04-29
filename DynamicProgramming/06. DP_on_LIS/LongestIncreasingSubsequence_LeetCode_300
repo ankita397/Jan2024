@@ -1,0 +1,83 @@
+class Solution {
+    //Algorithmic approach 
+    //TC = O(n^2)
+    //SC = O(n)
+    /*public int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        //Arrays.fill(dp, 1);
+        for(int i = 0; i < dp.length;i++){
+            dp[i] = 1;
+        }
+        //int longest = 1;
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            //longest = Math.max(longest, dp[i]);
+        }
+        int longest = 0;
+        for (int num : dp) {
+            longest = Math.max(longest, num);
+        }
+        return longest;
+    }*/
+
+    //Using Binary Search
+    //TC = O(nlogn)
+    //SC = O(n)
+    /*public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        List<Integer> temp = new ArrayList<>();
+        temp.add(nums[0]);
+
+        int len = 1;
+
+        for (int i = 1; i < n; i++) {
+            // arr[i] > the last element of temp array
+            if (nums[i] > temp.get(temp.size() - 1)) {
+                temp.add(nums[i]);
+                len++;
+            } else {
+                // Replacement step
+                int ind = Collections.binarySearch(temp, nums[i]);
+
+                if (ind < 0) { //input nums = [0] - if ind < 0, then we should insert at the prev iindex 
+                    ind = -ind - 1;
+               }
+                
+                temp.set(ind, nums[i]);
+            }
+        }
+        return len;
+    }*/
+
+    //Using Binary Search
+    //TC = O(nlogn)
+    //SC = O(n)
+    public int lengthOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] temp = new int[n];// temp can be of max n length
+        int len = 0;
+
+        //binary search
+        for (int i = 0; i < n; i++) {
+            int lb = 0; 
+            int ub = len;
+            while(lb != ub){
+                int mid = (lb+ub)/2;
+                if(temp[mid] < nums[i]){
+                    lb = mid+1;
+                }else{
+                    ub = mid;
+                }
+            }
+            //temp will have the smallest ending elements of each increasing subsequence of length lb+1
+            temp[lb] = nums[i];//set the value to lb of temp as we need LIS in increasing order
+            if(lb == len)// this means we did an insert element here(important)
+                len++;
+        }    
+        return len;
+    }
+}
