@@ -1,0 +1,39 @@
+/*
+* https://www.youtube.com/watch?v=cKVl1TFdNXg&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=23
+* https://leetcode.com/problems/number-of-longest-increasing-subsequence/description/
+*/
+class Solution {
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        int[] count = new int[n];
+        //Arrays.fill(dp, 1);
+        for(int i = 0; i < n;i++){
+            dp[i] = 1;
+        }
+        for(int i = 0; i < n;i++){
+            count[i] = 1;
+        }
+        int longest = 1;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
+                    dp[i] =  dp[j] + 1;
+                    //inherit count 
+                    count[i] = count[j];
+                }else if(nums[i] > nums[j] && dp[j] + 1 == dp[i]){
+                    //increase count
+                    count[i]+=count[j];
+                }
+            }
+            longest = Math.max(longest, dp[i]);
+        }
+        int totalLis = 0;
+        for(int i = 0; i < n; i++){
+            if(dp[i] == longest){
+                totalLis = totalLis + count[i];
+            }
+        }
+        return totalLis;
+    }
+}
