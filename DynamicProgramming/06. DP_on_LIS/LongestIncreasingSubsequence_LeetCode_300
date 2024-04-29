@@ -13,18 +13,14 @@ class Solution {
         for(int i = 0; i < dp.length;i++){
             dp[i] = 1;
         }
-        //int longest = 1;
+        int longest = 1;
         for (int i = 1; i < nums.length; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                if (nums[i] > nums[j] && dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
                 }
             }
-            //longest = Math.max(longest, dp[i]);
-        }
-        int longest = 0;
-        for (int num : dp) {
-            longest = Math.max(longest, num);
+            longest = Math.max(longest, dp[i]);
         }
         return longest;
     }*/
@@ -58,7 +54,7 @@ class Solution {
         return len;
     }*/
 
-    //Using Binary Search
+     //Using Binary Search
     //TC = O(nlogn)
     //SC = O(n)
     public int lengthOfLIS(int[] nums) {
@@ -78,7 +74,6 @@ class Solution {
                     ub = mid;
                 }
             }
-            //temp will have the smallest ending elements of each increasing subsequence of length lb+1
             temp[lb] = nums[i];//set the value to lb of temp as we need LIS in increasing order
             if(lb == len)// this means we did an insert element here(important)
                 len++;
