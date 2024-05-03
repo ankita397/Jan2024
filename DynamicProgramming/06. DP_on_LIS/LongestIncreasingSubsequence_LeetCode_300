@@ -1,10 +1,11 @@
 /*
+* https://www.youtube.com/watch?v=IFfYfonAFGc&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=21
 * https://www.youtube.com/watch?v=on2hvxBXJH4&list=PLgUwDviBIf0pwFf-BnpkXxs0Ra0eU2sJY&index=22
 * https://leetcode.com/problems/longest-increasing-subsequence/description/
 */
 
 class Solution {
-    //Algorithmic approach 
+    //Algorithmic approach - This solution will be required if we need to trace back the LIS(print)
     //TC = O(n^2)
     //SC = O(n)
     /*public int lengthOfLIS(int[] nums) {
