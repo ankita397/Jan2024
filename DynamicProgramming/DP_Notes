@@ -92,7 +92,7 @@ Tricks:
         dp[n][0] - next[0] - n is next of n-1 from which our ind loop starts in bottom up(DP on stocks)
         dp[i][0] - prev[0] - i(0) is prev 1 from which our i loop starts in bottom up(DP on others)
 - Tabulation & SO
-        - Be mindful of when to start or end second loop from/at 1st loop
+        - Be mindful of when to start or end second loop from/at 1st loop index
         - Eg :  i = n-1 to 1 
                 j = i+1 to n
         - Eg :  i = 1 to n-1
