@@ -29,7 +29,8 @@ BASE CASE :
         DP on Partition:
                 1. base: if i > j, return 0 (or)
                 2. base: if i == j, return 0 
-                2. calcculate based on question(steps/cost/etc) + f(i,k)(left sub problem)+ f(k+1,j)(right sub problem)
+                3. calculate based on question(steps/cost/etc) + f(i,k)(left sub problem)+ f(k+1,j)(right sub problem)
+                4. Recursion call from f(1,n-1) or f(1,n)
 
 
 TC / SC :
