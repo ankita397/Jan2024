@@ -35,6 +35,8 @@ BASE CASE :
                 3. calculate based on question(steps/cost/etc) + (left sub problem) + (right sub problem) 
                 4. Recursion call from f(1,n-1) or f(1,n)
                 5. IMP: Figure out where to perform partition.
+        DP on Squares:
+                1. Direct tabulation is intuitive.
 
 
 TC / SC :
