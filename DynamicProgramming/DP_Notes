@@ -1,20 +1,30 @@
-BASE CASE : since recursion is started from n-1, our base case will always be for index 0
+BASE CASE : 
+        whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
+        whenever recursion is started from 0, our base case will always be for index n - tabulation from n-1 to 0
         1D / 2D DP :
                 1. reach destination - i = 0 and j = 0
                 2. reach boundaries on any side - i < 0 or j < 0
+                3. Recursion call from n-1
         DP on Subsequences:
                 1. for target == 0 (target base case is written first)
                 2. for index == 0
+                3. Recursion call from n-1
         Dp on Strings:
                 1. for ind1 -ve for s1 => -ve means end of string s1
                 2. for ind2 -ve for s2 => -ve means end of string s2
-                s1 gets exhausted or s2 gets exhausted
+                        s1 gets exhausted or s2 gets exhausted
+                3. Recursion call from n-1
         DP on stocks:
                 1. Recursion call from 0 (not n-1)
-                2. ind == n
+                2. Base : ind == n
                 3. cap/txn == n(when required)
                 4. base case return 0 - not required for tabulation and SO
                 5. For SO, dp[n][0] - next[0] - n is next of n-1 from which our ind loop starts in bottom up
+        DO on LIS:
+                1. Same approach as other cas be taken but TC will be O(n^2)
+                2. Better approach - Binary search
+                3. Base: ind == n
+                4. Recursion call from f(0,-1) or tabulation with coordinate shift from f(0,-1+1)
 
 
 TC / SC :
