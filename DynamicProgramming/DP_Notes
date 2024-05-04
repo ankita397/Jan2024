@@ -1,6 +1,7 @@
 BASE CASE : 
         whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
         whenever recursion is started from 0, our base case will always be for index n - tabulation from n-1 to 0
+        
         1D / 2D DP :
                 1. reach destination - i = 0 and j = 0
                 2. reach boundaries on any side - i < 0 or j < 0
@@ -90,3 +91,9 @@ Tricks:
 - SO -
         dp[n][0] - next[0] - n is next of n-1 from which our ind loop starts in bottom up(DP on stocks)
         dp[i][0] - prev[0] - i(0) is prev 1 from which our i loop starts in bottom up(DP on others)
+- Tabulation & SO
+        - Be mindful of when to start or end second loop from/at 1st loop
+        - Eg :  i = n-1 to 1 
+                j = i+1 to n
+        - Eg :  i = 1 to n-1
+                j = 0 to i
