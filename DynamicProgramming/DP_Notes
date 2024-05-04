@@ -28,7 +28,10 @@ BASE CASE :
                 4. Recursion call from f(0,-1) or tabulation with coordinate shift from f(0,-1+1)
         DP on Partition:
                 1. base: if i == j, return 0 - steps = stepsFormula + f(i,k)+ f(k+1,j) - call f(1,n-1)
-                2. base: if i > j, return 0 - cost - costFormula + f(i,k-1) + f(k+1,j) - call f(1,n)
+                        tabulation: j cannot cross i (j loop - i+1 to n-1)
+                2. base: if i > j, return 0 - cost - costFormula + f(i,k-1) + f(k+1,j) - call f(1,n) - we solve for i == j 
+                        also(cut stick, burst balloon,etc)
+                        tabulation: j can cross i (j loop - 1 to n)
                 3. calculate based on question(steps/cost/etc) + (left sub problem) + (right sub problem) 
                 4. Recursion call from f(1,n-1) or f(1,n)
 
