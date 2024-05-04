@@ -27,9 +27,9 @@ BASE CASE :
                 3. Base: ind == n
                 4. Recursion call from f(0,-1) or tabulation with coordinate shift from f(0,-1+1)
         DP on Partition:
-                1. base: if i > j, return 0 (or)
-                2. base: if i == j, return 0 
-                3. calculate based on question(steps/cost/etc) + f(i,k)(left sub problem)+ f(k+1,j)(right sub problem)
+                1. base: if i == j, return 0 - steps = stepsFormula + f(i,k)+ f(k+1,j) - call f(1,n-1)
+                2. base: if i > j, return 0 - cost - costFormula + f(i,k-1) + f(k+1,j) - call f(1,n)
+                3. calculate based on question(steps/cost/etc) + (left sub problem) + (right sub problem) 
                 4. Recursion call from f(1,n-1) or f(1,n)
 
 
