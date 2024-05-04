@@ -73,6 +73,7 @@ DP on Strings
         - not match - need to be coded based on requirement
 
 Tricks:
+- TABULATION LOOP - from base case to the call(call means recursion call)
 - IMP : Recursion - f(1,n) -> tabulation - i = n to 1 and j = 1 to n (bottom up)
 - if(i<0) or (j<0) check is there, 
         - do a index shifting by increasing index by 1 as dp[-1] cannot be done for tabulation
