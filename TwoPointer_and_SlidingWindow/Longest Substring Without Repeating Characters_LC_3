@@ -1,0 +1,125 @@
+https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+
+//brute force - using Set
+//Generate all substrings and get the max length
+//keep i constant and move j to right till we encounter a repeating char in our hashSet
+
+//TC = O(n^2)
+//O(256)
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+
+        int len = s.length();
+        int maxLen = 0;
+        if(len==0)
+            return 0;
+        for(int i = 0; i < len; i++){
+            Set<Character> set = new HashSet();
+            for(int j = i; j < len; j++){
+                if(set.contains(s.charAt(j))){
+                    maxLen = Math.max(maxLen, j-i); //in sliding window,our string len is from i to j
+                    break;
+                }
+                set.add(s.charAt(i));
+            }
+        }
+        return maxLen;
+    }
+}
+
+//brute force - using freq array
+//Generate all substrings and get the max length
+//keep i constant and move j to right till we encounter a repeating char in our freq array
+
+//TC = O(n^2)
+//O(256)
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int maxLen = 0;
+        for(int i =0; i < n; i++){
+            //Set<Character> set = new HashSet<Character>();
+            int[] freq = new int[256];
+            for(int j = i; j < n; j++){
+                int length = j-i+1;
+                if(freq[s.charAt(j)] == 1){// already encountered this character
+                    break;
+                }
+                maxLen = Math.max(maxLen, length);
+                freq[s.charAt(j)] = 1; // mark it a seen before - so it will become repeating char next time
+            }
+        }
+        return maxLen;
+    }
+}
+
+//Optimal approach : Sliding window with 2 pointers (best)
+//using array for storing each character's index
+
+//TC = O(n)
+//SC = O(256)
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int len = s.length();
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        int[] charIndex = new int[256];//<Character's last seen position>
+        for(int i = 0; i < charIndex.length; i++){
+            charIndex[i] = -1;
+        }
+        //right pointer moving out of the array is where we stop 
+        while(right < len){
+            char currentChar = s.charAt(right);
+            //only when repeating character is seen and it is after left, move left
+            if(charIndex[s.charAt(right)] != -1 &&  charIndex[s.charAt(right)] >= left){
+                // Move left to avoid repeating character
+                // Eg: in cadbzabcd, for substring "cadbza" where right = 'a'(index 5), we found 'a' repeating
+                // so, we need to move left beyond charIndex[s.charAt(right)] 
+                // left = charIndex[s.charAt(right)]+1 -- i.e; left = 1+1=2
+                // this lets us skip left at index 1 where we have a first.
+                left = charIndex[s.charAt(right)]+1;
+            }
+            //update last seen position of the repeated character in the map to current position
+            charIndex[s.charAt(right)] = right;
+            // Calculate the length of the current substring
+            maxLen = Math.max(maxLen, right-left+1);
+            //move right to next character
+            right++;  
+        }
+        return maxLen;
+    }
+}
+
+//Optimal approach : Sliding window with 2 pointers (skip)
+//using hashmap for storing <character,index>
+
+//TC = O(n)
+//SC = O(n)
+
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int len = s.length();
+        int left = 0;
+        int right = 0;
+        int maxLen = 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();//<Character, last seen position>
+        //right pointer moving out of the array is where we stop 
+        while(right < len){
+            char currentChar = s.charAt(right);
+            //only when repeating character is seen and it is after left, move left
+            if(map.containsKey(currentChar) && map.get(currentChar) >= left){
+                // Move left to avoid repeating character
+                left = map.get(currentChar)+1;
+            }
+            //update last seen position of the repeated character in the map
+            map.put(currentChar,right);
+            // Calculate the length of the current substring
+            maxLen = Math.max(maxLen, right-left+1);
+            //move right to next character
+            right++;  
+        }
+        return maxLen;
+    }
+}
