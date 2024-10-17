@@ -32,3 +32,31 @@ class Solution {
         return maxLen;
     }
 }
+
+//Better - Two pointer & sliding window
+
+//TC = O(2n) => O(n)+O(n) -> O(n) for while for right & O(n) because the inner while can go max till length since left does not move always.
+//SC = O(1)
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int maxLen = 0;
+        int left = 0,right = 0;
+        int zeroCount = 0;
+        while(right < nums.length){
+            if(nums[right] == 0){
+                zeroCount++;
+            }
+            while(zeroCount > k){ //keep shrinking till condition is invalid
+                if(nums[left] == 0){//reduce zeroCount if left index has 0
+                    zeroCount--;
+                }  
+                left++;
+            }
+            if(zeroCount <= k){// valid condition
+                maxLen = Math.max(maxLen, right-left+1);
+            }
+            right++;
+        }
+        return maxLen;
+    }
+}
