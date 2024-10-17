@@ -47,7 +47,7 @@ class Solution {
                 zeroCount++;
             }
             while(zeroCount > k){ //keep shrinking till condition is invalid
-                if(nums[left] == 0){//reduce zeroCount if left index has 0
+                if(nums[left] == 0){//reduce zeroCount if left index(shrink index) has 0
                     zeroCount--;
                 }  
                 left++;
