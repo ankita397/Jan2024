@@ -7,7 +7,7 @@ Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
 //Brute Force 
 //generate all subarrays
 //Increment zeroCount when 0 is encountered
-//update maxLen when condition isvalid else break inner loop and start generating subarrays 
+//update maxLen when condition is valid else break inner loop and start generating subarrays 
 //from the next index(i = 0,1,...)
 
 TC = O(n^2)
