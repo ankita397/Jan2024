@@ -60,3 +60,34 @@ class Solution {
         return maxLen;
     }
 }
+
+//Optimal - This is only possible if maxLen or minLen is asked and not the substring or subarray
+//shrink on once each time condition is invalid - this lets us maintain the maxLen which we already got since we don't keep shrinking
+//Since we are interested only in maxLen, we don't care about the substring or position of left and right
+
+//TC = O(n)
+//SC = O(1)
+
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int maxLen = 0;
+        int left = 0,right = 0;
+        int zeroCount = 0;
+        while(right < nums.length){
+            if(nums[right] == 0){
+                zeroCount++;
+            }
+            if(zeroCount > k){ //shrink on once each time condition is invalid
+                if(nums[left] == 0){//reduce zeroCount if left index has 0
+                    zeroCount--;
+                }  
+                left++;
+            }
+            if(zeroCount <= k){//valid condition
+                maxLen = Math.max(maxLen, right-left+1);
+            }
+            right++;
+        }
+        return maxLen;
+    }
+}
