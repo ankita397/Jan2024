@@ -65,6 +65,9 @@ class Solution {
 //shrink on once each time condition is invalid - this lets us maintain the maxLen which we already got since we don't keep shrinking
 //Since we are interested only in maxLen, we don't care about the substring or position of left and right
 
+//while(zeroCount > k) ====> becomes ====> if(zeroCount > k)
+
+
 //TC = O(n)
 //SC = O(1)
 
