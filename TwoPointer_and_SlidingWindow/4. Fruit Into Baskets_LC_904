@@ -1,3 +1,23 @@
+https://leetcode.com/problems/fruit-into-baskets/description/ 
+
+- 2 baskets
+- each basket can contain only 1 type of fruit
+- once we start picking fruits from one tree, you cannot skip any trees in between => this means we have to pick from consecutive trees only.
+
+Rephrase question as -> Find the maximum length of subarray woth at most 2 types of numbers.
+
+Input: fruits = [0,1,2,2]
+Output: 3
+Explanation: We can pick from trees [1,2,2].
+If we had started at the first tree, we would only pick from trees [0,1].
+
+
+//brute force - Generate all subsarrays
+
+//TC = O(n*n*1) - 2 loops and 1 set which can have max 3 as size - so set.add - O(log 3) ~ O(1)
+//TC = O(n^2)
+//SC = O(3)
+
 class Solution {
     public int totalFruit(int[] fruits) {
         int maxLen = 0;
@@ -16,6 +36,13 @@ class Solution {
     }
 }
 
+//The set works in the brute force approach because you're building the set for every subarray from scratch and checking if you exceed 
+two distinct fruits. However, the set doesn't work in a dynamic sliding window approach because it lacks the ability to track 
+the frequency of fruit types, which is essential for correctly adjusting the window size when needed.
+
+//Better - shrink and expand
+//TC = O(n+n) = O(2n) 1 outer while loop takes O(n) and inner while loop takes total O(n) as it does not move always
+//SC = O(3)
 
 class Solution {
     public int totalFruit(int[] fruits) {
@@ -42,6 +69,9 @@ class Solution {
     }
 }
 
+//Optimal - shrink only once for invalid
+//TC = O(n)
+//SC = O(3)
 
 class Solution {
     public int totalFruit(int[] fruits) {
