@@ -53,7 +53,7 @@ class Solution {
         Map<Integer,Integer> map = new HashMap<Integer,Integer>();
         while(right < fruits.length){
             map.put(fruits[right], map.getOrDefault(fruits[right], 0)+1); // add the element to map with size 1 for the first occurrence
-            while(map.size() > 2){ // invalic condition - shrink the window
+            while(map.size() > 2){ // invalid condition - shrink the window till valid
                 map.put(fruits[left], map.get(fruits[left])-1); // remove the left most from map
                 if(map.get(fruits[left]) == 0){// if the left most element's freq becomes 0, the remove it ffom the map - we need the size of map later so this step is important
                     map.remove(fruits[left]);
@@ -82,7 +82,7 @@ class Solution {
         Map<Integer,Integer> map = new HashMap<Integer,Integer>();
         while(right < fruits.length){
             map.put(fruits[right], map.getOrDefault(fruits[right], 0)+1); // add the element to map with size 1 for the first occurrence
-            if(map.size() > 2){ // invalic condition - shrink the window
+            if(map.size() > 2){ // invalid condition - shrink the window only once
                 map.put(fruits[left], map.get(fruits[left])-1); // remove the left most from map
                 if(map.get(fruits[left]) == 0){// if the left most element's freq becomes 0, the remove it ffom the map - we need the size of map later so this step is important
                     map.remove(fruits[left]);
