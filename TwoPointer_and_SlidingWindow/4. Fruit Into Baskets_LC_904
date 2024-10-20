@@ -16,3 +16,28 @@ class Solution {
     }
 }
 
+
+class Solution {
+    public int totalFruit(int[] fruits) {
+        int left = 0, right = 0;
+        int maxLen = 0;
+        //int[] freq = new int[10]; - array cannot be used since  fruit types are represented as arbitrary integers in the input array, which could range from 0 to any large number.
+        //Set<Integer> set = new HashSet<Integer>();// Set does not track the number of occurrences of each type of fruit—it only keeps distinct elements. Also, when removing from the set, you might prematurely remove a type of fruit that still exists in the current window.
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        while(right < fruits.length){
+            map.put(fruits[right], map.getOrDefault(fruits[right], 0)+1); // add the element to map with size 1 for the first occurrence
+            while(map.size() > 2){ // invalic condition - shrink the window
+                map.put(fruits[left], map.get(fruits[left])-1); // remove the left most from map
+                if(map.get(fruits[left]) == 0){// if the left most element's freq becomes 0, the remove it ffom the map - we need the size of map later so this step is important
+                    map.remove(fruits[left]);
+                }
+                left++;
+            }
+            if(map.size() <= 2){
+                maxLen = Math.max(maxLen, right-left+1);
+            }
+            right++;  
+        } 
+        return maxLen;
+    }
+}
