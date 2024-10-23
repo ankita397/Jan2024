@@ -1,0 +1,38 @@
+https://leetcode.com/problems/count-number-of-nice-subarrays/description/
+Input: nums = [1,1,2,1,1], k = 3
+Output: 2
+Explanation: The only sub-arrays with 3 odd numbers are [1,1,2,1] and [1,2,1,1].
+
+--> Brute force and better in 
+//https://github.com/ankita397/Jan2024/blob/main/TwoPointer_and_SlidingWindow/8.%20Binary%20Subarrays%20With%20Sum_LC_930
+
+//Optimal 
+
+//If we consider all odd elements to be 1 and all even elements to be 0
+
+// [1,1,2,1,1] become [1,1,0,1,1] -> Now, the question became Find all Binary Subarrays with sum = k (LC 930)
+//[1,1,2,1] and [1,2,1,1] -> [1,1,0,1] (sum = 3) and [1,0,1,1] (sum = 3)
+
+class Solution {
+    public int numberOfSubarrays(int[] nums, int k) {
+        return niceSubArraysWithAtmostkOdd(nums, k) -
+                    niceSubArraysWithAtmostkOdd(nums , k-1);
+    }
+    public int niceSubArraysWithAtmostkOdd(int[] nums, int k){
+        int len = nums.length;
+        int left = 0, right = 0;
+        int count = 0;
+        int sum = 0;
+        while(right < len){
+            sum += nums[right]%2;//odd => 1,even => 0
+            while(sum > k){//shrink
+                sum = sum - nums[left]%2;//odd => 1,even => 0
+                left++;
+            }
+            count = count + (right-left+1);
+            
+            right++;
+        }
+        return count;
+    }
+}
