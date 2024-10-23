@@ -29,3 +29,74 @@ class Solution {
 }
 
 //Better - prefix sum approach
+
+//prefixSum[i]=arr[0]+arr[1]+…+arr[i] - for index i, prefixSum = sum of elements till index i.
+//Logic - To find if there is a subarray with sum = goal at index i, then we need to check if (prefixSum - goal) exists in the map or not.
+
+TC = O(n) //or O(nlog n) if we consoder worst case for map
+SC = O(n) //for map storing
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int len = nums.length; // Get the length of the input array
+        int count = 0; // Initialize count of valid subarrays
+        int prefixSum = 0; // Initialize the prefix sum
+        Map<Integer, Integer> prefixSumFreqMap = new HashMap<Integer, Integer>(); // Map to store frequency of prefix sums
+        
+        prefixSumFreqMap.put(0, 1); // Base case: a prefix sum of 0 can be formed in one way (no elements taken)
+
+        // Iterate through the array
+        for (int i = 0; i < len; i++) {
+            prefixSum += nums[i]; // Update the current prefix sum by adding the current element
+            
+            // Calculate the required prefix sum that, if found, indicates a valid subarray
+            int requiredPrefixSum = prefixSum - goal; 
+            
+            // Check if the required prefix sum exists in the map; if it does, add its frequency to the count
+            count += prefixSumFreqMap.getOrDefault(requiredPrefixSum, 0); 
+            
+            // Update the frequency of the current prefix sum in the map
+            prefixSumFreqMap.put(prefixSum, prefixSumFreqMap.getOrDefault(prefixSum, 0) + 1);
+        }
+        
+        // Return the total count of valid subarrays with the given sum
+        return count; 
+    }
+}
+
+//Optimal - Two pointers and sliding window
+
+//Here, we cannot shrink once as it will make us miss valid sub arrays and we need the count of total valid subarrays
+
+//TC = 2*O(n+n) - 2 is multiplied as we call the method twice
+//SC = O(1)
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        return numSubarraysWithSumAtMostGoal(nums, goal) - 
+                        numSubarraysWithSumAtMostGoal(nums, goal-1);
+    }
+
+    public int numSubarraysWithSumAtMostGoal(int[] nums, int goal){
+        int len = nums.length;
+        int count = 0;
+        int sum = 0;
+        int left = 0, right = 0;
+        
+        // If the goal is negative, there can't be any valid subarray
+        if(goal < 0){// since we call for goal-1 also, this edge case get ArrayIndexOutOfBoundsException
+            return 0;
+        }
+        while(right < len){
+            sum = sum + nums[right];
+            //While the sum exceeds the goal, shrink the window from the left
+            while(sum > goal){ 
+                sum = sum - nums[left];
+                left++;
+            }
+            count = count + (right-left+1);// if x+y <= goal, then y is definitely <= goal. So we add the length of the sub array as each element would be <=goal
+            right++;
+        }
+        return count;
+    }
+}
