@@ -1,1 +1,86 @@
+https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/description/
 
+Input: s = "abcabc"
+Output: 10
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", 
+"bcab", "bcabc", "cab", "cabc" and "abc" (again). 
+
+//Brute Force
+//TC = O(n^2)
+//SC = O(3) ~ O(1)
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int count = 0;
+        for(int i = 0; i < s.length(); i++){
+            int[] visited = new int[3]; // characters can be a, b, c - given in question
+            for(int j = i; j < s.length(); j++){
+                visited[s.charAt(j) - 'a'] = 1;
+                if(visited[0] + visited[1] + visited[2] == 3){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
+
+//Better
+// once we get a string which contains all 3 characters, whatever characters get added next the new strings will also be valid.
+//Eg: s= bbacba, 1st valid string we get is bbac, so we know bbacb and bbacba will also be valid. So we don't need to count them separately.
+//We can directly add 3 to our count (bbac, bbacb, bbacba)
+//That can be achived by just add all valid strings from j to end => (s.length() - j)
+//TC = O(n^2) - same
+//SC = O(3) ~ O(1) - same
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int count = 0;
+        for(int i = 0; i < s.length(); i++){ 
+            int[] visited = new int[3]; // Track if 'a', 'b', and 'c' are found
+            for(int j = i; j < s.length(); j++){
+                visited[s.charAt(j) - 'a'] = 1; // Mark character as found in 'visited'
+                if(visited[0] + visited[1] + visited[2] == 3){ // If all 'a', 'b', 'c' found
+                    count += (s.length() - j); // Add valid substrings from j to end
+                    break; // No need to check further for this starting index
+                }
+            }
+        }
+        return count; // Return total count of substrings
+    }
+}
+
+//Optimal
+//Two pointer and sliding window
+
+//Approach : Every character has a string that ends with that character. Find the min string.
+//Eg, s = bbacba -> b at index 4 - bbacb,bacb,acb,cb, b - all these strings end at b at index 4
+
+//TC = O(n)
+//SC = O(3) ~ O(1)
+
+class Solution {
+    public int numberOfSubstrings(String s) {
+        int[] last_seen_index = {-1,-1,-1};//-1 means not seen
+        int count = 0;
+        for(int i = 0; i < s.length(); i++){
+            last_seen_index[s.charAt(i) - 'a'] = i;
+            // Add valid substrings ending at current index i
+            // The minimum of last seen indices determines the earliest position for a valid substring
+            if(last_seen_index[0] != -1 && last_seen_index[2] != -1 && last_seen_index[2] != -1){
+                //At i = 4 (Character: 'b')
+                //last_seen_index = [2, 4, 3] (for 'a', 'b', 'c')
+                //min = 2
+                //Current Valid Substring:The valid substring that ends at i = 4 is "acb"
+                //All valid substrings that end at i = 4 are
+                // Starting at 2 (valid substring "acb"):
+                // Substring: "acb" (indexes 2 to 4)
+                // Starting at 3 (valid substring "cb"):
+                // Substring: "cb" (indexes 3 to 4)
+                // Starting at 4 (valid substring "b"):
+                // Substring: "b" (index 4)
+                // Adding 1 Represents:The valid substring that starts from min_index and extends to i is "acb".
+                count = count + (1 + Math.min(last_seen_index[0],Math.min(last_seen_index[1],last_seen_index[2])));
+            }
+        }
+        return count;
+    }
+}
