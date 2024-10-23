@@ -94,8 +94,8 @@ class Solution {
 //Optimal approach : Sliding window with 2 pointers (skip)
 //using hashmap for storing <character,index>
 
-//TC = O(n)
-//SC = O(n)
+//TC = O(n) or O(nlog n) if we consider worst case for map
+//SC = O(n) for map store
 
 class Solution {
     public int lengthOfLongestSubstring(String s) {
