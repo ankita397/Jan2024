@@ -13,6 +13,9 @@ Explanation: The only sub-arrays with 3 odd numbers are [1,1,2,1] and [1,2,1,1].
 // [1,1,2,1,1] become [1,1,0,1,1] -> Now, the question became Find all Binary Subarrays with sum = k (LC 930)
 //[1,1,2,1] and [1,2,1,1] -> [1,1,0,1] (sum = 3) and [1,0,1,1] (sum = 3)
 
+//TC = 2*O(2n)
+//SC = O(1)
+
 class Solution {
     public int numberOfSubarrays(int[] nums, int k) {
         return niceSubArraysWithAtmostkOdd(nums, k) -
