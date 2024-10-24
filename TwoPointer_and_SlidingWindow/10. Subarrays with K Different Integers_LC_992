@@ -26,3 +26,32 @@ class Solution {
 
 //Optimal - Two pointer and sliding window
 
+//TC = O(2*2n)
+//SC = O(n)
+
+class Solution {
+    public int subarraysWithKDistinct(int[] nums, int k) {
+        return subarraysWithAtMostkDist(nums, k) -
+                        subarraysWithAtMostkDist(nums, k-1);
+    }
+
+    public int subarraysWithAtMostkDist(int[] nums, int k){
+        int count = 0;
+        int len = nums.length;
+        int left = 0; int right = 0;
+        Map<Integer, Integer> freqMap = new HashMap<Integer, Integer>();
+        while(right < len){
+            freqMap.put(nums[right], freqMap.getOrDefault(nums[right],0)+1);
+            while(freqMap.size() > k){// invalid - shrink 
+                freqMap.put(nums[left], freqMap.getOrDefault(nums[left],0)-1);//reduce freq in map
+                if(freqMap.get(nums[left]) == 0){// check if the freq is 0
+                    freqMap.remove(nums[left]);// remove is freq is 0
+                }
+                left++;
+            }
+            count = count + (right-left+1);// all sub arrays till index = right will have at most k distinct integers
+            right++;
+        }
+        return count;
+    }
+}
