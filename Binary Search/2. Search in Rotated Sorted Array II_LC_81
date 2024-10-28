@@ -1,0 +1,42 @@
+https://leetcode.com/problems/search-in-rotated-sorted-array-ii/description/
+
+//TC = O(log n) [O(n/2) worst case - if there are a lof of duplicates and we have to shrink the search space by a lot]
+Reason: In the best and average scenarios, the binary search algorithm is primarily utilized and hence the time complexity is O(logN). 
+However, in the worst-case scenario, where all array elements are the same but not the target (e.g., given array = {3, 3, 3, 3, 3, 3, 3}), 
+we continue to reduce the search space by adjusting the low and high pointers until they intersect. This worst-case situation incurs a 
+time complexity of O(N/2).
+//SC = O(1)
+
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int low = 0, high = nums.length-1;
+        int mid = 0;
+        while(low <= high) {
+            mid = (low+high)/2;
+            if(target == nums[mid]){
+                return true;
+            }
+            //if duplicates are allowed in our array, then the only time we cannot know which half is sorted is when nums[low] == nums[mid] == nums[high]. 
+            //So here we shrink the search space by moving low and high
+            if(nums[low] == nums[mid] && nums[mid] == nums[high]){
+                low = low + 1;
+                high = high - 1;
+                continue; // keep shrinking till the condition becomes invalid
+            }
+            if(nums[low] <= nums[mid]){//left is sorted
+                if(target >= nums[low] && target <= nums[mid]){
+                    high = mid - 1;//eliminate right half as target is in left half
+                }else{
+                    low = mid + 1;//eliminate left half as target is in right half
+                }
+            }else{//right is sorted
+                if(target >= nums[mid] && target <= nums[high]){
+                    low = mid + 1;//eliminate left half as target is in right half
+                }else{
+                    high = mid - 1;//eliminate right half as target is in left half
+                }
+            }
+        }
+        return false;
+    }
+}
