@@ -16,7 +16,7 @@
 
 class Solution {
     public boolean isValidBST(TreeNode root) {
-        //-231 <= Node.val <= 231 - 1 - mentioned in problem statement - use Long
+        //-2^31 <= Node.val <= 2^31 - 1 - mentioned in problem statement - use Long
         return isValidBST(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }
 
