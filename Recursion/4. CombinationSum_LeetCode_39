@@ -25,8 +25,8 @@ class Solution {
             combinationSum(candidates, (target - candidates[index]) , index, result,tempList);
             
             //System.out.println("Removing...");
-            tempList.remove(tempList.size()-1);//not take
+            tempList.remove(tempList.size()-1);//backtrack
         }
-        combinationSum(candidates, target, index+1, result, tempList);
+        combinationSum(candidates, target, index+1, result, tempList);//take
     }
 }
