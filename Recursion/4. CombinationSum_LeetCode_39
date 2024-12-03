@@ -21,11 +21,11 @@ class Solution {
         }
         //System.out.println("Current target = "+target);
         if(candidates[index] <= target){
-            tempList.add(candidates[index]);
+            tempList.add(candidates[index]);//take
             combinationSum(candidates, (target - candidates[index]) , index, result,tempList);
             
             //System.out.println("Removing...");
-            tempList.remove(tempList.size()-1);
+            tempList.remove(tempList.size()-1);//not take
         }
         combinationSum(candidates, target, index+1, result, tempList);
     }
