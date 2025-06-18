@@ -2,6 +2,7 @@ Recurrence
 //1. Express everything in terms of index
 //2. Try all possible ways
 //3. Find max length or count, etc
+//4. Base case
 
 BASE CASE : 
         whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
