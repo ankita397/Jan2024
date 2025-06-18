@@ -1,8 +1,13 @@
 Recurrence
-//1. Express everything in terms of index
-//2. Try all possible ways
-//3. Find max length or count, etc
-//4. Base case
+1. Express everything in terms of index
+2. Try all possible ways
+3. Find max length or count, etc
+4. Base case
+
+Recursion to Memoization :
+1. declare dp array
+2. if(dp[ind] != -1) return dp[ind]; // if dp[ind] has been computed already, return the same
+3. assign dp[ind] to the result and return [Eg: return dp[ind] = maxLen]
 
 BASE CASE : 
         whenever recursion is started from n-1, our base case will always be for index 0 - tabulation from 0 to n-1
